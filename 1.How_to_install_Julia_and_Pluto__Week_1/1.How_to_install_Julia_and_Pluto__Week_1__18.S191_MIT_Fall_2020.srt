@@ -1,0 +1,556 @@
+1
+00:00:00,000 --> 00:00:00,821
+Right
+
+2
+00:00:00,821 --> 00:00:01,869
+ My name is Fons
+
+3
+00:00:02,085 --> 00:00:04,488
+ And in this video I will show you how to install Julia
+
+4
+00:00:04,596 --> 00:00:05,609
+ the programming language
+
+5
+00:00:05,609 --> 00:00:07,692
+ and Pluto, the programming environment
+
+6
+00:00:07,870 --> 00:00:11,800
+there's also a written version of this video available
+
+7
+00:00:11,800 --> 00:00:13,441
+ and there is also description
+
+8
+00:00:13,551 --> 00:00:14,861
+ And if you have any questions
+
+9
+00:00:14,974 --> 00:00:15,953
+ you can email us
+
+10
+00:00:16,453 --> 00:00:19,117
+so the first thing we do is to install Julia
+
+11
+00:00:19,230 --> 00:00:22,587
+so we go to JuliaLang.org
+
+12
+00:00:22,696 --> 00:00:26,416
+and here it allows us to install
+
+13
+00:00:26,558 --> 00:00:29,467
+to download Julia 1.5.1
+
+14
+00:00:29,581 --> 00:00:31,761
+which is the current stable release
+
+15
+00:00:31,872 --> 00:00:35,803
+and so you find the platform that you have
+
+16
+00:00:35,803 --> 00:00:37,331
+in my case it's Windows
+
+17
+00:00:37,331 --> 00:00:40,171
+You need click on the little help next to your OS
+
+18
+00:00:40,277 --> 00:00:43,338
+so we click
+
+19
+00:00:43,338 --> 00:00:45,411
+I already read this before
+
+20
+00:00:45,536 --> 00:00:48,468
+ but it just tells us to download the installer, run it
+
+21
+00:00:48,598 --> 00:00:51,638
+and we can also add it to our path
+
+22
+00:00:51,744 --> 00:00:55,067
+You don't really need it for our course
+
+23
+00:00:56,813 --> 00:00:57,248
+ but maybe you want it added later
+
+24
+00:00:57,389 --> 00:01:00,961
+You can read this on your own if you like
+
+25
+00:01:01,076 --> 00:01:02,696
+ So let's go to these downloads
+
+26
+00:01:02,816 --> 00:01:05,698
+ and in my case I need the 64-bit installer
+
+27
+00:01:06,140 --> 00:01:07,482
+I save it
+
+28
+00:01:09,665 --> 00:01:11,292
+and while it is downloading
+
+29
+00:01:11,446 --> 00:01:13,801
+ maybe you can have a look around this website
+
+30
+00:01:13,923 --> 00:01:18,640
+It has a bunch of resources to learn Julia
+
+31
+00:01:18,640 --> 00:01:21,589
+all right so downloaded and let's run
+
+32
+00:01:21,915 --> 00:01:32,290
+so take a minute to do install ... OK
+
+33
+00:01:32,509 --> 00:01:37,205
+ I'm just going to click next, etc.
+
+34
+00:01:37,205 --> 00:01:40,371
+And I'll pause, and see you when it's done
+
+35
+00:01:40,589 --> 00:01:44,192
+Okey, it's done and let's click finish
+
+36
+00:01:44,192 --> 00:01:45,659
+ And now whenever we want to start Julia
+
+37
+00:01:45,878 --> 00:01:48,172
+You just go to the start menu
+
+38
+00:01:48,282 --> 00:01:52,213
+ and then it will be here, Julia 1.5.1
+
+39
+00:01:52,213 --> 00:01:56,470
+so now we end up in something called REPL (Read-Evaluate-Print-Loop)
+
+40
+00:01:56,470 --> 00:01:59,202
+and this is where it can accept commands
+
+41
+00:01:59,202 --> 00:02:00,839
+ you should try out
+
+42
+00:02:00,839 --> 00:02:02,804
+ can you do 1 plus 1, ..., 2, he works
+
+43
+00:02:02,929 --> 00:02:06,298
+So here you type your Julia commands
+
+44
+00:02:09,501 --> 00:02:10,611
+but to install Pluto,
+
+45
+00:02:10,756 --> 00:02:14,652
+Pluto is a Julia package because Pluto is written in Julia
+
+46
+00:02:14,774 --> 00:02:17,169
+now we need to open a package manager
+
+47
+00:02:17,280 --> 00:02:19,678
+and in Julia the package manager is built into the REPL
+
+48
+00:02:19,678 --> 00:02:20,767
+ So what you do is
+
+49
+00:02:20,767 --> 00:02:23,280
+you press that closing bracket ...
+
+50
+00:02:23,444 --> 00:02:27,979
+closing square bracket sign, ..., this sign
+
+51
+00:02:28,412 --> 00:02:32,671
+and if you type that into the REPL without the hash at the start
+
+52
+00:02:32,998 --> 00:02:34,530
+ you end up in the package manager
+
+53
+00:02:34,530 --> 00:02:39,223
+and this is where I can type package commands instead of Julia commands
+
+54
+00:02:39,554 --> 00:02:43,375
+So this one doesn't work here it needs package commands
+
+55
+00:02:43,498 --> 00:02:45,994
+and the package commands we will give it was `add Pluto`
+
+56
+00:02:46,126 --> 00:02:48,617
+and if you run it
+
+57
+00:02:48,617 --> 00:02:51,347
+ it'll take a minute because we're doing this for the first time
+
+58
+00:02:51,457 --> 00:02:56,041
+ and it's setting up the package environments on the registry et cetera
+
+59
+00:02:56,041 --> 00:02:58,991
+so I'll pause again and I'll see you when it's done
+
+60
+00:02:58,991 --> 00:02:59,973
+So it's done
+
+61
+00:02:59,973 --> 00:03:04,235
+and now I'm going to press Backspace and back into the Julia REPL
+
+62
+00:03:04,235 --> 00:03:07,943
+Back into Julia REPL I will type 'import Pluto'
+
+63
+00:03:07,943 --> 00:03:09,146
+press enter
+
+64
+00:03:09,265 --> 00:03:11,551
+then it says
+
+65
+00:03:11,551 --> 00:03:14,061
+to start a notebook server you do `Pluto.run()`
+
+66
+00:03:14,209 --> 00:03:16,684
+let's give it a minute to load
+
+67
+00:03:16,684 --> 00:03:19,846
+Pluto.run()
+
+68
+00:03:21,376 --> 00:03:27,599
+and now it's telling us to go to localhost:1234 in your browser
+
+69
+00:03:27,929 --> 00:03:31,859
+so if you press Ctrl+C in the terminal
+
+70
+00:03:32,011 --> 00:03:34,044
+that's how you stop Pluto
+
+71
+00:03:34,196 --> 00:03:37,211
+so don't copy this using Ctrl+C
+
+72
+00:03:37,370 --> 00:03:40,049
+ it's different in the terminal for some reason
+
+73
+00:03:40,159 --> 00:03:42,672
+OK so in the browser (you need Firefox or Chrome btw)
+
+74
+00:03:42,800 --> 00:03:46,497
+you go to localhost:1234
+
+75
+00:03:46,630 --> 00:03:47,914
+You see I have typed it already
+
+76
+00:03:47,914 --> 00:03:53,155
+And you go there, it's loading and says welcome to Pluto
+
+77
+00:03:53,372 --> 00:03:55,011
+and so if you've seen this for the first time
+
+78
+00:03:55,230 --> 00:03:56,539
+ which you probably are
+
+79
+00:03:56,649 --> 00:03:59,270
+then you might want to have a look at these sample notebooks
+
+80
+00:03:59,378 --> 00:04:00,472
+Take click here
+
+81
+00:04:00,472 --> 00:04:03,311
+and these are meant to introduce you to Pluto
+
+82
+00:04:03,421 --> 00:04:08,225
+but also a bit to mathematics and to Julia code
+
+83
+00:04:08,359 --> 00:04:10,736
+if you're new to Julia
+
+84
+00:04:10,886 --> 00:04:13,904
+ I recommend having looked at 1,2 and 6
+
+85
+00:04:14,027 --> 00:04:17,724
+Because they explain... they also teach you a bit of Julia
+
+86
+00:04:17,836 --> 00:04:21,332
+Right, so in our case
+
+87
+00:04:21,472 --> 00:04:24,493
+ we want to work on homework 0
+
+88
+00:04:24,606 --> 00:04:27,444
+so we go to the github for the course page
+
+89
+00:04:27,659 --> 00:04:30,504
+and then we go to homework 0
+
+90
+00:04:30,623 --> 00:04:34,759
+and so this, the hw0.jl
+
+91
+00:04:34,981 --> 00:04:37,709
+is the link to the notebook file
+
+92
+00:04:37,817 --> 00:04:41,311
+ So you take this link, copy
+
+93
+00:04:41,420 --> 00:04:43,606
+and then here you Paste
+
+94
+00:04:43,713 --> 00:04:45,352
+press open
+
+95
+00:04:47,102 --> 00:04:50,151
+are you sure and you say Yes, I'm sure
+
+96
+00:04:52,338 --> 00:04:56,820
+and what it will do in this homework 0 is based on a template notebook
+
+97
+00:04:56,955 --> 00:04:58,997
+ and you have to start out from the template notebook
+
+98
+00:04:58,997 --> 00:05:02,165
+ adding your own stuff and then sending a book back to us
+
+99
+00:05:02,165 --> 00:05:03,151
+and so right now
+
+100
+00:05:03,151 --> 00:05:04,895
+ it's starting Pluto for the first time
+
+101
+00:05:04,895 --> 00:05:07,186
+ which is why it takes a while
+
+102
+00:05:07,186 --> 00:05:09,110
+And it just downloaded the notebook
+
+103
+00:05:09,221 --> 00:05:10,532
+ the template notebook
+
+104
+00:05:10,748 --> 00:05:13,915
+and it's running it
+
+105
+00:05:13,915 --> 00:05:15,774
+so the first thing one to do before anything else
+
+106
+00:05:15,917 --> 00:05:17,191
+is to save this notebook
+
+107
+00:05:17,300 --> 00:05:20,575
+ So right now it isn't saved anywhere
+
+108
+00:05:20,575 --> 00:05:22,978
+so let's first create a folder
+
+109
+00:05:22,978 --> 00:05:24,837
+ And this is different on every OS
+
+110
+00:05:24,837 --> 00:05:26,910
+ but I'm on windows so
+
+111
+00:05:26,910 --> 00:05:28,111
+go to file explorer
+
+112
+00:05:28,227 --> 00:05:30,406
+ let's say Documents
+
+113
+00:05:30,406 --> 00:05:38,266
+New folder, 18S191 SUBMISSIONS
+
+114
+00:05:40,670 --> 00:05:45,257
+what we need now is the path to this folder
+
+115
+00:05:45,257 --> 00:05:47,660
+so go inside the folder which is empty
+
+116
+00:05:49,188 --> 00:05:52,681
+ and then I do right click, Properties
+
+117
+00:05:53,119 --> 00:05:56,066
+and this tells me where this folder is exactly
+
+118
+00:05:56,175 --> 00:05:59,209
+So this is where you want to save this notebook
+
+119
+00:05:59,332 --> 00:06:00,409
+ So you go here
+
+120
+00:06:00,518 --> 00:06:03,243
+ And this is where you type the file
+
+121
+00:06:04,327 --> 00:06:06,624
+ so I paste, this
+
+122
+00:06:06,837 --> 00:06:09,895
+ and then it was 18...SUBMISSIONS...(Using tab to auto-complete)
+
+123
+00:06:10,113 --> 00:06:12,844
+that's called this homework 0
+
+124
+00:06:13,502 --> 00:06:14,917
+my name is Fonsi
+
+125
+00:06:15,685 --> 00:06:17,320
+Here you go
+
+126
+00:06:19,175 --> 00:06:21,366
+and so next you just work on a notebook
+
+127
+00:06:21,493 --> 00:06:23,437
+The instructions are inside the notebook
+
+128
+00:06:23,986 --> 00:06:24,964
+when you're done
+
+129
+00:06:25,184 --> 00:06:26,604
+this is where the file is
+
+130
+00:06:26,825 --> 00:06:29,552
+and you can see it in the folder
+
+131
+00:06:30,209 --> 00:06:32,499
+and so to submit it to canvas
+
+132
+00:06:33,813 --> 00:06:34,792
+you go to canvas
+
+133
+00:06:35,012 --> 00:06:36,056
+ and then there's an assignment
+
+134
+00:06:36,162 --> 00:06:37,693
+called homework 0
+
+135
+00:06:39,461 --> 00:06:44,155
+you click, and then here to submit the file
+
+136
+00:06:44,374 --> 00:06:51,449
+ the file upload is this Julia file
+
+137
+00:06:52,105 --> 00:06:53,304
+there you go
+
+138
+00:06:53,522 --> 00:06:54,509
+ have fun
+
+139
+00:06:54,740 --> 00:06:55,939
+ and let's see you soon
+
