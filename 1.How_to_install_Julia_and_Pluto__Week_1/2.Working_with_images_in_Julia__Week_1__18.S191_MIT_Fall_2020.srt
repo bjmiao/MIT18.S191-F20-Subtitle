@@ -1,0 +1,1967 @@
+﻿1
+00:00:01,030 --> 00:00:02,530
+so the first couple weeks of this course
+
+2
+00:00:02,530 --> 00:00:05,020
+ are going to be spent on image processing
+
+3
+00:00:05,020 --> 00:00:06,400
+ So for this very first lecture
+
+4
+00:00:06,400 --> 00:00:08,315
+ all I wanted to do is go through the basics of
+
+5
+00:00:08,315 --> 00:00:10,826
+how you work with images in the language Julia
+
+6
+00:00:11,155 --> 00:00:14,431
+now the slides that I'm going through here aren't actual normal slides
+
+7
+00:00:14,431 --> 00:00:16,506
+we're working in what's known as a Pluto notebook
+
+8
+00:00:16,616 --> 00:00:18,300
+ So at any given point
+
+9
+00:00:18,300 --> 00:00:23,130
+ you can type code and then output of that code is displayed in some way
+
+10
+00:00:23,310 --> 00:00:25,560
+this makes it really nice to work with images
+
+11
+00:00:25,560 --> 00:00:26,880
+ And in principle, with these lectures
+
+12
+00:00:26,880 --> 00:00:28,466
+ you can follow along if you want
+
+13
+00:00:28,466 --> 00:00:30,649
+and basically go through the same code and maybe
+
+14
+00:00:30,649 --> 00:00:33,420
+ change the inputs or tweak it if
+you want to explore anything
+
+15
+00:00:33,600 --> 00:00:36,150
+There are some fun things that we can do with Pluto notebooks
+
+16
+00:00:36,150 --> 00:00:40,230
+like embed a little webcam applet in here I guess
+
+17
+00:00:40,230 --> 00:00:42,670
+ And so I can take my picture
+
+18
+00:00:42,850 --> 00:00:46,830
+and we can use the output of that picture as a variable
+
+19
+00:00:47,010 --> 00:00:48,090
+so in this cell  for example
+
+20
+00:00:48,090 --> 00:00:50,592
+I am defining the variable
+grant to be something which
+
+21
+00:00:50,592 --> 00:00:53,595
+basically takes in the data
+that the webcam recorded
+
+22
+00:00:53,595 --> 00:00:55,752
+ and it's going to treat it as a variable
+
+23
+00:00:55,939 --> 00:00:58,650
+ And one thing that you will do in this first week's problem set is
+
+24
+00:00:58,650 --> 00:01:02,670
+write a function that lets you actually detect
+thee dges in an image which is pretty cool
+
+25
+00:01:02,670 --> 00:01:03,630
+ so you can put in your own image
+
+26
+00:01:03,630 --> 00:01:06,720
+ And it's going to find where in that image
+ all of the edges are
+
+27
+00:01:06,830 --> 00:01:09,250
+very useful in a lot of scientific applications
+
+28
+00:01:09,430 --> 00:01:09,940
+but before any of that
+
+29
+00:01:09,940 --> 00:01:14,440
+ let's back up to the basics in thinking about what exactly an image is
+
+30
+00:01:14,620 --> 00:01:16,990
+whenever we work with images in computers
+
+31
+00:01:16,990 --> 00:01:19,330
+ and I'm guessing a lot of you are well familiar with this
+
+32
+00:01:19,330 --> 00:01:21,250
+ It's essentially a grid of pixels
+
+33
+00:01:21,250 --> 00:01:26,020
+ So if I pull up some kind of image like a picture of my cat wearing a bow tie
+
+34
+00:01:26,020 --> 00:01:28,140
+ because why not
+
+35
+00:01:28,620 --> 00:01:29,940
+if you were to take this image
+
+36
+00:01:30,130 --> 00:01:31,580
+and you were to zoom in
+
+37
+00:01:31,760 --> 00:01:35,420
+maybe we zoom in onto this sallow eye of Sauron
+
+38
+00:01:35,600 --> 00:01:38,450
+nice, and you see that
+eventually you just get little squares
+
+39
+00:01:38,450 --> 00:01:40,490
+ and each square is a single color
+
+40
+00:01:40,490 --> 00:01:41,660
+ So somewhere in the computer
+
+41
+00:01:41,660 --> 00:01:45,590
+ it's representing each of these squares as some data type
+
+42
+00:01:45,590 --> 00:01:46,880
+ to represent a color
+
+43
+00:01:46,880 --> 00:01:48,710
+ and then it's creating a big grid of them
+
+44
+00:01:48,710 --> 00:01:52,419
+ ou often think of indexing into this array from the upper left corner by the way
+
+45
+00:01:52,419 --> 00:01:53,300
+So for example
+
+46
+00:01:53,300 --> 00:01:53,300
+ a first index might tell you how far down to walk
+
+47
+00:01:55,610 --> 00:01:59,930
+in a second index would tell you how far in to go to get to a certain point
+
+48
+00:02:00,300 --> 00:02:01,950
+so to start doing this with Julia
+
+49
+00:02:01,950 --> 00:02:04,180
+ let's just get our hands on a specific image
+
+50
+00:02:04,360 --> 00:02:06,130
+here we can see some of the boilerplate for you
+
+51
+00:02:06,130 --> 00:02:07,780
+ if you want to pull an image from the web
+
+52
+00:02:07,780 --> 00:02:09,520
+ So I'm defining a variable 'url'
+
+53
+00:02:09,520 --> 00:02:11,080
+ which is simply a string
+
+54
+00:02:11,080 --> 00:02:12,970
+ like in any other language
+
+55
+00:02:12,970 --> 00:02:15,074
+We use double quotation marks to denote the string
+
+56
+00:02:15,098 --> 00:02:16,900
+and it's going to pull a specific image
+
+57
+00:02:16,900 --> 00:02:19,460
+It's going to be Philip, the corgi
+
+58
+00:02:19,640 --> 00:02:22,280
+and this next line downloads whatever sitting in that url
+
+59
+00:02:22,280 --> 00:02:24,410
+ and it's going to save it locally on my machine
+
+60
+00:02:24,410 --> 00:02:26,860
+ as philip.jpg
+
+61
+00:02:27,140 --> 00:02:28,370
+and then in this next cell
+
+62
+00:02:28,370 --> 00:02:31,220
+ I'm going to start using the Images library
+
+63
+00:02:31,220 --> 00:02:36,030
+ So this syntax for bringing in a lot of functionality from some other libraries is using here
+
+64
+00:02:36,210 --> 00:02:41,220
+and then I might define a variable called philip to be 'load...'
+
+65
+00:02:41,220 --> 00:02:45,190
+ and then the name of this file that now in my system
+
+66
+00:02:45,370 --> 00:02:49,160
+but whenever we have multiple lines going on like this in a Pluto notebook
+
+67
+00:02:49,340 --> 00:02:51,978
+I'm going to go ahead and wrap it around
+
+68
+00:02:51,978 --> 00:02:54,810
+a begin-end block
+
+69
+00:02:54,810 --> 00:02:55,860
+and now, when I run this
+
+70
+00:02:56,120 --> 00:02:59,150
+ it's going to display whatever it finds from this last line
+
+71
+00:02:59,150 --> 00:03:03,580
+ which in this case is going to be something that's an image Philip
+
+72
+00:03:03,890 --> 00:03:04,757
+so that's kind of nice
+
+73
+00:03:04,757 --> 00:03:08,580
+ that the notebook knows that if I just have an object like Philip that
+
+74
+00:03:08,580 --> 00:03:11,204
+rather than displaying, you know, the raw underlying data of it
+
+75
+00:03:11,204 --> 00:03:13,970
+ that probably what I want is to see the image itself
+
+76
+00:03:14,150 --> 00:03:17,630
+but maybe we actually want to know a little bit more
+
+77
+00:03:17,630 --> 00:03:19,640
+about the raw underlying data for something like this
+
+78
+00:03:19,640 --> 00:03:22,650
+ So I could type something like typeof(philip)
+
+79
+00:03:23,530 --> 00:03:25,820
+and this is going to give me a type
+
+80
+00:03:26,300 --> 00:03:28,340
+ so this is a little bit confusing
+
+81
+00:03:28,340 --> 00:03:29,360
+for the first time you've seen it
+
+82
+00:03:29,360 --> 00:03:34,060
+ but essentially it's telling us that this variable is something that has type `Array'
+
+83
+00:03:34,240 --> 00:03:36,700
+and this 2 is telling us it's a two dimensional array
+
+84
+00:03:36,700 --> 00:03:39,543
+so one dimensional array would just be a list of values
+
+85
+00:03:39,567 --> 00:03:42,330
+and two dimensional arrays is a grid of values
+
+86
+00:03:42,510 --> 00:03:46,080
+and then the type for each one of those values is this RGBX thing
+
+87
+00:03:46,080 --> 00:03:48,630
+So RGB stands for red, green, blue
+
+88
+00:03:48,630 --> 00:03:52,350
+ This is a very standard way to describe colors in a computer
+
+89
+00:03:52,350 --> 00:03:53,682
+ You have three different numbers telling you
+
+90
+00:03:53,682 --> 00:03:56,280
+how much red, how much green,  how much blue is there
+
+91
+00:03:56,280 --> 00:03:58,100
+if you're wondering what that X means
+
+92
+00:03:58,100 --> 00:03:59,840
+I would say don't worry about it too much right now
+
+93
+00:03:59,840 --> 00:04:01,251
+ it's just a matter of padding
+
+94
+00:04:01,379 --> 00:04:03,871
+that can make internal data representations nice
+
+95
+00:04:03,871 --> 00:04:06,070
+but if you wanted to play with this type
+
+96
+00:04:06,070 --> 00:04:11,472
+ you could type something like RGBX and then type in a couple of potential values
+
+97
+00:04:11,591 --> 00:04:13,333
+ for the red the green and the blue
+
+98
+00:04:13,333 --> 00:04:15,910
+ which are going to be each between 0 and 1
+
+99
+00:04:15,910 --> 00:04:17,410
+ So if I type this
+
+100
+00:04:17,410 --> 00:04:20,980
+ it actually gives me the color that those three values correspond to
+
+101
+00:04:20,980 --> 00:04:23,410
+ And if maybe I increase the G part
+
+102
+00:04:23,410 --> 00:04:25,450
+increase the green part
+
+103
+00:04:25,450 --> 00:04:27,130
+ I get an even greener image
+
+104
+00:04:27,130 --> 00:04:28,420
+ but if I increase the red part
+
+105
+00:04:28,420 --> 00:04:28,630
+ you know
+
+106
+00:04:28,630 --> 00:04:32,350
+ I would get an even redder image here to blend of red and green
+
+107
+00:04:32,350 --> 00:04:33,430
+ And if I turned down the others
+
+108
+00:04:33,430 --> 00:04:33,640
+ you know
+
+109
+00:04:33,640 --> 00:04:35,250
+ we see something that's very much red
+
+110
+00:04:35,440 --> 00:04:36,280
+so that's the basic type
+
+111
+00:04:36,280 --> 00:04:40,510
+ And this variable Philip that we have is an array of a whole bunch of those
+
+112
+00:04:40,510 --> 00:04:42,080
+as you might expect, with an image
+
+113
+00:04:42,260 --> 00:04:44,620
+we could also ask about the size of Philip
+
+114
+00:04:44,800 --> 00:04:46,660
+they give us the dimensions
+
+115
+00:04:46,660 --> 00:04:51,860
+ So in this case, it's telling us 3675 * 2988
+
+116
+00:04:52,070 --> 00:04:53,630
+you might wonder which one of those is the height
+
+117
+00:04:53,630 --> 00:04:55,020
+ which one of those is the width
+
+118
+00:04:55,200 --> 00:04:58,413
+and we can basically just tell by taking a look at philip himself
+
+119
+00:04:58,437 --> 00:05:01,650
+and noticing that it's an image that's much taller than it is wide
+
+120
+00:05:01,650 --> 00:05:04,650
+ So that would suggest that this first variable was giving us the height
+
+121
+00:05:04,650 --> 00:05:06,600
+ And the second one is giving us the width
+
+122
+00:05:06,600 --> 00:05:08,280
+ which indeed it is
+
+123
+00:05:08,590 --> 00:05:11,830
+We can index directly into that array if we want to
+
+124
+00:05:11,830 --> 00:05:13,420
+ So if I did Philip
+
+125
+00:05:13,420 --> 00:05:15,060
+ and then I want to go to
+
+126
+00:05:15,250 --> 00:05:18,310
+the 100 pixel down from the top left
+
+127
+00:05:18,310 --> 00:05:22,070
+ and then the 400-th pixel in from the left
+
+128
+00:05:22,250 --> 00:05:25,906
+it will return for us something that's an RGB type
+
+129
+00:05:25,906 --> 00:05:29,200
+So if I asked what's the type
+of this thing that it returned
+
+130
+00:05:29,200 --> 00:05:30,700
+ it's an RGB object
+
+131
+00:05:30,700 --> 00:05:32,980
+ but when the Pluto notebook to seize that
+
+132
+00:05:32,980 --> 00:05:34,960
+ it thinks that what we want to see is the color
+
+133
+00:05:34,960 --> 00:05:36,840
+ which more often than not we probably do
+
+134
+00:05:37,020 --> 00:05:37,560
+so in this case
+
+135
+00:05:37,560 --> 00:05:40,470
+ it looks like I pulled out something that's black from that upper left
+
+136
+00:05:40,470 --> 00:05:42,240
+ But maybe if I had gone down a lot farther
+
+137
+00:05:42,240 --> 00:05:43,350
+ you know, 1000 down
+
+138
+00:05:43,350 --> 00:05:45,420
+ and we're getting some blue parts
+
+139
+00:05:45,420 --> 00:05:47,500
+ so maybe that was coming somewhere from the rug
+
+140
+00:05:48,060 --> 00:05:50,580
+we can also slice into this image where
+
+141
+00:05:50,580 --> 00:05:54,270
+ let's say I wanted to go from the first pixel up to the 1000 pixel
+
+142
+00:05:54,270 --> 00:05:57,180
+ and then from the first pixel into the 400 pixel
+
+143
+00:05:57,180 --> 00:05:59,280
+ Something like that
+
+144
+00:05:59,460 --> 00:06:01,710
+what this will return is another array
+
+145
+00:06:03,390 --> 00:06:06,810
+ it's an array that's basically a subset of the original picture
+
+146
+00:06:06,810 --> 00:06:10,650
+ So here it's just going from the upper left down by 1000 and in by 400
+
+147
+00:06:10,650 --> 00:06:12,920
+ which matches with what we see here
+
+148
+00:06:13,100 --> 00:06:15,830
+but that's maybe the least interesting part of the picture
+
+149
+00:06:15,830 --> 00:06:17,000
+ So maybe we want to do something like
+
+150
+00:06:17,000 --> 00:06:19,280
+ pull out the cute corgi himself
+
+151
+00:06:19,280 --> 00:06:22,430
+ And so here I have a predefined block that does that for us
+
+152
+00:06:22,430 --> 00:06:24,350
+Basically I take a look at the size
+
+153
+00:06:24,350 --> 00:06:26,210
+ the height and the width
+
+154
+00:06:26,210 --> 00:06:29,240
+ which I'm writing down as (h,w) equals the size of Philip
+
+155
+00:06:29,450 --> 00:06:30,920
+and then we're going to pull out
+
+156
+00:06:30,920 --> 00:06:33,440
+ just slice out a specific part of the array
+
+157
+00:06:33,440 --> 00:06:35,960
+ And here I'm going from halfway down the image
+
+158
+00:06:35,960 --> 00:06:36,860
+ So half of height
+
+159
+00:06:36,860 --> 00:06:38,260
+ all the way up to height itself
+
+160
+00:06:38,440 --> 00:06:39,400
+and here by the way
+
+161
+00:06:39,400 --> 00:06:41,410
+ we're using this division symbol
+
+162
+00:06:41,410 --> 00:06:42,370
+ So if in Julia
+
+163
+00:06:42,370 --> 00:06:46,240
+ you type basically anything from Latex um and then you
+
+164
+00:06:46,240 --> 00:06:47,830
+ with a backslash like `div'
+
+165
+00:06:47,830 --> 00:06:48,850
+ then I press Tab
+
+166
+00:06:48,850 --> 00:06:51,730
+ It lets us use more symbols than you usually can encode
+
+167
+00:06:51,730 --> 00:06:54,460
+ Because the spirit is that you want the code to read a lot like math
+
+168
+00:06:54,460 --> 00:06:56,260
+So if I'm typing, you know like a nabla
+
+169
+00:06:56,260 --> 00:06:58,450
+ this upside down triangle symbol
+
+170
+00:06:58,510 --> 00:07:00,610
+then I don't have to define that as a variable name
+
+171
+00:07:00,610 --> 00:07:02,200
+ or various things like that
+
+172
+00:07:02,200 --> 00:07:02,860
+ but in this case
+
+173
+00:07:02,860 --> 00:07:04,300
+ when we use that division symbol
+
+174
+00:07:04,300 --> 00:07:06,040
+ what is doing is integer division
+
+175
+00:07:06,040 --> 00:07:07,750
+ So it takes the height and divides by two
+
+176
+00:07:07,750 --> 00:07:09,710
+ but make sure to keep it of type integer
+
+177
+00:07:09,960 --> 00:07:11,460
+so it's taking that bottom half of the image
+
+178
+00:07:11,460 --> 00:07:15,000
+ and then the width is going from 1/10 of the way into it
+
+179
+00:07:15,000 --> 00:07:16,680
+ until 9/10 of the way into it
+
+180
+00:07:16,680 --> 00:07:19,260
+ and we're defining that as head
+
+181
+00:07:19,440 --> 00:07:20,730
+so now if I ask for
+
+182
+00:07:20,730 --> 00:07:22,370
+ what's the size of head
+
+183
+00:07:23,800 --> 00:07:25,750
+we can see that it's something smaller
+
+184
+00:07:25,750 --> 00:07:25,990
+ And in fact
+
+185
+00:07:25,990 --> 00:07:28,010
+ if we compare it to the size of Philip
+
+186
+00:07:30,390 --> 00:07:32,820
+we see that the first dimension is about half
+
+187
+00:07:32,820 --> 00:07:34,170
+ and then the next dimension is
+
+188
+00:07:34,860 --> 00:07:35,520
+ that should be about 80%
+
+189
+00:07:35,520 --> 00:07:36,860
+ which it is
+
+190
+00:07:37,150 --> 00:07:38,230
+so that's all well and good
+
+191
+00:07:38,230 --> 00:07:41,530
+ This is how we can slice into arrays to pull out specific subsets
+
+192
+00:07:42,100 --> 00:07:45,100
+Another nice thing we can do is concatenate arrays together
+
+193
+00:07:45,100 --> 00:07:49,060
+ So if I type open bracket and then this head image that I had
+
+194
+00:07:49,060 --> 00:07:49,840
+ and then space
+
+195
+00:07:49,840 --> 00:07:52,660
+ and then another copy of that head image with the close bracket
+
+196
+00:07:52,660 --> 00:07:55,900
+ what we get is an array that just sort of smashes the two together
+
+197
+00:07:56,080 --> 00:07:59,270
+so if I were to ask for the `typeof'
+
+198
+00:07:59,500 --> 00:08:00,640
+this subject
+
+199
+00:08:00,640 --> 00:08:01,570
+ it's the same type
+
+200
+00:08:01,570 --> 00:08:04,150
+ It's an array with these RGB values
+
+201
+00:08:04,150 --> 00:08:05,810
+ If I were to ask for its size
+
+202
+00:08:05,990 --> 00:08:07,280
+we see that it's actually much wider
+
+203
+00:08:07,280 --> 00:08:08,390
+ about twice as wide
+
+204
+00:08:08,390 --> 00:08:09,820
+ which is what you would expect
+
+205
+00:08:10,000 --> 00:08:10,420
+but again
+
+206
+00:08:10,420 --> 00:08:12,370
+ it displays it to us really nicely
+
+207
+00:08:12,740 --> 00:08:14,900
+we could do some fun things with concatenation
+
+208
+00:08:14,900 --> 00:08:17,420
+ like creating a kaleidoscopic corgi
+
+209
+00:08:17,420 --> 00:08:21,920
+ So what we have here is basically four different concatenated images
+
+210
+00:08:21,920 --> 00:08:24,050
+ We're in the upper left we have 'head'
+
+211
+00:08:24,050 --> 00:08:25,400
+ and in the upper right
+
+212
+00:08:25,400 --> 00:08:25,940
+ what I've done is
+
+213
+00:08:26,050 --> 00:08:28,236
+ reverse the head along the second dimension
+
+214
+00:08:28,342 --> 00:08:30,800
+ So if I had just typed head in there
+
+215
+00:08:31,520 --> 00:08:34,020
+then that upper right image would be a copy of it
+
+216
+00:08:34,200 --> 00:08:35,500
+but if I reverse it
+
+217
+00:08:36,720 --> 00:08:37,890
+`reverse(head)'
+
+218
+00:08:38,740 --> 00:08:43,310
+then Julia is yelling at me that I haven't put 
+in one of the keyword arguments to this function `reverse'
+
+219
+00:08:43,490 --> 00:08:45,129
+so I specify that the dimension along
+
+220
+00:08:45,129 --> 00:08:48,090
+ which I want to reverse it is 2
+
+221
+00:08:48,300 --> 00:08:52,270
+then it knows to basically flip that top image around
+
+222
+00:08:52,900 --> 00:08:53,860
+around the vertical axis
+
+223
+00:08:53,860 --> 00:08:55,390
+ and you can read from here
+
+224
+00:08:55,660 --> 00:08:57,250
+ the lower left quadrant
+
+225
+00:08:57,250 --> 00:08:58,510
+ We've flipped it around the other axes
+
+226
+00:08:58,510 --> 00:09:00,010
+ and in the bottom right
+
+227
+00:09:00,010 --> 00:09:01,090
+ we've kind of flipped it around both
+
+228
+00:09:01,090 --> 00:09:02,770
+And that gets us this nice you know
+
+229
+00:09:02,770 --> 00:09:04,660
+multiple mirror image corgi thing
+
+230
+00:09:04,840 --> 00:09:05,770
+the point here though
+
+231
+00:09:05,770 --> 00:09:08,140
+ is just how nice it is to concatenate arrays
+
+232
+00:09:08,140 --> 00:09:10,360
+ And we just have this open bracket & close bracket
+
+233
+00:09:10,360 --> 00:09:11,890
+ And then we write things down
+
+234
+00:09:11,890 --> 00:09:14,110
+kind of as you would write it in a math context
+
+235
+00:09:14,110 --> 00:09:15,340
+ just this matrix
+
+236
+00:09:15,340 --> 00:09:17,110
+ with different elements in different spots
+
+237
+00:09:17,470 --> 00:09:18,790
+Now, what we really want though
+
+238
+00:09:18,790 --> 00:09:22,390
+ is to actually get into those pixels and start doing some interesting things with them
+
+239
+00:09:22,570 --> 00:09:24,460
+and there's maybe two ways that we might think about this,
+
+240
+00:09:24,460 --> 00:09:28,060
+one is to modify the array itself very directly
+
+241
+00:09:28,060 --> 00:09:32,500
+ and the other one would be to copy the array to create a new object that's going to look different in some way
+
+242
+00:09:32,740 --> 00:09:34,900
+so copying things as straightforward enough
+
+243
+00:09:34,900 --> 00:09:36,800
+ we just call this function copy
+
+244
+00:09:36,980 --> 00:09:39,920
+and when I've called this `new_phll' is equal to a copy of  `head'
+
+245
+00:09:39,920 --> 00:09:42,320
+ That means we have a new variable, it's new data
+
+246
+00:09:42,320 --> 00:09:45,020
+ If we start manipulating this new_phil variable
+
+247
+00:09:45,020 --> 00:09:47,930
+it's not going to change the underlying data for `phil'
+
+248
+00:09:47,930 --> 00:09:50,300
+ the thing that we originally pulled it out from
+
+249
+00:09:50,920 --> 00:09:52,840
+so the goal right now is going to be to
+
+250
+00:09:52,840 --> 00:09:55,420
+ basically just paint one of the corners of this
+
+251
+00:09:55,420 --> 00:09:57,370
+ some monochromatic color like red
+
+252
+00:09:57,550 --> 00:10:00,602
+and there's two different ways that we could think about doing this
+
+253
+00:10:00,626 --> 00:10:03,940
+one is to create a double for-loop where I'm going to take all the indices  i
+
+254
+00:10:03,940 --> 00:10:05,850
+ ranging from 1 up to 100
+
+255
+00:10:06,030 --> 00:10:08,340
+and then all the ones j, from 1 up to 100
+
+256
+00:10:08,340 --> 00:10:11,289
+or maybe I'll make that a different number like 300
+
+257
+00:10:11,289 --> 00:10:15,380
+ So we'll be able to more easily see which index is affecting which dimension
+
+258
+00:10:15,630 --> 00:10:16,260
+and then after that
+
+259
+00:10:16,260 --> 00:10:18,120
+ I will take my array new_phil
+
+260
+00:10:18,120 --> 00:10:20,966
+ I will index into [i, j]
+
+261
+00:10:20,966 --> 00:10:23,545
+ And I'm going to ask it to become red
+
+262
+00:10:23,545 --> 00:10:26,190
+ where red is a thing that I've previously defined above
+
+263
+00:10:26,190 --> 00:10:29,340
+an RGB value that is just (1, 0, 0)
+
+264
+00:10:30,030 --> 00:10:31,110
+now you'll notice that
+
+265
+00:10:31,110 --> 00:10:32,250
+ unlike a lot of the other blocks
+
+266
+00:10:32,250 --> 00:10:33,716
+ this one isn't showing us anything
+
+267
+00:10:33,866 --> 00:10:36,340
+'cause for loops themselves don't return anything
+
+268
+00:10:36,340 --> 00:10:38,350
+Since that I would have to act a retype
+
+269
+00:10:38,610 --> 00:10:39,150
+new_phil
+
+270
+00:10:39,150 --> 00:10:43,560
+and we'll see that new_phil is indeed modified
+
+271
+00:10:43,560 --> 00:10:49,230
+ and it looks like the j variable that was going from 1 to 300 is going along the horizontal direction
+
+272
+00:10:49,410 --> 00:10:50,340
+and that kind of makes sense
+
+273
+00:10:50,340 --> 00:10:53,730
+because the first thing that we do when we go to an array is go from top to bottom
+
+274
+00:10:53,730 --> 00:10:55,950
+ And then the second thing is to start going inward
+
+275
+00:10:55,950 --> 00:10:58,632
+ you might think of it as being painted like one of those old style printers
+
+276
+00:10:58,632 --> 00:11:00,720
+that kind of goes left to right, left to right
+
+277
+00:11:00,720 --> 00:11:02,220
+ the way you would read a book
+
+278
+00:11:02,220 --> 00:11:03,270
+ or any kind of pitch
+
+279
+00:11:03,930 --> 00:11:04,680
+so that's nice
+
+280
+00:11:04,680 --> 00:11:05,970
+ We've modified our image
+
+281
+00:11:05,970 --> 00:11:08,781
+but there's actually a much easier
+way if you want to just change all of
+
+282
+00:11:08,781 --> 00:11:12,060
+those pixels to be read without
+going through the for-loops to get into it
+
+283
+00:11:12,260 --> 00:11:14,700
+and we can do what's known as broadcasting
+
+284
+00:11:14,980 --> 00:11:18,289
+so here what I'll do is create
+yet another phil, new_phil2
+
+285
+00:11:18,409 --> 00:11:20,364
+ That's copying new_phil itself
+
+286
+00:11:20,364 --> 00:11:23,530
+and then I'm going to slice into it when I'm going
+
+287
+00:11:23,530 --> 00:11:26,808
+from the 100 pixel up to the 200 pixel.
+
+288
+00:11:26,921 --> 00:11:28,227
+So that's going to be
+
+289
+00:11:28,227 --> 00:11:30,372
+ from the bottom of where we painted red down further
+
+290
+00:11:30,519 --> 00:11:32,662
+ and then from the first up to the hundredth
+
+291
+00:11:32,771 --> 00:11:36,248
+ which goes on only a third of the way in
+ as the red rectangle did
+
+292
+00:11:36,372 --> 00:11:37,554
+and then I'm going to say
+
+293
+00:11:37,554 --> 00:11:39,820
+Dot equals RGB(0,1,0)
+
+294
+00:11:39,820 --> 00:11:41,620
+ which is basically saying it's all green
+
+295
+00:11:41,620 --> 00:11:43,330
+ and none of the other colors
+
+296
+00:11:43,510 --> 00:11:45,910
+and what this dot is doing is saying
+
+297
+00:11:45,910 --> 00:11:48,040
+Hey, this operation I'm asking you to do
+
+298
+00:11:48,040 --> 00:11:50,530
+ rather than doing it to the object itself
+
+299
+00:11:50,530 --> 00:11:51,700
+ that you see on the left
+
+300
+00:11:51,700 --> 00:11:52,994
+I want you to look into all the elements
+
+301
+00:11:52,994 --> 00:11:55,615
+of this array and apply to each one of them individually
+
+302
+00:11:56,020 --> 00:11:58,990
+ So this is doing the same thing as the for-loops that we had above
+
+303
+00:11:58,990 --> 00:12:01,130
+but syntactically it's a lot nicer to look at
+
+304
+00:12:01,830 --> 00:12:06,390
+this little dot idea of broadcasting across arrays is actually quite common in Julia
+
+305
+00:12:06,390 --> 00:12:08,160
+ and you can do it with functions
+
+306
+00:12:08,160 --> 00:12:10,740
+ It doesn't have to be assigning variables like this
+
+307
+00:12:10,740 --> 00:12:12,380
+ And let me show you what I mean by that
+
+308
+00:12:13,890 --> 00:12:17,370
+let's say I write some kind of function that I want to happen to each individual pixel
+
+309
+00:12:17,370 --> 00:12:18,540
+ And in this case
+
+310
+00:12:18,540 --> 00:12:21,270
+ I'm defining a function called "redify"
+
+311
+00:12:21,270 --> 00:12:23,490
+ where "redify" is going to take in a variable
+
+312
+00:12:23,490 --> 00:12:24,480
+ We go give it a better name
+
+313
+00:12:24,480 --> 00:12:25,990
+or give it something like "color"
+
+314
+00:12:26,470 --> 00:12:28,160
+so it's going to take in a color
+
+315
+00:12:28,340 --> 00:12:31,100
+and then what it returns is a new RGB value
+
+316
+00:12:31,100 --> 00:12:34,580
+ where the red is pulled straight from colour "color.r"
+
+317
+00:12:34,580 --> 00:12:37,370
+And then it has no green and has no blue
+
+318
+00:12:37,370 --> 00:12:39,170
+So basically it says,  give me a pixel
+
+319
+00:12:39,170 --> 00:12:40,880
+ I'm going to strip out its blue and green value
+
+320
+00:12:40,880 --> 00:12:43,500
+ just keep its red value and give it back to you
+
+321
+00:12:43,680 --> 00:12:45,300
+so as an example
+
+322
+00:12:45,300 --> 00:12:49,653
+let's say I define some kind of color that has values (0.8, 0.5, 0.2)
+
+323
+00:12:49,653 --> 00:12:51,509
+So it's this nice sort of brownish value
+
+324
+00:12:51,616 --> 00:12:53,764
+ or maybe we rob it of some of its red
+
+325
+00:12:53,764 --> 00:12:56,170
+ and we get this sort of greenish value here
+
+326
+00:12:56,430 --> 00:13:03,090
+if I were to display a list, that's `[color, redify(color)]`
+
+327
+00:13:03,270 --> 00:13:05,100
+what is showing us is the original color
+
+328
+00:13:05,100 --> 00:13:07,460
+ And then what happens when we call redify to it
+
+329
+00:13:07,640 --> 00:13:11,130
+so no matter what color goes in
+
+330
+00:13:11,130 --> 00:13:12,550
+ it's pulling out just the red part
+
+331
+00:13:12,730 --> 00:13:13,720
+simple function
+
+332
+00:13:13,720 --> 00:13:15,640
+ not something you would really use in practice
+
+333
+00:13:15,640 --> 00:13:19,540
+ but the reason for defining it is to show you an example of what broadcasting can look like
+
+334
+00:13:19,720 --> 00:13:24,090
+because let's say we take the array that is Philip himself
+
+335
+00:13:24,270 --> 00:13:26,400
+and we call "redify.(philip)"
+
+336
+00:13:26,400 --> 00:13:30,300
+what is doing is it's applying this function across all of Philip
+
+337
+00:13:30,480 --> 00:13:31,470
+so if I didn't have that dot
+
+338
+00:13:31,470 --> 00:13:33,060
+ if I just tried to call "redify(philip)"
+
+339
+00:13:33,060 --> 00:13:34,470
+ it's giving me this error
+
+340
+00:13:34,470 --> 00:13:36,600
+It's like "type Array has no field r"
+
+341
+00:13:36,600 --> 00:13:40,580
+and the reason that it's doing that is because when you call the redify function
+
+342
+00:13:40,580 --> 00:13:42,050
+ it thinks that it's taking in a color
+
+343
+00:13:42,050 --> 00:13:44,270
+ And the thing that it does with that color is call `dot r'
+
+344
+00:13:44,270 --> 00:13:47,581
+ as if it was going to be of the appropriate type
+
+345
+00:13:47,581 --> 00:13:50,867
+but it complains to us for that
+
+346
+00:13:50,867 --> 00:13:51,350
+of course
+
+347
+00:13:51,350 --> 00:13:53,720
+ if we broadcast it across all of the pixels of philip
+
+348
+00:13:53,720 --> 00:13:54,740
+ those are of the correct type
+
+349
+00:13:54,740 --> 00:13:56,510
+ So when I do that
+ we see this very
+
+350
+00:13:56,510 --> 00:13:59,600
+ it's kind of like when one of those old school film development rooms
+
+351
+00:13:59,600 --> 00:14:03,720
+ and maybe there's this wet picture of the corgi just kind of hanging as it develops
+
+352
+00:14:03,900 --> 00:14:04,830
+but I would encourage you
+
+353
+00:14:04,830 --> 00:14:07,565
+ if you're playing with things right now to try to finding your own function
+
+354
+00:14:07,565 --> 00:14:09,142
+ that might do something else to the color
+
+355
+00:14:09,142 --> 00:14:12,050
+ and then broadcasting across whatever image you want
+
+356
+00:14:12,050 --> 00:14:15,280
+if you're working with a really big image that makes things kind of slow
+
+357
+00:14:15,280 --> 00:14:17,529
+ and you want to just see what it looks like sped up
+
+358
+00:14:17,637 --> 00:14:21,040
+ one kind of nice tactic is to use this decimate function where
+
+359
+00:14:21,040 --> 00:14:22,960
+ if we call "decimate" on one of our arrays
+
+360
+00:14:22,960 --> 00:14:24,490
+ it basically pulls out
+
+361
+00:14:24,490 --> 00:14:25,750
+ In this case
+
+362
+00:14:25,750 --> 00:14:27,670
+ I think it's pulling out every fifth element
+
+363
+00:14:27,670 --> 00:14:29,738
+ But I could ask it to pull out something like every 10th
+
+364
+00:14:29,738 --> 00:14:31,550
+and it's pulling out every tenth element
+
+365
+00:14:31,550 --> 00:14:35,332
+ Or if I said,  pull out every other element
+
+366
+00:14:35,332 --> 00:14:37,460
+so clearly decreases the quality
+
+367
+00:14:37,460 --> 00:14:39,200
+ And as far as image compression goes
+
+368
+00:14:39,200 --> 00:14:41,180
+ it's not the most sophisticated scheme
+
+369
+00:14:41,180 --> 00:14:46,310
+ but it's a nice way to just take what was a large image and then make it a smaller image that looks roughly the same
+
+370
+00:14:46,310 --> 00:14:47,060
+But here, of course
+
+371
+00:14:47,060 --> 00:14:48,350
+ it's of a poor quality
+
+372
+00:14:48,530 --> 00:14:50,000
+so if we asked for something like
+
+373
+00:14:50,000 --> 00:14:54,400
+hey what's the size of poor_phil this new variable have defined
+
+374
+00:14:54,780 --> 00:14:57,250
+we see it's notably smaller
+
+375
+00:14:57,430 --> 00:14:58,570
+and so from here if we wanted a nice
+
+376
+00:14:58,570 --> 00:15:00,130
+ small image to work quickly with
+
+377
+00:15:00,130 --> 00:15:01,420
+ we could have "poor_phil"
+
+378
+00:15:01,420 --> 00:15:03,800
+which is all well and good
+
+379
+00:15:03,800 --> 00:15:04,550
+ for example
+
+380
+00:15:04,550 --> 00:15:07,490
+one of the interesting things that we're going to get into mostly in Lecture 2
+
+381
+00:15:07,490 --> 00:15:09,350
+ But I want to give you a little preview of things today
+
+382
+00:15:09,350 --> 00:15:12,170
+is this idea of a convolution
+
+383
+00:15:12,170 --> 00:15:14,150
+ This is very common in image processing
+
+384
+00:15:14,150 --> 00:15:16,755
+It's basically a way that we can go through each pixel and
+
+385
+00:15:16,779 --> 00:15:19,430
+do something to it based on the neighbors of that pixel
+
+386
+00:15:19,430 --> 00:15:22,460
+and again we'll go over all of the map of that next time
+
+387
+00:15:22,460 --> 00:15:24,410
+but just as an initial preview
+
+388
+00:15:24,410 --> 00:15:26,540
+ I'm calling a function called convolve
+
+389
+00:15:26,540 --> 00:15:27,950
+ I'm inputting "poor_phil"
+
+390
+00:15:27,950 --> 00:15:30,620
+ the kind of decimated version of our puppy head
+
+391
+00:15:30,800 --> 00:15:34,040
+um and then I'm giving this other thing called "blur(2)"
+
+392
+00:15:34,040 --> 00:15:35,390
+ And if you were curious what "blur(2)" is
+
+393
+00:15:35,390 --> 00:15:37,020
+ you can just take a look at it
+
+394
+00:15:37,200 --> 00:15:40,080
+and we can see that it's a two by two array of floats
+
+395
+00:15:40,080 --> 00:15:41,670
+ It's got certain values
+
+396
+00:15:41,670 --> 00:15:43,860
+ And based on what we talk about in the next lecture
+
+397
+00:15:43,860 --> 00:15:47,930
+ it'll maybe be clearer why this does what it's about to do
+
+398
+00:15:48,210 --> 00:15:53,400
+but if I call this convolve function with the array and that blur(2), it makes it a little bit blurrier
+
+399
+00:15:53,400 --> 00:15:54,630
+ And that's a little bit clearer
+
+400
+00:15:54,630 --> 00:15:57,420
+if I have more of a blur, like blur(10)
+
+401
+00:15:58,020 --> 00:16:00,640
+and if I were to look at the value of blur 10
+
+402
+00:16:02,940 --> 00:16:05,160
+we see it’s much bigger array
+
+403
+00:16:05,160 --> 00:16:07,040
+and got a bunch of other values in there
+
+404
+00:16:07,220 --> 00:16:10,373
+and you might be able to guess at the moment that what this is doing is
+
+405
+00:16:10,397 --> 00:16:13,550
+taking a kind of average of all of the pixels around a particular pixel
+
+406
+00:16:13,550 --> 00:16:15,440
+ And by taking that average
+
+407
+00:16:15,440 --> 00:16:18,340
+it kind of, makes the picture look out of focus to us
+
+408
+00:16:18,340 --> 00:16:20,080
+ So if there were only blur of one
+
+409
+00:16:20,080 --> 00:16:22,570
+ we actually get the original image
+
+410
+00:16:22,570 --> 00:16:26,760
+ But then as you increase that value a little bit more than it gets blurrier and blurrier
+
+411
+00:16:27,050 --> 00:16:28,370
+and this thing that I'm doing right here
+
+412
+00:16:28,370 --> 00:16:29,630
+ where I'm trying to change this variable
+
+413
+00:16:29,630 --> 00:16:30,740
+ and I'm changing it one at a time
+
+414
+00:16:30,740 --> 00:16:33,290
+At least while we're in the context of Pluto
+
+415
+00:16:33,290 --> 00:16:35,000
+ we can do this in a nicer way
+
+416
+00:16:35,000 --> 00:16:38,200
+with these notion of UI elements.
+
+417
+00:16:38,380 --> 00:16:40,885
+so if we start using this library PlutoUI
+
+418
+00:16:41,012 --> 00:16:43,930
+ then we can do things like creating a slider
+
+419
+00:16:44,110 --> 00:16:50,020
+where I'm going to bind a variable called blur_factor to a slider
+
+420
+00:16:50,020 --> 00:16:52,060
+ And the slider is going to have values from 1 up to 20
+
+421
+00:16:52,060 --> 00:16:54,310
+ I want to show what it's value is
+
+422
+00:16:54,428 --> 00:16:55,948
+right now it's showing us the one
+
+423
+00:16:55,948 --> 00:16:57,400
+ But if I were to change it a little bit
+
+424
+00:16:57,400 --> 00:16:59,180
+ it shows us another value
+
+425
+00:16:59,360 --> 00:17:01,340
+and now we can take that variable
+
+426
+00:17:01,340 --> 00:17:02,810
+ I can have the same line that we had before
+
+427
+00:17:02,810 --> 00:17:07,190
+which was convolving poor_phil with blur
+
+428
+00:17:07,190 --> 00:17:09,440
+ according to some number that I'm putting into it
+
+429
+00:17:09,440 --> 00:17:11,780
+ But here I can do in a more interactive way
+
+430
+00:17:11,780 --> 00:17:13,320
+ which is kind of nice, so again
+
+431
+00:17:13,320 --> 00:17:14,640
+ if this is something that you're playing with
+
+432
+00:17:14,640 --> 00:17:18,403
+this makes it a nice way to just
+tweak the variables to see the effect
+
+433
+00:17:18,427 --> 00:17:22,201
+that it has on whatever function
+you're coming to be familiar with
+
+434
+00:17:22,201 --> 00:17:24,224
+so right now,
+
+435
+00:17:24,224 --> 00:17:26,040
+food for thought for anyone watching this is
+
+436
+00:17:26,040 --> 00:17:28,890
+ I want you to think about exactly what blur is probably doing
+
+437
+00:17:28,890 --> 00:17:30,240
+Like I said, you know
+
+438
+00:17:30,240 --> 00:17:33,630
+ it's taking each part of the image and it's changing it based on the neighbors around it
+
+439
+00:17:33,630 --> 00:17:34,710
+ And this whole idea
+
+440
+00:17:34,710 --> 00:17:36,810
+ which we can kind of write in pseudo code here
+
+441
+00:17:36,810 --> 00:17:40,710
+ where each element of an image you index into it at [i,j]
+
+442
+00:17:40,710 --> 00:17:43,230
+you doing something based on the neighborhood
+
+443
+00:17:43,230 --> 00:17:45,270
+that is a thing being really powerful
+
+444
+00:17:45,270 --> 00:17:49,050
+ and if that something is simply an average or more sophisticated kind of average
+
+445
+00:17:49,050 --> 00:17:50,730
+ you typically get a blurring effect
+
+446
+00:17:50,730 --> 00:17:52,200
+ But we can do smarter things with it
+
+447
+00:17:52,200 --> 00:17:54,360
+And one of the things you're going to do in the first problem set
+
+448
+00:17:54,360 --> 00:17:58,395
+is actually take that idea of just looking at a pixel
+
+449
+00:17:58,395 --> 00:18:00,034
+ and then looking at all of its neighbors
+
+450
+00:18:00,034 --> 00:18:01,602
+ and using that to try to pull out
+
+451
+00:18:01,602 --> 00:18:04,111
+what the edges of that images actually are
+
+452
+00:18:05,784 --> 00:18:07,090
+so in this context
+
+453
+00:18:07,090 --> 00:18:11,580
+ if I call a function which you are going to define, called edge_detect
+
+454
+00:18:12,100 --> 00:18:16,100
+on "poor_phil"
+
+455
+00:18:16,100 --> 00:18:18,140
+ it pulls out a lot of the little edges in there
+
+456
+00:18:18,140 --> 00:18:20,240
+ And then one thing that you might play around with his
+
+457
+00:18:20,240 --> 00:18:22,280
+ what would happen if I smoothed out
+
+458
+00:18:22,280 --> 00:18:23,870
+ fill a little bit beforehand
+
+459
+00:18:23,870 --> 00:18:25,990
+ I might convolve poor_phil
+
+460
+00:18:26,210 --> 00:18:29,230
+with a blur maybe a blur_factor of 3
+
+461
+00:18:30,070 --> 00:18:33,270
+and it's yelling at me because of some invalid syntax
+
+462
+00:18:33,620 --> 00:18:34,940
+uh premature input
+
+463
+00:18:34,940 --> 00:18:37,860
+ so what am I doing here convolve poor_phil
+
+464
+00:18:38,620 --> 00:18:39,820
+blur three
+
+465
+00:18:40,000 --> 00:18:43,110
+and then I'm plugging in the output of that edge detect
+
+466
+00:18:43,290 --> 00:18:47,170
+...oh I just don't have enough parenthesis... great
+
+467
+00:18:48,480 --> 00:18:49,710
+if I take a smoothed version
+
+468
+00:18:49,710 --> 00:18:50,970
+ it's finding fewer edges
+
+469
+00:18:50,970 --> 00:18:52,020
+ which kind of makes sense
+
+470
+00:18:52,020 --> 00:18:54,030
+ because the smoother it is
+
+471
+00:18:54,030 --> 00:18:55,760
+ the fewer edges there are to be found
+
+472
+00:18:56,140 --> 00:19:00,550
+but that's all something that we're going to dig into a little bit more in detail in the next lecture
+
+473
+00:19:00,770 --> 00:19:01,490
+before then
+
+474
+00:19:01,490 --> 00:19:04,070
+ I would encourage you to start thinking about how this might work
+
+475
+00:19:04,370 --> 00:19:06,800
+ How is it that you figure out what the edges are
+
+476
+00:19:06,800 --> 00:19:08,570
+ especially if it's in a noisy environment
+
+477
+00:19:08,570 --> 00:19:10,630
+ what can we do to try to overcome that noise
+
+478
+00:19:10,810 --> 00:19:11,080
+and again
+
+479
+00:19:11,080 --> 00:19:14,560
+ edge detection is actually quite useful in a lot of scientific applications
+
+480
+00:19:14,560 --> 00:19:16,330
+ You take a picture of a bunch of cells
+
+481
+00:19:16,330 --> 00:19:18,370
+ and you want to know how many cells there are in there
+
+482
+00:19:18,370 --> 00:19:20,590
+ and you want to do that in kind of an automated way
+
+483
+00:19:20,590 --> 00:19:22,930
+ A classic first step would be to detect the edges
+
+484
+00:19:22,930 --> 00:19:24,520
+ to make it a simpler image
+
+485
+00:19:25,470 --> 00:19:26,520
+as we move forward
+
+486
+00:19:26,520 --> 00:19:29,220
+ we're going to start doing some more sophisticated things with these
+
+487
+00:19:29,220 --> 00:19:30,690
+ and it's going to get good
+
+488
+00:19:30,690 --> 00:19:32,590
+ I think you're going to enjoy where we're going with this
+
