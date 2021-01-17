@@ -10,7 +10,7 @@ MIT 18.S191 / Fall 2020课程 Introduction to Computational Thinking（[课程�
 
 可以JuliaCN的私信里面戳我
 
-已经在Julia Slack中确认了本项目没有版权的Issue
+已经在Julia Slack中确认了本项目在版权方面没有问题。
 
 # 推荐的工具链
 - Youtube下载工具，略
