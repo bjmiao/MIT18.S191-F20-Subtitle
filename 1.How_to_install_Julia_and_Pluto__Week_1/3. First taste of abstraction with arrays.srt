@@ -1,0 +1,756 @@
+﻿1
+00:00:00,240 --> 00:00:02,119
+alan edelman and philip the corgi and
+
+2
+00:00:02,319 --> 00:00:03,495
+we're here to talk to you
+
+3
+00:00:03,520 --> 00:00:06,519
+about abstraction abstraction has an
+
+4
+00:00:06,719 --> 00:00:08,600
+opposite specialization
+
+5
+00:00:08,800 --> 00:00:10,600
+it's all about what's the same and
+
+6
+00:00:10,800 --> 00:00:13,000
+what's different for different
+
+7
+00:00:13,199 --> 00:00:16,999
+kinds of things different
+types of elements so
+
+8
+00:00:17,199 --> 00:00:20,440
+let's get the idea by let's
+
+9
+00:00:20,640 --> 00:00:23,480
+put i'll call it element
+just an arbitrary name
+
+10
+00:00:23,679 --> 00:00:26,919
+let me say element is equal to one okay
+
+11
+00:00:27,118 --> 00:00:29,159
+and let's go ahead and put this element
+
+12
+00:00:29,359 --> 00:00:30,839
+in an array let's
+
+13
+00:00:31,039 --> 00:00:33,959
+fill up oh i don't know let's fill up
+
+14
+00:00:34,159 --> 00:00:37,878
+an array with three
+rows and four columns
+
+15
+00:00:38,079 --> 00:00:41,079
+with this element and
+here you see a three by four
+
+16
+00:00:41,280 --> 00:00:44,038
+array or matrix with the number one now
+
+17
+00:00:44,238 --> 00:00:45,559
+let's take a close look you see
+
+18
+00:00:45,759 --> 00:00:47,239
+the information that julia gives back is
+
+19
+00:00:47,439 --> 00:00:49,320
+that it's a three by four array
+
+20
+00:00:49,520 --> 00:00:51,079
+it's the number two says it's two
+
+21
+00:00:51,280 --> 00:00:53,640
+dimensional so one would
+be a vector two would be
+
+22
+00:00:53,840 --> 00:00:55,719
+a matrix perhaps and three would be
+
+23
+00:00:55,920 --> 00:00:57,079
+maybe they call it a tensor or a
+
+24
+00:00:57,280 --> 00:00:58,439
+three-dimensional array
+
+25
+00:00:58,640 --> 00:01:03,158
+and the elements are in
+64s and just to be clear
+
+26
+00:01:03,359 --> 00:01:06,200
+if i take the type of the element
+
+27
+00:01:06,400 --> 00:01:08,439
+that's the julia command it'll tell you
+
+28
+00:01:08,640 --> 00:01:09,399
+that it's an int
+
+29
+00:01:09,599 --> 00:01:12,599
+64. now we can go ahead and change
+
+30
+00:01:12,799 --> 00:01:17,238
+things for example we
+could make the element 1.0
+
+31
+00:01:17,438 --> 00:01:20,840
+okay and now look i've got a 3x4 array
+
+32
+00:01:21,040 --> 00:01:24,278
+of floats 64s now so that 1.0
+
+33
+00:01:24,478 --> 00:01:26,039
+is a float type it's a two-dimensional
+
+34
+00:01:26,239 --> 00:01:28,599
+array still but it's filled with floats
+
+35
+00:01:28,799 --> 00:01:32,519
+maybe we should kind of um keep track
+
+36
+00:01:32,719 --> 00:01:36,439
+of the numbers that we're putting in so
+
+37
+00:01:36,640 --> 00:01:38,278
+let's or at least how about we keep
+
+38
+00:01:38,478 --> 00:01:39,480
+track of the types
+
+39
+00:01:39,680 --> 00:01:43,079
+so the type of one the type of 1.0
+
+40
+00:01:43,280 --> 00:01:47,000
+let's put this itself into an array
+
+41
+00:01:47,200 --> 00:01:49,399
+and you could see here oh let's make it
+
+42
+00:01:49,599 --> 00:01:50,840
+actually a vector i'll put a comma and
+
+43
+00:01:51,040 --> 00:01:52,519
+it'll make it a vector
+
+44
+00:01:52,719 --> 00:01:56,039
+okay and you can see here that
+
+45
+00:01:56,239 --> 00:01:59,558
+we have an int64 and a float 64.
+
+46
+00:01:59,759 --> 00:02:01,000
+and if you wanted to know what is the
+
+47
+00:02:01,200 --> 00:02:02,679
+type of keep track
+
+48
+00:02:02,879 --> 00:02:04,039
+since it's displayed a little bit
+
+49
+00:02:04,239 --> 00:02:07,159
+differently you could
+see that the internal
+
+50
+00:02:07,359 --> 00:02:09,000
+julia is that it's an array it's one
+
+51
+00:02:09,199 --> 00:02:11,240
+dimensional and the elements are
+
+52
+00:02:11,439 --> 00:02:14,600
+datatypes so let's
+go a little bit further
+
+53
+00:02:14,800 --> 00:02:17,080
+and change the element to a string let's
+
+54
+00:02:17,280 --> 00:02:18,039
+take the string
+
+55
+00:02:18,239 --> 00:02:22,759
+for one okay and my
+assistant looks like he has to
+
+56
+00:02:22,959 --> 00:02:26,679
+go somewhere all right so now we have
+
+57
+00:02:26,878 --> 00:02:29,080
+this is this is the type of the element
+
+58
+00:02:29,280 --> 00:02:30,439
+as a string
+
+59
+00:02:30,639 --> 00:02:34,200
+and we have a three by
+four array of the string
+
+60
+00:02:34,400 --> 00:02:37,640
+one so let's add that
+as well to our vector
+
+61
+00:02:37,840 --> 00:02:39,800
+just so that we could keep track so you
+
+62
+00:02:40,000 --> 00:02:47,160
+see we have integers we
+have we have floats and we
+
+63
+00:02:47,360 --> 00:02:52,280
+have strings and the
+whole idea is that
+
+64
+00:02:52,479 --> 00:02:54,439
+a computer language shouldn't require
+
+65
+00:02:54,639 --> 00:02:56,439
+any difference between these different
+
+66
+00:02:56,639 --> 00:02:58,039
+data types here i'll show you another
+
+67
+00:02:58,239 --> 00:03:01,399
+one let's use a rational
+number so we can go
+
+68
+00:03:01,598 --> 00:03:05,480
+uh 1 divided by one
+is two slashes and julia
+
+69
+00:03:05,680 --> 00:03:06,920
+so that's our element and here's the
+
+70
+00:03:07,120 --> 00:03:08,920
+three by four array of
+
+71
+00:03:09,120 --> 00:03:10,840
+and this may be a little bit interesting
+
+72
+00:03:11,039 --> 00:03:13,399
+it's still the number
+two it's two dimensional
+
+73
+00:03:13,598 --> 00:03:15,640
+but it consists of rationals that are
+
+74
+00:03:15,840 --> 00:03:18,039
+themselves made of int64s and so
+
+75
+00:03:18,239 --> 00:03:21,080
+this is a type that's
+made up of other types
+
+76
+00:03:21,280 --> 00:03:24,039
+a composite type if you will a rational
+
+77
+00:03:24,239 --> 00:03:25,880
+made up of int64s
+
+78
+00:03:26,080 --> 00:03:28,360
+okay so let's put that one in here too
+
+79
+00:03:28,560 --> 00:03:29,640
+and you see we get type
+
+80
+00:03:29,840 --> 00:03:33,480
+of one and we'll add
+that to our list as well
+
+81
+00:03:33,680 --> 00:03:35,640
+okay so we have ins float strings
+
+82
+00:03:35,840 --> 00:03:38,039
+rational now let me stand back a second
+
+83
+00:03:38,239 --> 00:03:41,480
+and point out that at some level
+
+84
+00:03:41,680 --> 00:03:43,719
+to you these might all be the number one
+
+85
+00:03:43,919 --> 00:03:45,480
+right in some representation
+
+86
+00:03:45,680 --> 00:03:48,679
+there's one 1.0 the string one
+
+87
+00:03:48,878 --> 00:03:51,959
+one slash one you could
+even think of one in
+
+88
+00:03:52,158 --> 00:03:55,319
+different human languages
+like uno in spanish
+
+89
+00:03:55,519 --> 00:03:58,280
+or um the way one writes one with like
+
+90
+00:03:58,479 --> 00:04:00,439
+to me it looks like a dash in chinese
+
+91
+00:04:00,639 --> 00:04:01,959
+right and so all of these are
+
+92
+00:04:02,158 --> 00:04:05,959
+representations of the
+abstract notion of one
+
+93
+00:04:06,158 --> 00:04:08,920
+on a computer of course uh concretely
+
+94
+00:04:09,120 --> 00:04:10,840
+every one of these is represented
+
+95
+00:04:11,039 --> 00:04:12,759
+in a different way somehow even if we
+
+96
+00:04:12,959 --> 00:04:14,280
+think of it all as one
+
+97
+00:04:14,479 --> 00:04:15,719
+we could go a little further we can
+
+98
+00:04:15,919 --> 00:04:18,120
+actually go looking for a picture of the
+
+99
+00:04:18,319 --> 00:04:20,278
+number now i'm gonna
+look for some images
+
+100
+00:04:20,478 --> 00:04:23,960
+of one and them look
+nice oh this one's fun
+
+101
+00:04:24,160 --> 00:04:29,840
+here's a cute number one download
+
+102
+00:04:29,918 --> 00:04:33,639
+this uh yeah i just got the url i don't
+
+103
+00:04:33,839 --> 00:04:36,759
+have to really look
+at it the the the pkg.add
+
+104
+00:04:36,959 --> 00:04:39,079
+only needed to happen once so it's
+
+105
+00:04:39,279 --> 00:04:41,718
+actually tempting to put a comment here
+
+106
+00:04:41,918 --> 00:04:44,199
+and a comment here
+
+107
+00:04:44,399 --> 00:04:46,278
+okay but we do need to load the images
+
+108
+00:04:46,478 --> 00:04:48,520
+package there it is we've got it
+
+109
+00:04:48,720 --> 00:04:51,160
+so now this should work there we go and
+
+110
+00:04:51,360 --> 00:04:52,680
+there's that cute little picture of a
+
+111
+00:04:52,879 --> 00:04:54,278
+one how do you like that
+
+112
+00:04:54,478 --> 00:04:57,960
+okay and let's while we're at it let's
+
+113
+00:04:58,160 --> 00:05:02,120
+um what should we call
+it should we call it a uh
+
+114
+00:05:02,319 --> 00:05:05,319
+how about a cute acute one
+
+115
+00:05:05,519 --> 00:05:07,240
+all right it's a cute_one image so we'll
+
+116
+00:05:07,439 --> 00:05:08,999
+just store it in cute_one
+
+117
+00:05:09,199 --> 00:05:11,800
+and so now what we can do is and this is
+
+118
+00:05:12,000 --> 00:05:15,400
+kind of fun i can go
+ahead and edit this and call
+
+119
+00:05:15,600 --> 00:05:17,559
+this a cute one you see
+
+120
+00:05:17,759 --> 00:05:20,520
+and you'll see that i now have a three
+
+121
+00:05:20,720 --> 00:05:22,759
+by four array of images
+
+122
+00:05:22,959 --> 00:05:26,759
+isn't that nice now uh so you see
+
+123
+00:05:26,959 --> 00:05:29,400
+just by changing the type it it goes and
+
+124
+00:05:29,600 --> 00:05:31,079
+does something a little bit
+
+125
+00:05:31,279 --> 00:05:33,240
+different but a little bit the same and
+
+126
+00:05:33,439 --> 00:05:34,520
+imagine what would happen
+
+127
+00:05:34,720 --> 00:05:37,800
+if my element itself was an array so for
+
+128
+00:05:38,000 --> 00:05:41,319
+example suppose my
+element was the array one
+
+129
+00:05:41,519 --> 00:05:45,319
+two three four what's
+going to happen now
+
+130
+00:05:45,519 --> 00:05:47,240
+well let's think about that for a moment
+
+131
+00:05:47,439 --> 00:05:48,838
+so my elements one two three
+
+132
+00:05:49,038 --> 00:05:52,838
+four and so now i
+have an array of arrays
+
+133
+00:05:53,038 --> 00:05:55,960
+and you can see how the
+nesting is sort of logical
+
+134
+00:05:56,160 --> 00:05:58,520
+uh the it's a two-dimensional array
+
+135
+00:05:58,720 --> 00:06:00,360
+whose elements themselves
+
+136
+00:06:00,560 --> 00:06:02,520
+are two-dimensional arrays whose
+
+137
+00:06:02,720 --> 00:06:04,199
+elements themselves are
+
+138
+00:06:04,399 --> 00:06:06,999
+int64. they're integers so it displays
+
+139
+00:06:07,199 --> 00:06:08,680
+it in a sort of compact format you might
+
+140
+00:06:08,879 --> 00:06:10,520
+like that or you may not
+
+141
+00:06:10,720 --> 00:06:13,639
+but you can see that
+the elements are arrays of
+
+142
+00:06:13,839 --> 00:06:17,079
+int64s so it kind of makes sense
+
+143
+00:06:17,279 --> 00:06:19,559
+that we could actually add that as well
+
+144
+00:06:19,759 --> 00:06:21,319
+so if i have the type
+
+145
+00:06:21,519 --> 00:06:25,160
+of and i put in the one two three
+
+146
+00:06:25,360 --> 00:06:29,240
+four you'll see that
+
+147
+00:06:29,439 --> 00:06:33,400
+i now have arrays as element types
+
+148
+00:06:33,600 --> 00:06:36,759
+all right let's go further
+now and make an array
+
+149
+00:06:36,959 --> 00:06:41,718
+of this cute uh what's
+it called cute one
+
+150
+00:06:41,918 --> 00:06:44,600
+and let that be the element and let's
+
+151
+00:06:44,800 --> 00:06:46,360
+take a closer look we have my
+
+152
+00:06:46,560 --> 00:06:50,199
+three by four array of these images
+
+153
+00:06:50,399 --> 00:06:53,718
+and let's take a look
+the type of the element
+
+154
+00:06:53,918 --> 00:06:56,838
+is itself an array of colors
+
+155
+00:06:57,038 --> 00:06:59,879
+so let's get this straight we have an
+
+156
+00:07:00,079 --> 00:07:03,639
+array of images what's an image an image
+
+157
+00:07:03,839 --> 00:07:05,160
+is an array of colors
+
+158
+00:07:05,360 --> 00:07:08,520
+so it's an array of an array of colors
+
+159
+00:07:08,720 --> 00:07:10,920
+right a color by the way is itself a
+
+160
+00:07:11,120 --> 00:07:12,199
+composite type
+
+161
+00:07:12,399 --> 00:07:15,480
+it's in rgba red green blue alpha alpha
+
+162
+00:07:15,680 --> 00:07:17,240
+being the opacity
+
+163
+00:07:17,439 --> 00:07:19,319
+of some unsigned integers that are norms
+
+164
+00:07:19,519 --> 00:07:22,999
+in some way you see and
+so i'd like to sum this up
+
+165
+00:07:23,199 --> 00:07:26,920
+by saying that the
+notion of an array
+
+166
+00:07:27,120 --> 00:07:30,199
+is a container it's a
+container that contains
+
+167
+00:07:30,399 --> 00:07:32,119
+elements and the elements could be of
+
+168
+00:07:32,319 --> 00:07:33,800
+many very different types
+
+169
+00:07:34,000 --> 00:07:35,800
+and soon we're going to see that one can
+
+170
+00:07:36,000 --> 00:07:36,838
+write functions
+
+171
+00:07:37,038 --> 00:07:39,879
+on arrays and if all goes well these
+
+172
+00:07:40,079 --> 00:07:41,319
+functions should be
+
+173
+00:07:41,519 --> 00:07:43,319
+independent of the type of the element
+
+174
+00:07:43,519 --> 00:07:45,639
+in other words if you
+wanted to move things around
+
+175
+00:07:45,839 --> 00:07:47,879
+or you wanted to manipulate an array it
+
+176
+00:07:48,079 --> 00:07:48,999
+shouldn't care
+
+177
+00:07:49,199 --> 00:07:51,399
+about the type of the element as long as
+
+178
+00:07:51,598 --> 00:07:53,879
+it makes sense so now
+you have the notion of
+
+179
+00:07:54,079 --> 00:07:59,079
+abstraction
+
