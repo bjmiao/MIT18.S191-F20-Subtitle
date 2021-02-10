@@ -6,6 +6,10 @@ MIT 18.S191 / Fall 2020课程 Introduction to Computational Thinking（[课程�
 
 欢迎PR（本人英语渣渣），校对/时间轴/听译/油管视频下载
 
+所有TODO_subtitle里面的字幕都是待校对和翻译的。
+
+目前进度：1.3
+
 项目长期招人（不然大概率烂尾）
 
 可以JuliaCN的私信里面戳我

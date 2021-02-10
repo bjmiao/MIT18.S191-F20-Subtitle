@@ -1,0 +1,3824 @@
+﻿1
+00:00:01,520 --> 00:00:03,238
+hi it's alan edelman
+
+2
+00:00:03,439 --> 00:00:06,359
+and philip the corgi and this lecture is
+
+3
+00:00:06,559 --> 00:00:09,960
+about structure so to give the idea
+
+4
+00:00:10,160 --> 00:00:11,080
+let's talk about
+
+5
+00:00:11,279 --> 00:00:13,800
+matrices you all know about matrices
+
+6
+00:00:14,000 --> 00:00:15,399
+they're pretty simple objects
+
+7
+00:00:15,599 --> 00:00:18,679
+they're just m by n tables of numbers
+
+8
+00:00:18,879 --> 00:00:21,720
+right well no not exactly
+
+9
+00:00:21,920 --> 00:00:25,079
+wrong well maybe right so the surprise
+
+10
+00:00:25,278 --> 00:00:28,280
+answer really is matrices are not
+
+11
+00:00:28,480 --> 00:00:29,239
+necessarily
+
+12
+00:00:29,439 --> 00:00:31,318
+m by n tables of numbers well you can
+
+13
+00:00:31,518 --> 00:00:32,358
+always think of them as
+
+14
+00:00:32,558 --> 00:00:34,599
+m by n tables of numbers but that
+
+15
+00:00:34,799 --> 00:00:36,919
+doesn't mean you have to store
+
+16
+00:00:37,119 --> 00:00:39,159
+m times n numbers on your computer to
+
+17
+00:00:39,359 --> 00:00:40,678
+represent a matrix
+
+18
+00:00:40,878 --> 00:00:42,198
+so in this lecture we'll talk about
+
+19
+00:00:42,399 --> 00:00:43,799
+matrix structures and how
+
+20
+00:00:44,000 --> 00:00:46,358
+we might save storage often using far
+
+21
+00:00:46,558 --> 00:00:48,119
+less than the m by n numbers
+
+22
+00:00:48,320 --> 00:00:49,878
+that you might often think of as
+
+23
+00:00:50,079 --> 00:00:52,038
+required to represent a matrix
+
+24
+00:00:52,238 --> 00:00:55,559
+so the bigger message here is
+
+25
+00:00:55,759 --> 00:00:58,279
+take advantage of structure always take
+
+26
+00:00:58,479 --> 00:00:59,799
+advantage of structure
+
+27
+00:01:00,000 --> 00:01:01,079
+in this lecture we're going to take
+
+28
+00:01:01,280 --> 00:01:03,158
+advantage of structure primarily for
+
+29
+00:01:03,359 --> 00:01:04,840
+saving storage
+
+30
+00:01:05,040 --> 00:01:07,159
+but we can also take advantage of
+
+31
+00:01:07,359 --> 00:01:08,359
+structure and maybe we'll see this in
+
+32
+00:01:08,560 --> 00:01:10,359
+future lectures or you might see this in
+
+33
+00:01:10,560 --> 00:01:12,840
+future classes you can take advantage of
+
+34
+00:01:13,040 --> 00:01:15,000
+structure to save time as well
+
+35
+00:01:15,200 --> 00:01:17,719
+in fact most of the best algorithms and
+
+36
+00:01:17,920 --> 00:01:18,759
+most of the best
+
+37
+00:01:18,959 --> 00:01:21,558
+uh computational thinking is about
+
+38
+00:01:21,759 --> 00:01:23,399
+taking advantage of the structural
+
+39
+00:01:23,599 --> 00:01:24,519
+problem
+
+40
+00:01:24,719 --> 00:01:28,200
+so in julia it's often possible we see
+
+41
+00:01:28,400 --> 00:01:29,878
+this more often than you think
+
+42
+00:01:30,078 --> 00:01:31,558
+that the structure can be taken
+
+43
+00:01:31,759 --> 00:01:33,159
+advantage of and
+
+44
+00:01:33,359 --> 00:01:35,799
+the good news about using julia is
+
+45
+00:01:36,000 --> 00:01:36,439
+there's no
+
+46
+00:01:36,640 --> 00:01:38,599
+overhead to using structure in fact you
+
+47
+00:01:38,799 --> 00:01:40,918
+should it's absolutely recommended other
+
+48
+00:01:41,118 --> 00:01:42,519
+dynamic languages might
+
+49
+00:01:42,719 --> 00:01:45,399
+incur some cost but with julia it's
+
+50
+00:01:45,599 --> 00:01:47,159
+absolutely perfectly reasonable
+
+51
+00:01:47,359 --> 00:01:50,359
+and often done to represent the
+
+52
+00:01:50,560 --> 00:01:51,959
+structure go ahead and do it it is
+
+53
+00:01:52,159 --> 00:01:53,399
+highly streamlined
+
+54
+00:01:53,599 --> 00:01:56,119
+so what am i talking about let me kind
+
+55
+00:01:56,319 --> 00:01:56,679
+of
+
+56
+00:01:56,879 --> 00:01:59,640
+give you the idea by starting with a
+
+57
+00:01:59,840 --> 00:02:01,640
+vector that shows up in machine learning
+
+58
+00:02:01,840 --> 00:02:02,679
+it also shows up
+
+59
+00:02:02,879 --> 00:02:05,719
+in linear algebra in linear algebra it
+
+60
+00:02:05,920 --> 00:02:07,000
+might be called the column of
+
+61
+00:02:07,200 --> 00:02:09,479
+the identity matrix in machine learning
+
+62
+00:02:09,679 --> 00:02:11,080
+it's called the one hop vector
+
+63
+00:02:11,280 --> 00:02:14,600
+and it's simply this it's a vector that
+
+64
+00:02:14,800 --> 00:02:17,399
+is all zeros except for one entry that's
+
+65
+00:02:17,598 --> 00:02:18,039
+one
+
+66
+00:02:18,239 --> 00:02:20,360
+for example this vector over here has
+
+67
+00:02:20,560 --> 00:02:21,560
+length six
+
+68
+00:02:21,759 --> 00:02:23,240
+and the second entry is a one the other
+
+69
+00:02:23,439 --> 00:02:25,560
+entries are zeros so the one
+
+70
+00:02:25,759 --> 00:02:28,439
+is the one hot the one is hot the zero
+
+71
+00:02:28,639 --> 00:02:29,800
+is cold you see
+
+72
+00:02:30,000 --> 00:02:31,480
+so this is a one hot vector of length
+
+73
+00:02:31,680 --> 00:02:33,800
+six with the
+
+74
+00:02:34,000 --> 00:02:37,560
+with the hot element being number two so
+
+75
+00:02:37,759 --> 00:02:41,160
+if you look at this you'll say well okay
+
+76
+00:02:41,360 --> 00:02:45,120
+there are six numbers here
+
+77
+00:02:45,840 --> 00:02:49,280
+there are six numbers here
+
+78
+00:02:49,519 --> 00:02:51,960
+but maybe i don't really need to store
+
+79
+00:02:52,159 --> 00:02:53,719
+six numbers
+
+80
+00:02:53,919 --> 00:02:55,800
+maybe i can just somehow store two
+
+81
+00:02:56,000 --> 00:02:56,920
+numbers
+
+82
+00:02:57,120 --> 00:02:58,439
+and you'd be right if you thought about
+
+83
+00:02:58,639 --> 00:03:00,280
+it that way so
+
+84
+00:03:00,479 --> 00:03:02,600
+you can have just the number six which
+
+85
+00:03:02,800 --> 00:03:03,880
+is the length
+
+86
+00:03:04,080 --> 00:03:07,080
+and the number two which is the element
+
+87
+00:03:07,280 --> 00:03:08,118
+that's hot
+
+88
+00:03:08,318 --> 00:03:09,719
+and somehow the number six and the
+
+89
+00:03:09,919 --> 00:03:12,039
+number two should be able to represent
+
+90
+00:03:12,239 --> 00:03:13,719
+that same
+
+91
+00:03:13,919 --> 00:03:16,039
+object that in your mind is link six
+
+92
+00:03:16,239 --> 00:03:17,160
+okay you don't
+
+93
+00:03:17,360 --> 00:03:20,039
+need to store six numbers to have in
+
+94
+00:03:20,239 --> 00:03:21,959
+your mind the abstraction of something
+
+95
+00:03:22,158 --> 00:03:24,920
+that has length six and by the way this
+
+96
+00:03:25,120 --> 00:03:25,719
+is not
+
+97
+00:03:25,919 --> 00:03:29,399
+about just deleting zeros i mean just to
+
+98
+00:03:29,598 --> 00:03:31,319
+we could also talk about a one cold
+
+99
+00:03:31,519 --> 00:03:32,439
+vector so
+
+100
+00:03:32,639 --> 00:03:35,080
+the the corresponding notion is a vector
+
+101
+00:03:35,280 --> 00:03:36,200
+that's all ones
+
+102
+00:03:36,400 --> 00:03:38,439
+except for one entry that's cold right
+
+103
+00:03:38,639 --> 00:03:40,118
+and so again
+
+104
+00:03:40,318 --> 00:03:42,920
+you could represent one cold vectors but
+
+105
+00:03:43,120 --> 00:03:43,959
+with the numbers six
+
+106
+00:03:44,158 --> 00:03:46,679
+and two if you have a context that it's
+
+107
+00:03:46,878 --> 00:03:47,719
+one cold
+
+108
+00:03:47,919 --> 00:03:49,560
+so you don't have to store all those
+
+109
+00:03:49,759 --> 00:03:51,560
+ones you just need the six and the two
+
+110
+00:03:51,759 --> 00:03:53,480
+you don't need any zeros or any ones
+
+111
+00:03:53,680 --> 00:03:55,800
+just the six and the two and context to
+
+112
+00:03:56,000 --> 00:03:57,000
+say that this is a one
+
+113
+00:03:57,199 --> 00:04:00,039
+cold vector that's how we build
+
+114
+00:04:00,239 --> 00:04:02,599
+a one hot object in julia using just two
+
+115
+00:04:02,799 --> 00:04:03,719
+numbers
+
+116
+00:04:03,919 --> 00:04:06,840
+so a julia type is created with the word
+
+117
+00:04:07,039 --> 00:04:07,959
+struct
+
+118
+00:04:08,158 --> 00:04:10,360
+it's going to be built from two numbers
+
+119
+00:04:10,560 --> 00:04:11,399
+n and k
+
+120
+00:04:11,598 --> 00:04:12,679
+that's all that's really going to be in
+
+121
+00:04:12,878 --> 00:04:14,759
+there is the n and the k and
+
+122
+00:04:14,959 --> 00:04:16,360
+here there's a little bit of punctuation
+
+123
+00:04:16,560 --> 00:04:18,038
+in this lesson colon
+
+124
+00:04:18,238 --> 00:04:19,960
+what does that mean julia's full fill
+
+125
+00:04:20,160 --> 00:04:21,559
+with all this kind of punctuation
+
+126
+00:04:21,759 --> 00:04:23,639
+this says that one hat is going to be a
+
+127
+00:04:23,839 --> 00:04:24,840
+subtype
+
+128
+00:04:25,040 --> 00:04:27,960
+of an abstract vector of integers
+
+129
+00:04:28,160 --> 00:04:31,160
+so in simple english we want the one hat
+
+130
+00:04:31,360 --> 00:04:33,400
+to pretend to be an ordinary vector
+
+131
+00:04:33,600 --> 00:04:35,879
+even though we're going to store it with
+
+132
+00:04:36,079 --> 00:04:36,600
+a lot
+
+133
+00:04:36,800 --> 00:04:38,600
+less information wasting a whole lot
+
+134
+00:04:38,800 --> 00:04:40,840
+less storage so we're going to pretend
+
+135
+00:04:41,040 --> 00:04:43,319
+that a one hot is a vector of integers
+
+136
+00:04:43,519 --> 00:04:45,879
+but in fact it's going to be a one hat
+
+137
+00:04:46,079 --> 00:04:49,160
+okay so to
+
+138
+00:04:49,360 --> 00:04:51,160
+create something that has the pretense
+
+139
+00:04:51,360 --> 00:04:52,920
+you actually need to only define
+
+140
+00:04:53,120 --> 00:04:56,040
+two functions we need to get the size of
+
+141
+00:04:56,240 --> 00:04:57,639
+a one hot object
+
+142
+00:04:57,839 --> 00:05:00,838
+so the size will be the end field of
+
+143
+00:05:01,038 --> 00:05:02,680
+the one-half object and it's put into a
+
+144
+00:05:02,879 --> 00:05:04,199
+tuple of length one
+
+145
+00:05:04,399 --> 00:05:05,960
+because size is always meant to be a
+
+146
+00:05:06,160 --> 00:05:08,680
+tuple and
+
+147
+00:05:08,879 --> 00:05:10,838
+let's talk about what should happen when
+
+148
+00:05:11,038 --> 00:05:11,718
+we type
+
+149
+00:05:11,918 --> 00:05:15,319
+x of i well when we type x of i
+
+150
+00:05:15,519 --> 00:05:19,559
+we should simply check whether the
+
+151
+00:05:19,759 --> 00:05:21,559
+we we only have to check whether the hot
+
+152
+00:05:21,759 --> 00:05:22,999
+element is equal to i
+
+153
+00:05:23,199 --> 00:05:25,240
+and so that's exactly what happens here
+
+154
+00:05:25,439 --> 00:05:26,120
+right we just
+
+155
+00:05:26,319 --> 00:05:30,040
+check if it equals i okay and so if
+
+156
+00:05:30,240 --> 00:05:33,240
+i were to create a one hot of six comma
+
+157
+00:05:33,439 --> 00:05:33,718
+two
+
+158
+00:05:33,918 --> 00:05:37,160
+as i do here you could see that my one
+
+159
+00:05:37,360 --> 00:05:38,278
+hot vector
+
+160
+00:05:38,478 --> 00:05:41,400
+looks just like i
+
+161
+00:05:41,600 --> 00:05:44,759
+it looks just as if i had typed zero one
+
+162
+00:05:44,959 --> 00:05:45,240
+zero
+
+163
+00:05:45,439 --> 00:05:48,040
+zero zero zero it right that's all you
+
+164
+00:05:48,240 --> 00:05:48,999
+see i can
+
+165
+00:05:49,199 --> 00:05:50,920
+kind of make it vertical or horizontal
+
+166
+00:05:51,120 --> 00:05:52,199
+but either way
+
+167
+00:05:52,399 --> 00:05:55,718
+it is the one hot vector like this now
+
+168
+00:05:55,918 --> 00:05:58,838
+on the next cell i do a dump of my one
+
+169
+00:05:59,038 --> 00:06:01,400
+hot vector this lets me see inside
+
+170
+00:06:01,600 --> 00:06:03,718
+and of course you could see that the
+
+171
+00:06:03,918 --> 00:06:04,999
+dump shows you
+
+172
+00:06:05,199 --> 00:06:06,520
+that only the two numbers are being
+
+173
+00:06:06,720 --> 00:06:08,119
+stored six and two
+
+174
+00:06:08,319 --> 00:06:10,999
+so don't let the printing fool you well
+
+175
+00:06:11,199 --> 00:06:12,838
+maybe it's meant to fool you it's
+
+176
+00:06:13,038 --> 00:06:14,520
+in your mind you could think of it as a
+
+177
+00:06:14,720 --> 00:06:15,800
+vector of length six right you could
+
+178
+00:06:16,000 --> 00:06:16,999
+think of it as the
+
+179
+00:06:17,199 --> 00:06:19,400
+second column of the identity matrix of
+
+180
+00:06:19,600 --> 00:06:23,280
+a six by six identity matrix
+
+181
+00:06:23,759 --> 00:06:26,999
+but in fact it is
+
+182
+00:06:27,199 --> 00:06:30,199
+just stored with the numbers six and two
+
+183
+00:06:30,399 --> 00:06:33,480
+okay and it might be reasonable just to
+
+184
+00:06:33,680 --> 00:06:34,119
+kind of
+
+185
+00:06:34,319 --> 00:06:37,800
+show off because we we actually use this
+
+186
+00:06:38,000 --> 00:06:40,920
+let's just show you that if
+
+187
+00:06:41,120 --> 00:06:43,400
+i do take here i guess i'll do it here
+
+188
+00:06:43,600 --> 00:06:44,838
+if i do take my
+
+189
+00:06:45,038 --> 00:06:47,879
+my one hot vector
+
+190
+00:06:48,079 --> 00:06:51,639
+of three it for sure gives you a zero
+
+191
+00:06:51,839 --> 00:06:55,279
+why because
+
+192
+00:06:55,519 --> 00:06:58,520
+it says does three equal two the answer
+
+193
+00:06:58,720 --> 00:06:59,319
+is
+
+194
+00:06:59,519 --> 00:07:01,240
+false and it turns the false six with
+
+195
+00:07:01,439 --> 00:07:02,439
+the integer zero
+
+196
+00:07:02,639 --> 00:07:04,278
+on the other hand if i go on my my one
+
+197
+00:07:04,478 --> 00:07:06,278
+have vector of two does two equal two
+
+198
+00:07:06,478 --> 00:07:07,079
+yes true
+
+199
+00:07:07,279 --> 00:07:10,999
+and we get the one uh i kind of like to
+
+200
+00:07:11,199 --> 00:07:11,639
+see
+
+201
+00:07:11,839 --> 00:07:13,718
+these sorts of things um both in
+
+202
+00:07:13,918 --> 00:07:15,399
+vectorial and
+
+203
+00:07:15,598 --> 00:07:17,480
+picture format so i kind of like turning
+
+204
+00:07:17,680 --> 00:07:19,079
+it into an image
+
+205
+00:07:19,279 --> 00:07:21,559
+so a bunch of colors really so here you
+
+206
+00:07:21,759 --> 00:07:24,119
+can see here let's let's play with this
+
+207
+00:07:24,319 --> 00:07:26,838
+as i slide the second slider i want you
+
+208
+00:07:27,038 --> 00:07:27,800
+to look both
+
+209
+00:07:28,000 --> 00:07:29,800
+here let's let's move this up a little
+
+210
+00:07:30,000 --> 00:07:31,639
+i'd like you to look at this vector
+
+211
+00:07:31,839 --> 00:07:34,439
+and as well as the vector of colors and
+
+212
+00:07:34,639 --> 00:07:35,559
+you can see it moving
+
+213
+00:07:35,759 --> 00:07:37,399
+i can make one hot vectors of various
+
+214
+00:07:37,598 --> 00:07:38,999
+different sizes
+
+215
+00:07:39,199 --> 00:07:42,199
+right here here i am of size seven
+
+216
+00:07:42,399 --> 00:07:43,480
+and you could see all the seven
+
+217
+00:07:43,680 --> 00:07:46,520
+possibilities and so forth just for fun
+
+218
+00:07:46,720 --> 00:07:59,240
+okay and i guess i don't need that
+
+219
+00:07:59,439 --> 00:08:01,559
+all right so hopefully you now see the
+
+220
+00:08:01,759 --> 00:08:02,439
+idea
+
+221
+00:08:02,639 --> 00:08:06,040
+that a vector or more generally a matrix
+
+222
+00:08:06,240 --> 00:08:06,520
+or even
+
+223
+00:08:06,720 --> 00:08:09,399
+any array you don't necessarily have to
+
+224
+00:08:09,598 --> 00:08:10,920
+store it as a table
+
+225
+00:08:11,120 --> 00:08:13,319
+to use it as a table so let me show you
+
+226
+00:08:13,519 --> 00:08:14,278
+a couple more
+
+227
+00:08:14,478 --> 00:08:17,319
+examples uh so that to completely firm
+
+228
+00:08:17,519 --> 00:08:18,439
+up the idea
+
+229
+00:08:18,639 --> 00:08:20,759
+and we're going to use this idea to sort
+
+230
+00:08:20,959 --> 00:08:21,718
+of get the
+
+231
+00:08:21,918 --> 00:08:23,559
+key information to be able to compress
+
+232
+00:08:23,759 --> 00:08:26,199
+images at the end of this uh towards the
+
+233
+00:08:26,399 --> 00:08:26,759
+end of this
+
+234
+00:08:26,959 --> 00:08:30,679
+of this lecture so let's talk about
+
+235
+00:08:30,879 --> 00:08:34,039
+diagonal matrices okay so here's a three
+
+236
+00:08:34,240 --> 00:08:36,278
+by three diagonal matrix
+
+237
+00:08:36,479 --> 00:08:37,958
+if you saw diagonal matrices in high
+
+238
+00:08:38,158 --> 00:08:39,240
+school you might have written it out
+
+239
+00:08:39,440 --> 00:08:41,318
+with all the zeros
+
+240
+00:08:41,519 --> 00:08:43,559
+so here's the diagonal matrix 5 6 and
+
+241
+00:08:43,759 --> 00:08:45,159
+-10 are on
+
+242
+00:08:45,360 --> 00:08:47,959
+the diagonal okay so there's your matrix
+
+243
+00:08:48,159 --> 00:08:48,599
+m
+
+244
+00:08:48,799 --> 00:08:51,639
+but here what i'm going to do is tell
+
+245
+00:08:51,839 --> 00:08:52,359
+julia
+
+246
+00:08:52,559 --> 00:08:55,078
+that to convert it to a diagonal matrix
+
+247
+00:08:55,278 --> 00:08:55,799
+you could of course
+
+248
+00:08:56,000 --> 00:08:58,279
+directly create a diagonal matrix of
+
+249
+00:08:58,480 --> 00:08:58,839
+julia
+
+250
+00:08:59,039 --> 00:09:01,240
+but i've created a general matrix and
+
+251
+00:09:01,440 --> 00:09:02,279
+i'm going to
+
+252
+00:09:02,480 --> 00:09:04,599
+now store it as a diagonal maybe it's
+
+253
+00:09:04,799 --> 00:09:06,639
+good to show you that you could have
+
+254
+00:09:06,839 --> 00:09:08,198
+directly built
+
+255
+00:09:08,399 --> 00:09:11,000
+a diagonal matrix with a syntax like
+
+256
+00:09:11,200 --> 00:09:11,719
+this
+
+257
+00:09:11,919 --> 00:09:13,159
+and then of course you never would have
+
+258
+00:09:13,360 --> 00:09:14,758
+wasted memory
+
+259
+00:09:14,958 --> 00:09:16,039
+in the middle in the middle of this
+
+260
+00:09:16,240 --> 00:09:18,198
+operation okay but here you see
+
+261
+00:09:18,399 --> 00:09:21,240
+this is a three by three diagonal infra
+
+262
+00:09:21,440 --> 00:09:22,039
+matrix
+
+263
+00:09:22,240 --> 00:09:24,198
+and as you'd expect the amount of
+
+264
+00:09:24,399 --> 00:09:25,639
+storage is just
+
+265
+00:09:25,839 --> 00:09:29,240
+three numbers not the nine numbers
+
+266
+00:09:29,440 --> 00:09:32,359
+so in fact if you take a look if i dump
+
+267
+00:09:32,559 --> 00:09:34,198
+m you see all nine numbers are being
+
+268
+00:09:34,399 --> 00:09:36,839
+stored but if i dump diagonal of m
+
+269
+00:09:37,039 --> 00:09:39,000
+you could see that the basic information
+
+270
+00:09:39,200 --> 00:09:40,679
+that's being stored are the three
+
+271
+00:09:40,879 --> 00:09:43,360
+elements
+
+272
+00:09:44,080 --> 00:09:48,039
+okay so at the risk of repeating the
+
+273
+00:09:48,240 --> 00:09:49,240
+main message
+
+274
+00:09:49,440 --> 00:09:50,758
+always look for structure where it
+
+275
+00:09:50,958 --> 00:09:53,318
+exists if it comes pre-built in julia
+
+276
+00:09:53,519 --> 00:09:55,078
+like diagonal matrices
+
+277
+00:09:55,278 --> 00:09:57,959
+then use it if this is a structure
+
+278
+00:09:58,159 --> 00:09:58,439
+that's
+
+279
+00:09:58,639 --> 00:10:00,679
+not already readily available in julia
+
+280
+00:10:00,879 --> 00:10:01,719
+build it yourself
+
+281
+00:10:01,919 --> 00:10:03,639
+you don't have to ask for permission
+
+282
+00:10:03,839 --> 00:10:06,279
+that's another main message let's just
+
+283
+00:10:06,480 --> 00:10:08,919
+go ahead and do it i'm now going to talk
+
+284
+00:10:09,120 --> 00:10:10,439
+about another commonly used
+
+285
+00:10:10,639 --> 00:10:13,399
+representation for matrices and that is
+
+286
+00:10:13,600 --> 00:10:14,758
+the so-called sparse matrix
+
+287
+00:10:14,958 --> 00:10:16,039
+representation
+
+288
+00:10:16,240 --> 00:10:18,279
+where we do not store any zeros in the
+
+289
+00:10:18,480 --> 00:10:20,758
+matrix so this could be a data matrix
+
+290
+00:10:20,958 --> 00:10:22,679
+perhaps some of the entries are absent
+
+291
+00:10:22,879 --> 00:10:23,878
+so we think of it as zero
+
+292
+00:10:24,078 --> 00:10:26,439
+and we don't want to store it or it
+
+293
+00:10:26,639 --> 00:10:28,120
+could be a numerical matrix which just
+
+294
+00:10:28,320 --> 00:10:29,878
+happens to have a lot of zeros
+
+295
+00:10:30,078 --> 00:10:31,559
+and you don't feel like there's any
+
+296
+00:10:31,759 --> 00:10:33,159
+great use for storing it
+
+297
+00:10:33,360 --> 00:10:36,599
+so there's the sparse representation and
+
+298
+00:10:36,799 --> 00:10:39,719
+there's going to be two versions of the
+
+299
+00:10:39,919 --> 00:10:41,639
+sparse matrix representation that
+
+300
+00:10:41,839 --> 00:10:44,919
+i'll talk about uh one would be the ij
+
+301
+00:10:45,120 --> 00:10:47,959
+value or i j a i j representation
+
+302
+00:10:48,159 --> 00:10:51,198
+and i'll briefly touch on the so called
+
+303
+00:10:51,399 --> 00:10:54,599
+csc or column sparse compressed
+
+304
+00:10:54,799 --> 00:10:56,198
+format but i think i don't want to go
+
+305
+00:10:56,399 --> 00:10:58,359
+into that too far so
+
+306
+00:10:58,559 --> 00:11:00,919
+first of all here was this diagonal
+
+307
+00:11:01,120 --> 00:11:02,758
+matrix m with the entries 5
+
+308
+00:11:02,958 --> 00:11:05,878
+6 n minus 10. and here
+
+309
+00:11:06,078 --> 00:11:08,279
+is a pretty obvious representation for
+
+310
+00:11:08,480 --> 00:11:09,318
+the matrix
+
+311
+00:11:09,519 --> 00:11:12,359
+it's it has the row and column indices
+
+312
+00:11:12,559 --> 00:11:14,359
+the 1 1 the two two and three three
+
+313
+00:11:14,559 --> 00:11:16,839
+and the value five six minus ten so this
+
+314
+00:11:17,039 --> 00:11:18,120
+is what i'm calling the i j
+
+315
+00:11:18,320 --> 00:11:21,639
+a i j or the uh i j value
+
+316
+00:11:21,839 --> 00:11:23,479
+representation i'd like to briefly show
+
+317
+00:11:23,679 --> 00:11:24,919
+you the csc
+
+318
+00:11:25,120 --> 00:11:27,318
+sparse format it's not the only format
+
+319
+00:11:27,519 --> 00:11:29,799
+though it's a commonly used one
+
+320
+00:11:30,000 --> 00:11:33,078
+the csc stands for column sparse
+
+321
+00:11:33,278 --> 00:11:35,399
+compressed format and i'll show it to
+
+322
+00:11:35,600 --> 00:11:37,000
+you with this matrix with zero eight
+
+323
+00:11:37,200 --> 00:11:38,839
+nine five zero zero twelve
+
+324
+00:11:39,039 --> 00:11:42,279
+zero four so when you uh
+
+325
+00:11:42,480 --> 00:11:43,639
+when you're represented as a sparse
+
+326
+00:11:43,839 --> 00:11:45,878
+matrix julia's first choice is the csc
+
+327
+00:11:46,078 --> 00:11:47,719
+format it's not the only format
+
+328
+00:11:47,919 --> 00:11:50,120
+but some people think that it's a good
+
+329
+00:11:50,320 --> 00:11:52,039
+default choice i think that's arguable
+
+330
+00:11:52,240 --> 00:11:53,479
+as well
+
+331
+00:11:53,679 --> 00:11:57,318
+so here it is if i dump it there are
+
+332
+00:11:57,519 --> 00:11:58,919
+the m and n are easy to understand it's
+
+333
+00:11:59,120 --> 00:12:00,438
+a three by three matrix
+
+334
+00:12:00,639 --> 00:12:02,039
+and let's see the non let's go skip to
+
+335
+00:12:02,240 --> 00:12:04,279
+the bottom the non-zero values
+
+336
+00:12:04,480 --> 00:12:08,359
+are the non-zero values
+
+337
+00:12:08,559 --> 00:12:11,799
+are uh they go this way five they go
+
+338
+00:12:12,000 --> 00:12:13,959
+by columns the hence the column format
+
+339
+00:12:14,159 --> 00:12:14,839
+five twelve
+
+340
+00:12:15,039 --> 00:12:16,919
+eight nine four you see so these are the
+
+341
+00:12:17,120 --> 00:12:18,359
+numbers that are being stored
+
+342
+00:12:18,559 --> 00:12:19,719
+but there's a little bit of overhead
+
+343
+00:12:19,919 --> 00:12:21,719
+because you have to also
+
+344
+00:12:21,919 --> 00:12:23,878
+somehow say where these numbers are
+
+345
+00:12:24,078 --> 00:12:25,878
+located well let's see the row index is
+
+346
+00:12:26,078 --> 00:12:27,000
+easy to understand
+
+347
+00:12:27,200 --> 00:12:29,559
+this is in row two this is in row three
+
+348
+00:12:29,759 --> 00:12:31,479
+this is in row one this is in row one
+
+349
+00:12:31,679 --> 00:12:32,919
+and this is in row three
+
+350
+00:12:33,120 --> 00:12:35,240
+so that's easy to understand the column
+
+351
+00:12:35,440 --> 00:12:36,919
+pointer takes a little bit more getting
+
+352
+00:12:37,120 --> 00:12:37,799
+used to
+
+353
+00:12:38,000 --> 00:12:41,399
+but what's going on is it's going to say
+
+354
+00:12:41,600 --> 00:12:44,519
+which entry starts
+
+355
+00:12:44,720 --> 00:12:47,559
+with the the column in which position
+
+356
+00:12:47,759 --> 00:12:50,519
+let's let me let me give it by example
+
+357
+00:12:50,720 --> 00:12:51,559
+this
+
+358
+00:12:51,759 --> 00:12:54,839
+this one is going to point to the five
+
+359
+00:12:55,039 --> 00:12:57,240
+okay this three is going to point to the
+
+360
+00:12:57,440 --> 00:12:58,198
+eight
+
+361
+00:12:58,399 --> 00:12:59,959
+the four is going to point to the fourth
+
+362
+00:13:00,159 --> 00:13:01,559
+element or the nine
+
+363
+00:13:01,759 --> 00:13:04,438
+and the six is going to point f the six
+
+364
+00:13:04,639 --> 00:13:06,519
+is basically saying we have now
+
+365
+00:13:06,720 --> 00:13:08,758
+at the end so the one pointing to the
+
+366
+00:13:08,958 --> 00:13:09,639
+five
+
+367
+00:13:09,839 --> 00:13:12,120
+says the five is the first entry in the
+
+368
+00:13:12,320 --> 00:13:13,159
+first column
+
+369
+00:13:13,360 --> 00:13:16,198
+the three pointing to the eight says the
+
+370
+00:13:16,399 --> 00:13:19,240
+eight is the first entry in the second
+
+371
+00:13:19,440 --> 00:13:20,679
+column right the 3 is the
+
+372
+00:13:20,879 --> 00:13:23,000
+the second number in the sequence 4 is
+
+373
+00:13:23,200 --> 00:13:24,519
+the third number in the sequence so we
+
+374
+00:13:24,720 --> 00:13:26,599
+count the 4 here we get to 9
+
+375
+00:13:26,799 --> 00:13:29,000
+and 9 is the first entry in the third
+
+376
+00:13:29,200 --> 00:13:29,878
+column
+
+377
+00:13:30,078 --> 00:13:32,919
+okay and then finally 6
+
+378
+00:13:33,120 --> 00:13:36,039
+says we're beyond the end and so we go
+
+379
+00:13:36,240 --> 00:13:37,559
+here and say it's beyond the end there's
+
+380
+00:13:37,759 --> 00:13:38,839
+no fourth column
+
+381
+00:13:39,039 --> 00:13:40,438
+okay so that's kind of what it's
+
+382
+00:13:40,639 --> 00:13:42,039
+signifying so
+
+383
+00:13:42,240 --> 00:13:44,279
+i think what's confusing perhaps to some
+
+384
+00:13:44,480 --> 00:13:45,078
+people
+
+385
+00:13:45,278 --> 00:13:48,679
+is that this three is in the second
+
+386
+00:13:48,879 --> 00:13:49,318
+position
+
+387
+00:13:49,519 --> 00:13:52,679
+here which means that
+
+388
+00:13:52,879 --> 00:13:54,599
+it's going to point to the second column
+
+389
+00:13:54,799 --> 00:13:56,599
+but it's going to take the third entry
+
+390
+00:13:56,799 --> 00:13:59,959
+the 4 is in the third position so the 9
+
+391
+00:14:00,159 --> 00:14:03,159
+corresponds to the fourth column right
+
+392
+00:14:03,360 --> 00:14:06,679
+the i hope that makes
+
+393
+00:14:06,879 --> 00:14:09,278
+sense
+
+394
+00:14:10,480 --> 00:14:12,879
+okay
+
+395
+00:14:15,360 --> 00:14:17,318
+let me kind of talk to another kind of
+
+396
+00:14:17,519 --> 00:14:19,719
+way of compressing information
+
+397
+00:14:19,919 --> 00:14:21,479
+a little bit different from simply not
+
+398
+00:14:21,679 --> 00:14:23,719
+storing numbers this is more about like
+
+399
+00:14:23,919 --> 00:14:26,279
+summarizing numbers okay and we could
+
+400
+00:14:26,480 --> 00:14:27,639
+think a little bit about
+
+401
+00:14:27,839 --> 00:14:29,878
+here's a random vector of the million
+
+402
+00:14:30,078 --> 00:14:30,758
+entries
+
+403
+00:14:30,958 --> 00:14:32,438
+okay a vector will be good enough for
+
+404
+00:14:32,639 --> 00:14:34,519
+this purpose here's a random vector with
+
+405
+00:14:34,720 --> 00:14:35,799
+a million entries
+
+406
+00:14:36,000 --> 00:14:37,318
+the entries are just digits from one
+
+407
+00:14:37,519 --> 00:14:40,198
+through nine and you can ask yourself
+
+408
+00:14:40,399 --> 00:14:42,599
+what do you have to do to convey the
+
+409
+00:14:42,799 --> 00:14:43,878
+important information
+
+410
+00:14:44,078 --> 00:14:45,479
+to somebody else what would you have to
+
+411
+00:14:45,679 --> 00:14:47,799
+communicate what would you have to store
+
+412
+00:14:48,000 --> 00:14:50,998
+well some people might think that since
+
+413
+00:14:51,198 --> 00:14:52,599
+the numbers are random you might have to
+
+414
+00:14:52,799 --> 00:14:53,159
+store
+
+415
+00:14:53,360 --> 00:14:56,359
+all the million numbers some of you
+
+416
+00:14:56,559 --> 00:14:57,559
+might have heard of
+
+417
+00:14:57,759 --> 00:15:00,279
+various ways of compressing the
+
+418
+00:15:00,480 --> 00:15:02,359
+information in a lossless way
+
+419
+00:15:02,559 --> 00:15:06,438
+that means that you can store this
+
+420
+00:15:06,639 --> 00:15:08,919
+there are procedures or algorithms for
+
+421
+00:15:09,120 --> 00:15:10,599
+example run length encoding
+
+422
+00:15:10,799 --> 00:15:12,599
+which will store the same information
+
+423
+00:15:12,799 --> 00:15:14,679
+but with fewer than a million numbers
+
+424
+00:15:14,879 --> 00:15:17,399
+okay but let me go more extreme and talk
+
+425
+00:15:17,600 --> 00:15:18,039
+about
+
+426
+00:15:18,240 --> 00:15:20,919
+statistical information so i'm just
+
+427
+00:15:21,120 --> 00:15:21,318
+going to
+
+428
+00:15:21,519 --> 00:15:23,318
+take the mean and the standard deviation
+
+429
+00:15:23,519 --> 00:15:25,318
+and just for fun pointing out that
+
+430
+00:15:25,519 --> 00:15:26,839
+because these are random numbers i know
+
+431
+00:15:27,039 --> 00:15:29,479
+that the theoretical limiting mean is 5
+
+432
+00:15:29,679 --> 00:15:30,198
+and the
+
+433
+00:15:30,399 --> 00:15:32,120
+square root of 20 thirds is the standard
+
+434
+00:15:32,320 --> 00:15:34,039
+deviation
+
+435
+00:15:34,240 --> 00:15:37,719
+but the main point is that sometimes and
+
+436
+00:15:37,919 --> 00:15:39,558
+again it depends on context
+
+437
+00:15:39,759 --> 00:15:41,240
+the mean and the standard deviation is
+
+438
+00:15:41,440 --> 00:15:42,839
+enough information
+
+439
+00:15:43,039 --> 00:15:44,438
+from this vector you could throw away
+
+440
+00:15:44,639 --> 00:15:47,318
+the million numbers now you might say
+
+441
+00:15:47,519 --> 00:15:49,159
+some people might say throw away a
+
+442
+00:15:49,360 --> 00:15:50,519
+million numbers well i might need it
+
+443
+00:15:50,720 --> 00:15:51,479
+someday
+
+444
+00:15:51,679 --> 00:15:52,839
+well those are the sorts of people that
+
+445
+00:15:53,039 --> 00:15:54,279
+probably have too much clutter in their
+
+446
+00:15:54,480 --> 00:15:55,799
+basement
+
+447
+00:15:56,000 --> 00:15:58,198
+you may need it you may not need it it's
+
+448
+00:15:58,399 --> 00:15:58,839
+up to you
+
+449
+00:15:59,039 --> 00:16:02,039
+it requires judgment good judgment as to
+
+450
+00:16:02,240 --> 00:16:03,078
+whether you need to store the
+
+451
+00:16:03,278 --> 00:16:03,878
+information
+
+452
+00:16:04,078 --> 00:16:06,279
+or if you just need to store the summary
+
+453
+00:16:06,480 --> 00:16:08,120
+okay and just a little bit of julia in
+
+454
+00:16:08,320 --> 00:16:09,318
+case you don't know what a mean is i
+
+455
+00:16:09,519 --> 00:16:10,758
+guess everybody knows it's the sum
+
+456
+00:16:10,958 --> 00:16:12,359
+divided by the length
+
+457
+00:16:12,559 --> 00:16:15,399
+and the variance is the difference of
+
+458
+00:16:15,600 --> 00:16:17,159
+uh the data from the mean squared
+
+459
+00:16:17,360 --> 00:16:18,919
+divided by the length minus one
+
+460
+00:16:19,120 --> 00:16:20,279
+the length minus one always sort of
+
+461
+00:16:20,480 --> 00:16:21,878
+confuses people but there's a simple
+
+462
+00:16:22,078 --> 00:16:22,839
+explanation for it
+
+463
+00:16:23,039 --> 00:16:24,279
+but the funny thing is it doesn't even
+
+464
+00:16:24,480 --> 00:16:26,919
+matter uh very often because as long as
+
+465
+00:16:27,120 --> 00:16:27,558
+your data
+
+466
+00:16:27,759 --> 00:16:29,719
+is you know not of length one two or
+
+467
+00:16:29,919 --> 00:16:31,399
+three it probably doesn't matter too
+
+468
+00:16:31,600 --> 00:16:31,799
+much
+
+469
+00:16:32,000 --> 00:16:34,679
+maybe you know if it's up you know 50 or
+
+470
+00:16:34,879 --> 00:16:37,399
+more i don't think it matters
+
+471
+00:16:37,600 --> 00:16:38,998
+here the the standard deviation by
+
+472
+00:16:39,198 --> 00:16:40,120
+definition is the square root of the
+
+473
+00:16:40,320 --> 00:16:40,839
+variance
+
+474
+00:16:41,039 --> 00:16:42,758
+and so just to show you that we got the
+
+475
+00:16:42,958 --> 00:16:43,959
+same number
+
+476
+00:16:44,159 --> 00:16:46,679
+here that was built in with julia but
+
+477
+00:16:46,879 --> 00:16:47,878
+what i want to do now
+
+478
+00:16:48,078 --> 00:16:50,599
+is move in into another kind of
+
+479
+00:16:50,799 --> 00:16:51,479
+compression
+
+480
+00:16:51,679 --> 00:16:53,318
+a kind of image compression but i'm
+
+481
+00:16:53,519 --> 00:16:54,519
+going to do it with
+
+482
+00:16:54,720 --> 00:16:56,359
+numerical examples and i'm going to
+
+483
+00:16:56,559 --> 00:16:58,120
+start with something
+
+484
+00:16:58,320 --> 00:17:00,438
+that i think you saw in third grade
+
+485
+00:17:00,639 --> 00:17:02,599
+maybe in second grade maybe fourth grade
+
+486
+00:17:02,799 --> 00:17:04,039
+i think you saw it in third grade i saw
+
+487
+00:17:04,240 --> 00:17:06,919
+it in third grade multiplication tables
+
+488
+00:17:07,119 --> 00:17:10,598
+okay so here i hope you all recognize
+
+489
+00:17:10,798 --> 00:17:12,598
+this maybe it brings back memories
+
+490
+00:17:12,798 --> 00:17:14,838
+here's the 10 by 10 multiplication
+
+491
+00:17:15,038 --> 00:17:18,838
+table okay it is simply i take every
+
+492
+00:17:19,038 --> 00:17:21,559
+number i in the i throw and j in the jth
+
+493
+00:17:21,759 --> 00:17:22,838
+column and i multiply i
+
+494
+00:17:23,038 --> 00:17:25,878
+times j and that will give me the
+
+495
+00:17:26,078 --> 00:17:27,319
+multiplication table
+
+496
+00:17:27,519 --> 00:17:30,440
+while i'm at it let me define an outer
+
+497
+00:17:30,640 --> 00:17:32,838
+product this is a linear algebra term
+
+498
+00:17:33,038 --> 00:17:34,119
+but let's just call the outer
+
+499
+00:17:34,319 --> 00:17:37,639
+product where i can take x times y
+
+500
+00:17:37,839 --> 00:17:41,399
+for x in v now i'm going to change this
+
+501
+00:17:41,599 --> 00:17:42,119
+to
+
+502
+00:17:42,319 --> 00:17:44,279
+i like this sort of math notation i hope
+
+503
+00:17:44,480 --> 00:17:46,200
+you like it too it's the same as
+
+504
+00:17:46,400 --> 00:17:49,719
+in but
+
+505
+00:17:49,919 --> 00:17:52,279
+uh for every x and v and every y and w
+
+506
+00:17:52,480 --> 00:17:54,039
+let's just do the multiply this would
+
+507
+00:17:54,240 --> 00:17:55,559
+this would allow us to get general
+
+508
+00:17:55,759 --> 00:17:57,159
+multiplication tables
+
+509
+00:17:57,359 --> 00:18:00,519
+so for example what this lets me do is
+
+510
+00:18:00,720 --> 00:18:02,440
+i can make a little 3x3 multiplication
+
+511
+00:18:02,640 --> 00:18:04,119
+table or i can go
+
+512
+00:18:04,319 --> 00:18:07,159
+as far as maybe
+
+513
+00:18:07,359 --> 00:18:10,279
+a 12 by 12 or
+
+514
+00:18:10,480 --> 00:18:13,599
+even further so
+
+515
+00:18:13,839 --> 00:18:15,799
+our co-professor dave sanders tells me
+
+516
+00:18:16,000 --> 00:18:17,559
+that it's required in great britain
+
+517
+00:18:17,759 --> 00:18:20,279
+not to stop at 10 by 10 but 12 by 12 is
+
+518
+00:18:20,480 --> 00:18:20,759
+the
+
+519
+00:18:20,960 --> 00:18:23,000
+the one that everybody uses in in great
+
+520
+00:18:23,200 --> 00:18:24,838
+britain so here's the 12 by 12
+
+521
+00:18:25,038 --> 00:18:26,039
+multiplication
+
+522
+00:18:26,240 --> 00:18:29,879
+table okay here's another outer product
+
+523
+00:18:30,079 --> 00:18:31,719
+two four six with ten hundred thousand
+
+524
+00:18:31,919 --> 00:18:33,479
+just to show you an example
+
+525
+00:18:33,679 --> 00:18:37,079
+of uh of a generalized multiplication
+
+526
+00:18:37,279 --> 00:18:37,559
+table
+
+527
+00:18:37,759 --> 00:18:39,159
+so you see that in the first row we have
+
+528
+00:18:39,359 --> 00:18:40,919
+two times ten two times a hundred
+
+529
+00:18:41,119 --> 00:18:43,079
+two times a thousand right or four times
+
+530
+00:18:43,279 --> 00:18:44,838
+ten four hundred thousand in the second
+
+531
+00:18:45,038 --> 00:18:45,399
+row
+
+532
+00:18:45,599 --> 00:18:48,598
+and so on okay so
+
+533
+00:18:48,798 --> 00:18:50,440
+if you asked how much information there
+
+534
+00:18:50,640 --> 00:18:52,919
+is in the regular multiplication table
+
+535
+00:18:53,119 --> 00:18:55,240
+well i think you could see that you
+
+536
+00:18:55,440 --> 00:18:56,358
+could store
+
+537
+00:18:56,558 --> 00:18:59,479
+let's make a ten by ten
+
+538
+00:18:59,679 --> 00:19:03,159
+you can store all hundred numbers
+
+539
+00:19:03,359 --> 00:19:06,358
+but you also if you have context all you
+
+540
+00:19:06,558 --> 00:19:07,960
+need is really one number
+
+541
+00:19:08,160 --> 00:19:10,358
+right the one number 10 right or the one
+
+542
+00:19:10,558 --> 00:19:11,319
+number 11
+
+543
+00:19:11,519 --> 00:19:12,838
+and then you just need some context on
+
+544
+00:19:13,038 --> 00:19:15,079
+how to compute it right so
+
+545
+00:19:15,279 --> 00:19:18,598
+i don't need like if i ask you right now
+
+546
+00:19:18,798 --> 00:19:22,440
+okay if i have the billion by billion
+
+547
+00:19:22,640 --> 00:19:23,879
+multiplication table
+
+548
+00:19:24,079 --> 00:19:25,960
+and i ask you for the entry that's in
+
+549
+00:19:26,160 --> 00:19:27,879
+the 5 7 position
+
+550
+00:19:28,079 --> 00:19:30,358
+you could on the fly tell me it's 35
+
+551
+00:19:30,558 --> 00:19:32,200
+right you didn't store all those numbers
+
+552
+00:19:32,400 --> 00:19:33,399
+and look for it
+
+553
+00:19:33,599 --> 00:19:35,319
+right you just know that the 5 7 entry
+
+554
+00:19:35,519 --> 00:19:37,159
+is 35 you can compute what you need when
+
+555
+00:19:37,359 --> 00:19:38,039
+you need it
+
+556
+00:19:38,240 --> 00:19:41,799
+right so you know you can compute it
+
+557
+00:19:42,000 --> 00:19:42,838
+just when you need it
+
+558
+00:19:43,038 --> 00:19:45,000
+right and that's kind of what the point
+
+559
+00:19:45,200 --> 00:19:47,159
+is you just need to know the number k
+
+560
+00:19:47,359 --> 00:19:48,759
+right and then when you pick out an
+
+561
+00:19:48,960 --> 00:19:50,838
+index an element you just need to know
+
+562
+00:19:51,038 --> 00:19:52,039
+the indices
+
+563
+00:19:52,240 --> 00:19:55,319
+okay here is a bit more
+
+564
+00:19:55,519 --> 00:19:56,759
+here's another outer product a
+
+565
+00:19:56,960 --> 00:19:59,479
+multiplication table if you will
+
+566
+00:19:59,679 --> 00:20:01,319
+where i suppose it would be a little
+
+567
+00:20:01,519 --> 00:20:03,479
+harder to see the structure though
+
+568
+00:20:03,679 --> 00:20:05,000
+you might start to notice it if you get
+
+569
+00:20:05,200 --> 00:20:07,000
+good at it for example you might
+
+570
+00:20:07,200 --> 00:20:09,639
+i would say that this number is just
+
+571
+00:20:09,839 --> 00:20:11,000
+about half this number
+
+572
+00:20:11,200 --> 00:20:13,559
+when i look at it so this is about half
+
+573
+00:20:13,759 --> 00:20:16,200
+this is about half oh yes i see
+
+574
+00:20:16,400 --> 00:20:17,879
+this number is just a little more than
+
+575
+00:20:18,079 --> 00:20:19,399
+the first number
+
+576
+00:20:19,599 --> 00:20:20,919
+yep this one's a little more than the
+
+577
+00:20:21,119 --> 00:20:22,838
+one in the top of its column okay
+
+578
+00:20:23,038 --> 00:20:25,479
+yeah i'm starting to see it okay or here
+
+579
+00:20:25,679 --> 00:20:27,879
+if you like you could see a picture
+
+580
+00:20:28,079 --> 00:20:30,200
+of the outer product of in this case of
+
+581
+00:20:30,400 --> 00:20:31,159
+a ten by ten
+
+582
+00:20:31,359 --> 00:20:33,159
+and you start to often get these sort of
+
+583
+00:20:33,359 --> 00:20:34,358
+striped or maybe
+
+584
+00:20:34,558 --> 00:20:36,838
+plaid pictures it's not unusual to sort
+
+585
+00:20:37,038 --> 00:20:37,799
+of see these
+
+586
+00:20:38,000 --> 00:20:40,119
+plaid pictures when you're taking when
+
+587
+00:20:40,319 --> 00:20:40,838
+you kind of
+
+588
+00:20:41,038 --> 00:20:43,479
+show the uh from an image point of view
+
+589
+00:20:43,679 --> 00:20:43,879
+so
+
+590
+00:20:44,079 --> 00:20:45,959
+image is you know from zero to one uses
+
+591
+00:20:46,159 --> 00:20:47,799
+the colors of the rainbow
+
+592
+00:20:48,000 --> 00:20:51,079
+but then you do get to get these sort of
+
+593
+00:20:51,279 --> 00:20:53,879
+uh plaid pictures so can we go the other
+
+594
+00:20:54,079 --> 00:20:54,200
+way
+
+595
+00:20:54,400 --> 00:20:55,399
+if somebody gives me one of these
+
+596
+00:20:55,599 --> 00:20:57,240
+generalized multiplication tables like
+
+597
+00:20:57,440 --> 00:20:58,440
+the array here
+
+598
+00:20:58,640 --> 00:21:02,039
+can i go the other way and
+
+599
+00:21:02,240 --> 00:21:04,440
+can i go the other way and and and get
+
+600
+00:21:04,640 --> 00:21:06,200
+two matrices whose outer product will be
+
+601
+00:21:06,400 --> 00:21:07,479
+what i need
+
+602
+00:21:07,679 --> 00:21:10,358
+okay and the answer is you can and
+
+603
+00:21:10,558 --> 00:21:11,959
+here's a little function
+
+604
+00:21:12,159 --> 00:21:14,680
+that does it i mean the basic math is in
+
+605
+00:21:14,880 --> 00:21:16,039
+three lines
+
+606
+00:21:16,240 --> 00:21:19,240
+you it's very simple really
+
+607
+00:21:19,440 --> 00:21:21,000
+take if the multiplication table you
+
+608
+00:21:21,200 --> 00:21:22,519
+take the first column
+
+609
+00:21:22,720 --> 00:21:24,119
+of your table call it v you take the
+
+610
+00:21:24,319 --> 00:21:26,519
+first row table call it w
+
+611
+00:21:26,720 --> 00:21:28,598
+and most of the time you could just take
+
+612
+00:21:28,798 --> 00:21:29,799
+w divided by v of
+
+613
+00:21:30,000 --> 00:21:33,000
+1 and that'll give the right answer uh
+
+614
+00:21:33,200 --> 00:21:35,559
+if you can't divide by zero and if it
+
+615
+00:21:35,759 --> 00:21:37,639
+was a zero would be all zeros anyway
+
+616
+00:21:37,839 --> 00:21:41,079
+so you can just do a check for that and
+
+617
+00:21:41,279 --> 00:21:44,598
+uh i and i think it it just seems like a
+
+618
+00:21:44,798 --> 00:21:46,279
+good idea to check if
+
+619
+00:21:46,480 --> 00:21:47,959
+uh you actually get something that's
+
+620
+00:21:48,159 --> 00:21:49,959
+approximately equal to your table
+
+621
+00:21:50,159 --> 00:21:51,559
+um otherwise you could tell the user
+
+622
+00:21:51,759 --> 00:21:53,159
+that the input is not a multiplication
+
+623
+00:21:53,359 --> 00:21:53,959
+table
+
+624
+00:21:54,159 --> 00:21:57,079
+and so here for example i took i
+
+625
+00:21:57,279 --> 00:21:58,838
+factored the outer product of one two
+
+626
+00:21:59,038 --> 00:21:59,559
+three two two
+
+627
+00:21:59,759 --> 00:22:02,039
+two and of course i got two four six one
+
+628
+00:22:02,240 --> 00:22:03,000
+one one
+
+629
+00:22:03,200 --> 00:22:04,838
+just showing that there's kind of an
+
+630
+00:22:05,038 --> 00:22:06,358
+arbitrary scaling i mean
+
+631
+00:22:06,558 --> 00:22:09,479
+i could always multiply this by 17 and
+
+632
+00:22:09,679 --> 00:22:11,240
+divide this by 17
+
+633
+00:22:11,440 --> 00:22:12,838
+and i would get the same outer product
+
+634
+00:22:13,038 --> 00:22:14,680
+and so there's a kind of choice to be
+
+635
+00:22:14,880 --> 00:22:15,399
+made
+
+636
+00:22:15,599 --> 00:22:17,240
+right you might think about the fact
+
+637
+00:22:17,440 --> 00:22:18,440
+that
+
+638
+00:22:18,640 --> 00:22:20,200
+any multiplication table then could be
+
+639
+00:22:20,400 --> 00:22:21,959
+represented you might think it could be
+
+640
+00:22:22,159 --> 00:22:22,838
+represented by
+
+641
+00:22:23,038 --> 00:22:25,799
+m plus n numbers but in fact m plus n
+
+642
+00:22:26,000 --> 00:22:27,799
+minus one are sufficient
+
+643
+00:22:28,000 --> 00:22:29,719
+okay here's an example where i try to
+
+644
+00:22:29,919 --> 00:22:31,559
+factor a two by two matrix
+
+645
+00:22:31,759 --> 00:22:33,639
+it's not a multiplication table and my
+
+646
+00:22:33,839 --> 00:22:34,919
+little error message
+
+647
+00:22:35,119 --> 00:22:37,399
+kicked in and said input is not a
+
+648
+00:22:37,599 --> 00:22:38,680
+multiplication table
+
+649
+00:22:38,880 --> 00:22:42,358
+just as desired just as expected okay
+
+650
+00:22:42,558 --> 00:22:45,079
+so a multiplication table can be
+
+651
+00:22:45,279 --> 00:22:46,279
+factored
+
+652
+00:22:46,480 --> 00:22:49,240
+and stored or possibly never even built
+
+653
+00:22:49,440 --> 00:22:50,919
+right you could just store the
+
+654
+00:22:51,119 --> 00:22:52,680
+the factors and that could be good
+
+655
+00:22:52,880 --> 00:22:53,959
+enough and again
+
+656
+00:22:54,159 --> 00:22:56,759
+if i wanted the if i have my v and w and
+
+657
+00:22:56,960 --> 00:22:58,519
+i just want to calculate the i j
+
+658
+00:22:58,720 --> 00:23:01,159
+entry the moment i need it i can compute
+
+659
+00:23:01,359 --> 00:23:01,639
+v i
+
+660
+00:23:01,839 --> 00:23:04,720
+times w j
+
+661
+00:23:04,960 --> 00:23:06,279
+now what can we do with multiplication
+
+662
+00:23:06,480 --> 00:23:08,838
+tables well we can add them
+
+663
+00:23:09,038 --> 00:23:12,200
+right so here's a sum of two
+
+664
+00:23:12,400 --> 00:23:14,119
+three three by three multiplication
+
+665
+00:23:14,319 --> 00:23:15,959
+tables right so
+
+666
+00:23:16,159 --> 00:23:18,440
+if i went from one to one this would be
+
+667
+00:23:18,640 --> 00:23:19,959
+a single multiplication table
+
+668
+00:23:20,159 --> 00:23:21,479
+this is the sum of two multiplication
+
+669
+00:23:21,679 --> 00:23:23,879
+tables here's the sum of three
+
+670
+00:23:24,079 --> 00:23:27,639
+okay so let's let's just stop with two
+
+671
+00:23:27,839 --> 00:23:30,759
+and now here's the question can i
+
+672
+00:23:30,960 --> 00:23:31,719
+actually find
+
+673
+00:23:31,919 --> 00:23:33,559
+the structure can i find out that this
+
+674
+00:23:33,759 --> 00:23:35,959
+was made up of two multiplication tables
+
+675
+00:23:36,159 --> 00:23:37,799
+well interestingly enough there is a
+
+676
+00:23:38,000 --> 00:23:39,479
+kind of fancy linear algebra
+
+677
+00:23:39,679 --> 00:23:40,680
+decomposition
+
+678
+00:23:40,880 --> 00:23:43,479
+which will do this for you okay and my
+
+679
+00:23:43,679 --> 00:23:44,358
+goal right now
+
+680
+00:23:44,558 --> 00:23:47,479
+is not to talk about how you can
+
+681
+00:23:47,679 --> 00:23:50,279
+calculate this thing by hand i don't
+
+682
+00:23:50,480 --> 00:23:52,358
+want to even explain the linear algebra
+
+683
+00:23:52,558 --> 00:23:53,719
+you might see it in a linear algebra
+
+684
+00:23:53,919 --> 00:23:54,919
+class
+
+685
+00:23:55,119 --> 00:23:56,279
+i just want to mention it it's something
+
+686
+00:23:56,480 --> 00:23:58,279
+called the singular value decomposition
+
+687
+00:23:58,480 --> 00:24:01,240
+and it is really good at finding the
+
+688
+00:24:01,440 --> 00:24:02,838
+multiplication tables
+
+689
+00:24:03,038 --> 00:24:06,119
+that need to be summed to form a matrix
+
+690
+00:24:06,319 --> 00:24:08,200
+and the great thing about the singular
+
+691
+00:24:08,400 --> 00:24:09,399
+value decomposition
+
+692
+00:24:09,599 --> 00:24:12,759
+is you can choose to throw away
+
+693
+00:24:12,960 --> 00:24:14,759
+as many multiplication tables as you
+
+694
+00:24:14,960 --> 00:24:16,519
+like just keep the first few
+
+695
+00:24:16,720 --> 00:24:18,200
+and this will be a good approximation to
+
+696
+00:24:18,400 --> 00:24:20,200
+a matrix so
+
+697
+00:24:20,400 --> 00:24:24,039
+here is the svd of the matrix
+
+698
+00:24:24,240 --> 00:24:26,279
+the svd of the matrix the singular value
+
+699
+00:24:26,480 --> 00:24:27,559
+decomposition
+
+700
+00:24:27,759 --> 00:24:30,119
+always returns a matrix a vector and a
+
+701
+00:24:30,319 --> 00:24:31,078
+matrix
+
+702
+00:24:31,278 --> 00:24:33,159
+right so let me put that in here so u
+
+703
+00:24:33,359 --> 00:24:36,639
+and v are matrices
+
+704
+00:24:37,278 --> 00:24:42,000
+okay and sigma is a vector
+
+705
+00:24:42,159 --> 00:24:43,719
+okay they have some special properties
+
+706
+00:24:43,919 --> 00:24:44,919
+again you might learn about them in
+
+707
+00:24:45,119 --> 00:24:46,279
+linear algebra
+
+708
+00:24:46,480 --> 00:24:47,959
+many people like to connect singular
+
+709
+00:24:48,159 --> 00:24:51,000
+value decomposition to eigenvalues
+
+710
+00:24:51,200 --> 00:24:53,319
+it's not my favorite approach though
+
+711
+00:24:53,519 --> 00:24:54,039
+it's kind of
+
+712
+00:24:54,240 --> 00:24:55,879
+it's a simple thing to do because
+
+713
+00:24:56,079 --> 00:24:57,639
+eigenvalues appear in every linear
+
+714
+00:24:57,839 --> 00:24:58,680
+algebra class
+
+715
+00:24:58,880 --> 00:25:00,358
+so you can kind of sort of dump them in
+
+716
+00:25:00,558 --> 00:25:01,959
+afterwards
+
+717
+00:25:02,159 --> 00:25:04,358
+i think that's backwards i think the svd
+
+718
+00:25:04,558 --> 00:25:05,399
+deserves
+
+719
+00:25:05,599 --> 00:25:08,519
+its own life and
+
+720
+00:25:08,720 --> 00:25:10,440
+people get a little too caught up in
+
+721
+00:25:10,640 --> 00:25:12,200
+calculating by hand i think that's not
+
+722
+00:25:12,400 --> 00:25:13,479
+even necessary anymore
+
+723
+00:25:13,679 --> 00:25:15,319
+but again that's a bit of an editorial
+
+724
+00:25:15,519 --> 00:25:17,479
+that maybe we don't need right now
+
+725
+00:25:17,679 --> 00:25:19,639
+so let me just sort of show you i'm
+
+726
+00:25:19,839 --> 00:25:21,159
+going to just show you how to use the
+
+727
+00:25:21,359 --> 00:25:22,759
+svd for the purposes of this
+
+728
+00:25:22,960 --> 00:25:24,519
+computational thinking class
+
+729
+00:25:24,720 --> 00:25:25,879
+but it would be great for you to learn
+
+730
+00:25:26,079 --> 00:25:27,639
+more about the svd so many things you
+
+731
+00:25:27,839 --> 00:25:28,838
+can learn
+
+732
+00:25:29,038 --> 00:25:30,358
+but here i'm going to do all i'm going
+
+733
+00:25:30,558 --> 00:25:32,598
+to do is calculate the u sigma in v
+
+734
+00:25:32,798 --> 00:25:33,799
+and then i'm just going to take two
+
+735
+00:25:34,000 --> 00:25:35,399
+outer products i'm going to take the
+
+736
+00:25:35,599 --> 00:25:36,519
+first column of u
+
+737
+00:25:36,720 --> 00:25:37,479
+and then i'm also going to take the
+
+738
+00:25:37,679 --> 00:25:39,639
+second column of u
+
+739
+00:25:39,839 --> 00:25:41,639
+as the first argument to my outer
+
+740
+00:25:41,839 --> 00:25:43,719
+product and i'm going to take the scale
+
+741
+00:25:43,919 --> 00:25:45,399
+sigma's going to tell me how to scale it
+
+742
+00:25:45,599 --> 00:25:47,639
+a scaled first column of v and a scaled
+
+743
+00:25:47,839 --> 00:25:50,440
+second column of v and i'm going to add
+
+744
+00:25:50,640 --> 00:25:51,240
+them up
+
+745
+00:25:51,440 --> 00:25:54,358
+and i'm going to notice that this is
+
+746
+00:25:54,558 --> 00:25:57,479
+somewhat approximately this matrix okay
+
+747
+00:25:57,679 --> 00:25:59,000
+it actually gets better
+
+748
+00:25:59,200 --> 00:26:01,479
+for bigger matrices with structure but
+
+749
+00:26:01,679 --> 00:26:02,598
+here i'll
+
+750
+00:26:02,798 --> 00:26:04,759
+kind of take a few different cases you
+
+751
+00:26:04,960 --> 00:26:06,759
+could see that here's a three by three
+
+752
+00:26:06,960 --> 00:26:07,719
+matrix
+
+753
+00:26:07,919 --> 00:26:10,759
+here i'm adding two outer products
+
+754
+00:26:10,960 --> 00:26:12,680
+and you can see that this is not a bad
+
+755
+00:26:12,880 --> 00:26:14,119
+approximation
+
+756
+00:26:14,319 --> 00:26:17,240
+okay so it approximates very well i
+
+757
+00:26:17,440 --> 00:26:18,039
+could add more
+
+758
+00:26:18,240 --> 00:26:19,399
+for example if you want the exact
+
+759
+00:26:19,599 --> 00:26:21,159
+reconstruction of the matrix
+
+760
+00:26:21,359 --> 00:26:23,719
+i would copy this and i would put the
+
+761
+00:26:23,919 --> 00:26:25,479
+three and of course i could
+
+762
+00:26:25,679 --> 00:26:28,358
+make this more general and put a sum but
+
+763
+00:26:28,558 --> 00:26:30,119
+maybe it's good to just see it
+
+764
+00:26:30,319 --> 00:26:32,919
+right so if i put this in you'll see i
+
+765
+00:26:33,119 --> 00:26:35,000
+reproduce the matrix entirely
+
+766
+00:26:35,200 --> 00:26:37,479
+but i could leave out pieces right if i
+
+767
+00:26:37,679 --> 00:26:39,879
+leave it out again
+
+768
+00:26:40,079 --> 00:26:42,519
+it serves as an approximation so let's
+
+769
+00:26:42,720 --> 00:26:43,639
+continue with this
+
+770
+00:26:43,839 --> 00:26:45,879
+let's see what we can use our svd for
+
+771
+00:26:46,079 --> 00:26:47,719
+our singular value decomposition
+
+772
+00:26:47,919 --> 00:26:51,319
+well here's a flag okay
+
+773
+00:26:51,519 --> 00:26:54,759
+my flag here is an outer product where
+
+774
+00:26:54,960 --> 00:26:57,559
+it's made up of just ones and twos okay
+
+775
+00:26:57,759 --> 00:26:59,078
+so here it's an outer
+
+776
+00:26:59,278 --> 00:27:02,519
+product it almost looks already like a
+
+777
+00:27:02,720 --> 00:27:04,119
+flag numerically if i use these
+
+778
+00:27:04,319 --> 00:27:05,399
+distinguishable colors
+
+779
+00:27:05,599 --> 00:27:06,680
+i think this makes it even look more
+
+780
+00:27:06,880 --> 00:27:08,680
+like a flag i'm just indexing into
+
+781
+00:27:08,880 --> 00:27:10,440
+distinguishable colors to make it
+
+782
+00:27:10,640 --> 00:27:12,919
+kind of visually pretty okay so this is
+
+783
+00:27:13,119 --> 00:27:14,119
+one outer product
+
+784
+00:27:14,319 --> 00:27:17,319
+just stripes okay here i'm going to take
+
+785
+00:27:17,519 --> 00:27:18,759
+two outer products the
+
+786
+00:27:18,960 --> 00:27:21,078
+just to make it easy i'm taking the flag
+
+787
+00:27:21,278 --> 00:27:23,240
+plus the flag transpose which means
+
+788
+00:27:23,440 --> 00:27:26,519
+that i've taken the the the
+
+789
+00:27:26,720 --> 00:27:28,838
+the flag plus the flag transpose is
+
+790
+00:27:29,038 --> 00:27:30,680
+really nothing other than and i guess i
+
+791
+00:27:30,880 --> 00:27:31,399
+could
+
+792
+00:27:31,599 --> 00:27:33,719
+it's another it's nothing other than
+
+793
+00:27:33,919 --> 00:27:35,159
+taking the outer product
+
+794
+00:27:35,359 --> 00:27:38,440
+one way and then
+
+795
+00:27:38,640 --> 00:27:40,358
+uh switching the arguments which i guess
+
+796
+00:27:40,558 --> 00:27:41,559
+i could almost
+
+797
+00:27:41,759 --> 00:27:43,000
+cheat because there aren't that many
+
+798
+00:27:43,200 --> 00:27:44,198
+entries that are different than the
+
+799
+00:27:44,398 --> 00:27:45,159
+arguments
+
+800
+00:27:45,359 --> 00:27:46,759
+by just changing the middle arguments
+
+801
+00:27:46,960 --> 00:27:49,479
+you see
+
+802
+00:27:49,679 --> 00:27:52,598
+okay so here's the actual
+
+803
+00:27:52,798 --> 00:27:55,719
+here here here's the actual matrix and
+
+804
+00:27:55,919 --> 00:27:57,319
+of course if i take cs
+
+805
+00:27:57,519 --> 00:28:01,000
+of this by indexing into my colors
+
+806
+00:28:01,200 --> 00:28:03,559
+i get this picture all right so we might
+
+807
+00:28:03,759 --> 00:28:05,240
+explore this in the homework that
+
+808
+00:28:05,440 --> 00:28:08,279
+lots and lots of flags can be written uh
+
+809
+00:28:08,480 --> 00:28:10,358
+as the sum of outer products
+
+810
+00:28:10,558 --> 00:28:12,680
+okay thereby saving i mean already you
+
+811
+00:28:12,880 --> 00:28:13,799
+could see
+
+812
+00:28:14,000 --> 00:28:15,319
+i i mean you might be able to imagine
+
+813
+00:28:15,519 --> 00:28:17,240
+doing better than this but
+
+814
+00:28:17,440 --> 00:28:19,799
+uh i'm not using 81 numbers by any means
+
+815
+00:28:20,000 --> 00:28:21,639
+to represent this flag
+
+816
+00:28:21,839 --> 00:28:24,759
+okay well now let's kind of push this
+
+817
+00:28:24,960 --> 00:28:27,879
+all the way and talk about actual real
+
+818
+00:28:28,079 --> 00:28:28,838
+images
+
+819
+00:28:29,038 --> 00:28:30,759
+okay and so here what we're going to do
+
+820
+00:28:30,960 --> 00:28:32,759
+is we're going to download an image of a
+
+821
+00:28:32,960 --> 00:28:33,559
+tree
+
+822
+00:28:33,759 --> 00:28:35,639
+okay so there's a tree and we'll down
+
+823
+00:28:35,839 --> 00:28:37,399
+sample it a little bit for no you know
+
+824
+00:28:37,599 --> 00:28:38,119
+just to make it
+
+825
+00:28:38,319 --> 00:28:41,319
+so you can see it right and so uh
+
+826
+00:28:41,519 --> 00:28:44,039
+in julia the in the image processing
+
+827
+00:28:44,240 --> 00:28:45,319
+there's something called the channel
+
+828
+00:28:45,519 --> 00:28:46,119
+view
+
+829
+00:28:46,319 --> 00:28:49,159
+which basically takes every pixel and
+
+830
+00:28:49,359 --> 00:28:51,319
+turns it into its red and green and blue
+
+831
+00:28:51,519 --> 00:28:52,279
+components
+
+832
+00:28:52,480 --> 00:28:53,879
+so that by the time you're done if you
+
+833
+00:28:54,079 --> 00:28:55,959
+turn it into floats which makes it
+
+834
+00:28:56,159 --> 00:28:57,319
+all the red green and blue is between
+
+835
+00:28:57,519 --> 00:28:59,000
+zero and one we're going to get a three
+
+836
+00:28:59,200 --> 00:29:00,598
+dimensional array that's
+
+837
+00:29:00,798 --> 00:29:02,440
+that's three by two sixteen by three
+
+838
+00:29:02,640 --> 00:29:05,159
+eighty four so what's going on here is
+
+839
+00:29:05,359 --> 00:29:07,639
+there the vertical size and pixels of
+
+840
+00:29:07,839 --> 00:29:09,479
+this picture is 216.
+
+841
+00:29:09,679 --> 00:29:12,198
+the horizontal size is 384 and the three
+
+842
+00:29:12,398 --> 00:29:14,039
+represents the three channels the red
+
+843
+00:29:14,240 --> 00:29:15,639
+the green and the blue
+
+844
+00:29:15,839 --> 00:29:18,919
+okay we could actually separate out and
+
+845
+00:29:19,119 --> 00:29:21,399
+get matrices two-dimensional matrices
+
+846
+00:29:21,599 --> 00:29:23,559
+by using the each slice command in julia
+
+847
+00:29:23,759 --> 00:29:25,479
+we're going to slice it along the first
+
+848
+00:29:25,679 --> 00:29:27,479
+dimension the the dimension of size
+
+849
+00:29:27,679 --> 00:29:28,279
+three
+
+850
+00:29:28,480 --> 00:29:30,519
+and this will give me the the the red
+
+851
+00:29:30,720 --> 00:29:31,799
+part of the picture the green part of
+
+852
+00:29:32,000 --> 00:29:32,919
+the picture of the blue part of the
+
+853
+00:29:33,119 --> 00:29:33,559
+picture
+
+854
+00:29:33,759 --> 00:29:35,399
+which i can reconstruct and put next to
+
+855
+00:29:35,599 --> 00:29:36,759
+each other and you could see it
+
+856
+00:29:36,960 --> 00:29:38,759
+i kind of like the use of the tree
+
+857
+00:29:38,960 --> 00:29:41,078
+because you can see very closely that
+
+858
+00:29:41,278 --> 00:29:41,559
+the
+
+859
+00:29:41,759 --> 00:29:44,279
+tree is basically green um the green
+
+860
+00:29:44,480 --> 00:29:45,639
+shows up in the green part
+
+861
+00:29:45,839 --> 00:29:47,240
+and it kind of looks just like a shadow
+
+862
+00:29:47,440 --> 00:29:48,519
+through the red filter or the blue
+
+863
+00:29:48,720 --> 00:29:49,639
+filter
+
+864
+00:29:49,839 --> 00:29:51,559
+it's kind of it's much black or it's
+
+865
+00:29:51,759 --> 00:29:52,759
+really is a shadow
+
+866
+00:29:52,960 --> 00:29:54,680
+okay but anyway there's the three
+
+867
+00:29:54,880 --> 00:29:56,919
+channels the red green and blue pieces
+
+868
+00:29:57,119 --> 00:29:58,358
+of the tree picture
+
+869
+00:29:58,558 --> 00:30:02,279
+okay and what i would like to do is
+
+870
+00:30:02,480 --> 00:30:05,399
+break up this picture using the svd so
+
+871
+00:30:05,599 --> 00:30:07,000
+i'm going to take the svd of the red
+
+872
+00:30:07,200 --> 00:30:08,919
+part the green part and the blue part
+
+873
+00:30:09,119 --> 00:30:10,838
+remember the u and the v are matrices
+
+874
+00:30:11,038 --> 00:30:13,479
+the sigma are the scale factors the
+
+875
+00:30:13,679 --> 00:30:16,680
+the they're the vectors and
+
+876
+00:30:16,880 --> 00:30:19,799
+let's take a look at what happens if we
+
+877
+00:30:20,000 --> 00:30:21,639
+try to approximate our tree with one
+
+878
+00:30:21,839 --> 00:30:23,319
+multiplication table
+
+879
+00:30:23,519 --> 00:30:26,198
+well there you see the plaid picture uh
+
+880
+00:30:26,398 --> 00:30:27,078
+maybe
+
+881
+00:30:27,278 --> 00:30:29,879
+it's as expected you mean the the the
+
+882
+00:30:30,079 --> 00:30:32,358
+tree kind of sort of smeared to the
+
+883
+00:30:32,558 --> 00:30:35,159
+to the left and right the trunk kind of
+
+884
+00:30:35,359 --> 00:30:36,680
+went up and down
+
+885
+00:30:36,880 --> 00:30:38,039
+you could kind of see the ground that's
+
+886
+00:30:38,240 --> 00:30:39,799
+sort of being spread to the right
+
+887
+00:30:40,000 --> 00:30:41,319
+it's pretty much i think what you'd
+
+888
+00:30:41,519 --> 00:30:44,198
+expect okay now let's kind of move
+
+889
+00:30:44,398 --> 00:30:47,240
+one over and now we have the sum of two
+
+890
+00:30:47,440 --> 00:30:48,919
+addition tables right i'm
+
+891
+00:30:49,119 --> 00:30:52,358
+i'm basically reconstructing this and
+
+892
+00:30:52,558 --> 00:30:54,838
+i'm summing this and i'm taking up to
+
+893
+00:30:55,038 --> 00:30:56,358
+two
+
+894
+00:30:56,558 --> 00:30:58,358
+so this looks like maybe can i call this
+
+895
+00:30:58,558 --> 00:31:00,198
+like a minecraft tree it's gonna have
+
+896
+00:31:00,398 --> 00:31:02,759
+that rectangular shape now
+
+897
+00:31:02,960 --> 00:31:06,039
+with two you can somehow get you can
+
+898
+00:31:06,240 --> 00:31:08,358
+the tree can sort of become blocked the
+
+899
+00:31:08,558 --> 00:31:10,279
+ground is a bit more clear
+
+900
+00:31:10,480 --> 00:31:12,279
+the trunk is still kind of uh
+
+901
+00:31:12,480 --> 00:31:13,799
+influencing itself all
+
+902
+00:31:14,000 --> 00:31:16,358
+entirely vertically but we can kind of
+
+903
+00:31:16,558 --> 00:31:18,598
+continue and go to three and now
+
+904
+00:31:18,798 --> 00:31:21,078
+the tree can at least have a bit of
+
+905
+00:31:21,278 --> 00:31:22,119
+staggering now
+
+906
+00:31:22,319 --> 00:31:24,680
+kind of it's stepped and we can go a
+
+907
+00:31:24,880 --> 00:31:25,959
+little further
+
+908
+00:31:26,159 --> 00:31:27,639
+here's the the sum of four
+
+909
+00:31:27,839 --> 00:31:29,318
+multiplication tables
+
+910
+00:31:29,519 --> 00:31:32,198
+and so forth so we can keep doing this
+
+911
+00:31:32,398 --> 00:31:34,198
+after a while you can recognize it
+
+912
+00:31:34,398 --> 00:31:35,959
+clearly as a tree
+
+913
+00:31:36,159 --> 00:31:38,759
+but it has some ugly artifacts and we
+
+914
+00:31:38,960 --> 00:31:41,639
+could keep going a little bit more
+
+915
+00:31:41,839 --> 00:31:44,279
+remember this tree was what did i say
+
+916
+00:31:44,480 --> 00:31:47,078
+the size was i mentioned it before
+
+917
+00:31:47,278 --> 00:31:50,119
+it was 216 by 384 but
+
+918
+00:31:50,319 --> 00:31:53,000
+probably here you know 60 i guess i
+
+919
+00:31:53,200 --> 00:31:55,078
+don't completely love those artifacts
+
+920
+00:31:55,278 --> 00:31:57,639
+but pretty closely you're getting a
+
+921
+00:31:57,839 --> 00:31:59,240
+pretty decent tree some pictures work
+
+922
+00:31:59,440 --> 00:32:00,680
+better than others
+
+923
+00:32:00,880 --> 00:32:02,358
+and depending on what visual quality you
+
+924
+00:32:02,558 --> 00:32:04,198
+like but it does show you that the
+
+925
+00:32:04,398 --> 00:32:05,959
+singular value decomposition
+
+926
+00:32:06,159 --> 00:32:08,598
+is a way of extracting the structure
+
+927
+00:32:08,798 --> 00:32:09,078
+from an
+
+928
+00:32:09,278 --> 00:32:12,519
+image it's not the only way a lot of
+
+929
+00:32:12,720 --> 00:32:14,198
+a lot of image compression schemes like
+
+930
+00:32:14,398 --> 00:32:15,799
+jpeg they use something different
+
+931
+00:32:16,000 --> 00:32:16,919
+entirely that's
+
+932
+00:32:17,119 --> 00:32:18,838
+probably more effective in practice for
+
+933
+00:32:19,038 --> 00:32:21,479
+images but the svd is certainly quick
+
+934
+00:32:21,679 --> 00:32:23,799
+and easy and dirty that you can use
+
+935
+00:32:24,000 --> 00:32:26,358
+it's very easy to use and it is used to
+
+936
+00:32:26,558 --> 00:32:27,078
+compress
+
+937
+00:32:27,278 --> 00:32:29,639
+many many things these days so just to
+
+938
+00:32:29,839 --> 00:32:31,879
+kind of sum it up
+
+939
+00:32:32,079 --> 00:32:34,358
+in lots of lots of times these days you
+
+940
+00:32:34,558 --> 00:32:35,959
+have all kinds of data
+
+941
+00:32:36,159 --> 00:32:38,680
+and if the data could live in sort of a
+
+942
+00:32:38,880 --> 00:32:40,838
+high dimensional space but it lives on
+
+943
+00:32:41,038 --> 00:32:42,598
+so the analogy of a plane it's called a
+
+944
+00:32:42,798 --> 00:32:45,159
+hyperplane then the svd does a very good
+
+945
+00:32:45,359 --> 00:32:46,279
+job at
+
+946
+00:32:46,480 --> 00:32:48,358
+compressing the information to the
+
+947
+00:32:48,558 --> 00:32:49,559
+important pieces
+
+948
+00:32:49,759 --> 00:32:51,240
+this is the idea behind something you
+
+949
+00:32:51,440 --> 00:32:52,838
+may see in statistics called
+
+950
+00:32:53,038 --> 00:32:55,318
+principal components analysis and it
+
+951
+00:32:55,519 --> 00:32:55,879
+also
+
+952
+00:32:56,079 --> 00:32:59,000
+is some it gets generalized into machine
+
+953
+00:32:59,200 --> 00:33:00,119
+learning where
+
+954
+00:33:00,319 --> 00:33:04,158
+you pick out the small number of
+
+955
+00:33:08,839 --> 00:33:11,839
+parameters
+
+956
+00:33:20,159 --> 00:33:25,159
+you
+

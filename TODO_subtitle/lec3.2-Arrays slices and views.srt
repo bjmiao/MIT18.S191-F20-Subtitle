@@ -1,0 +1,1284 @@
+﻿1
+00:00:00,160 --> 00:00:02,599
+in this video we'll look at arrays
+
+2
+00:00:02,799 --> 00:00:04,200
+slices and views
+
+3
+00:00:04,400 --> 00:00:06,280
+and we'll see what those are in a moment
+
+4
+00:00:06,480 --> 00:00:08,839
+so arrays are a very common way of study
+
+5
+00:00:09,039 --> 00:00:11,479
+of storing data of course not the only
+
+6
+00:00:11,679 --> 00:00:12,519
+way by any means
+
+7
+00:00:12,718 --> 00:00:13,720
+there are plenty of other data
+
+8
+00:00:13,919 --> 00:00:16,440
+structures that we can use but so
+
+9
+00:00:16,640 --> 00:00:18,359
+since they're so important it's very
+
+10
+00:00:18,559 --> 00:00:20,519
+useful to know how to manipulate them
+
+11
+00:00:20,719 --> 00:00:23,318
+any in different ways so let's start off
+
+12
+00:00:23,518 --> 00:00:25,239
+by making a vector
+
+13
+00:00:25,439 --> 00:00:27,560
+called v and so i'm using the ones
+
+14
+00:00:27,760 --> 00:00:28,440
+function
+
+15
+00:00:28,640 --> 00:00:30,919
+to make a vector with containing all
+
+16
+00:00:31,118 --> 00:00:31,879
+ones
+
+17
+00:00:32,079 --> 00:00:34,119
+and we see that i can have this
+
+18
+00:00:34,320 --> 00:00:35,479
+different view by
+
+19
+00:00:35,679 --> 00:00:36,839
+pressing this arrow it gives me a
+
+20
+00:00:37,039 --> 00:00:39,079
+vertical view instead and this is the
+
+21
+00:00:39,280 --> 00:00:40,439
+length of the array so i have
+
+22
+00:00:40,640 --> 00:00:43,799
+10 ones and we know that we can index
+
+23
+00:00:44,000 --> 00:00:45,719
+into that array in other words extract
+
+24
+00:00:45,920 --> 00:00:48,119
+one element using these square brackets
+
+25
+00:00:48,320 --> 00:00:50,358
+so square brackets three gives the third
+
+26
+00:00:50,558 --> 00:00:52,119
+element of the array
+
+27
+00:00:52,320 --> 00:00:56,439
+uh since julia starts indexing at one
+
+28
+00:00:56,640 --> 00:00:58,998
+the first element is index number one
+
+29
+00:00:59,198 --> 00:00:59,479
+and we
+
+30
+00:00:59,679 --> 00:01:01,878
+can modify the array using the same
+
+31
+00:01:02,079 --> 00:01:03,559
+square bracket so v
+
+32
+00:01:03,759 --> 00:01:06,119
+indexed at the third element equals two
+
+33
+00:01:06,319 --> 00:01:06,918
+assigns
+
+34
+00:01:07,118 --> 00:01:09,560
+the value two to that element and we see
+
+35
+00:01:09,760 --> 00:01:10,599
+that in that case
+
+36
+00:01:10,799 --> 00:01:13,640
+v has changed we've made
+
+37
+00:01:13,840 --> 00:01:15,719
+we've managed to modify the third
+
+38
+00:01:15,920 --> 00:01:17,480
+element of the array
+
+39
+00:01:17,680 --> 00:01:20,759
+to give 2. now if we want to extract
+
+40
+00:01:20,959 --> 00:01:23,000
+a subset several elements of the array
+
+41
+00:01:23,200 --> 00:01:25,000
+we can do so by indexing using
+
+42
+00:01:25,200 --> 00:01:27,640
+a range instead so a range is written
+
+43
+00:01:27,840 --> 00:01:28,759
+with a colon
+
+44
+00:01:28,959 --> 00:01:32,200
+and v square brackets three colon five
+
+45
+00:01:32,400 --> 00:01:34,679
+will extract three elements of the
+
+46
+00:01:34,879 --> 00:01:35,399
+vector
+
+47
+00:01:35,599 --> 00:01:37,640
+starting at position number three and
+
+48
+00:01:37,840 --> 00:01:41,079
+finishing in position number five
+
+49
+00:01:41,280 --> 00:01:43,558
+so this is one reason why one based
+
+50
+00:01:43,759 --> 00:01:45,000
+indexing where you start and
+
+51
+00:01:45,200 --> 00:01:48,039
+one is useful because these numbers
+
+52
+00:01:48,239 --> 00:01:49,640
+exactly correspond to the positions in
+
+53
+00:01:49,840 --> 00:01:51,399
+the array
+
+54
+00:01:51,599 --> 00:01:53,159
+and this is called a slice of the array
+
+55
+00:01:53,359 --> 00:01:54,599
+so when we extract a sub
+
+56
+00:01:54,799 --> 00:01:57,480
+piece of the array a subset of the array
+
+57
+00:01:57,680 --> 00:01:58,278
+that's called
+
+58
+00:01:58,478 --> 00:02:01,159
+slicing now what i what if i want to
+
+59
+00:02:01,359 --> 00:02:02,439
+modify this slice
+
+60
+00:02:02,640 --> 00:02:04,359
+how could i do that so you might think
+
+61
+00:02:04,560 --> 00:02:05,959
+that you could do that
+
+62
+00:02:06,159 --> 00:02:09,320
+uh just extending the previous syntax
+
+63
+00:02:09,520 --> 00:02:11,719
+by using v square brackets three colon
+
+64
+00:02:11,919 --> 00:02:13,719
+five equals four
+
+65
+00:02:13,919 --> 00:02:15,560
+but if i try and do that i actually get
+
+66
+00:02:15,759 --> 00:02:17,000
+an error
+
+67
+00:02:17,199 --> 00:02:19,880
+and uh it tells me that the problem is
+
+68
+00:02:20,080 --> 00:02:20,280
+that
+
+69
+00:02:20,479 --> 00:02:22,520
+on the left i have an array but on the
+
+70
+00:02:22,719 --> 00:02:23,880
+right i have a number
+
+71
+00:02:24,080 --> 00:02:26,118
+and it doesn't make sense to assign a
+
+72
+00:02:26,318 --> 00:02:27,320
+number to
+
+73
+00:02:27,520 --> 00:02:29,880
+an array so we have to actually be more
+
+74
+00:02:30,080 --> 00:02:30,600
+explicit
+
+75
+00:02:30,800 --> 00:02:32,520
+we have to tell juror exact julia
+
+76
+00:02:32,719 --> 00:02:34,118
+exactly what we want to do
+
+77
+00:02:34,318 --> 00:02:36,118
+what we want to do is assign the number
+
+78
+00:02:36,318 --> 00:02:38,840
+four to each element of that array
+
+79
+00:02:39,039 --> 00:02:41,160
+and we can do that using this dot syntax
+
+80
+00:02:41,360 --> 00:02:42,759
+called broadcasting
+
+81
+00:02:42,959 --> 00:02:45,399
+so if i do add a dot before the equal
+
+82
+00:02:45,598 --> 00:02:47,560
+sign i now i'm going to assign
+
+83
+00:02:47,759 --> 00:02:50,520
+for element wise or element by element
+
+84
+00:02:50,719 --> 00:02:51,319
+so i'll assign
+
+85
+00:02:51,519 --> 00:02:53,240
+four to the element number three the
+
+86
+00:02:53,439 --> 00:02:55,719
+number four and the number five
+
+87
+00:02:55,919 --> 00:02:59,000
+and when i do that uh we have to check
+
+88
+00:02:59,199 --> 00:03:00,759
+what happened to the original array
+
+89
+00:03:00,959 --> 00:03:03,240
+and we see that indeed the original
+
+90
+00:03:03,439 --> 00:03:03,800
+array got
+
+91
+00:03:04,000 --> 00:03:07,240
+modified itself so that was
+
+92
+00:03:07,439 --> 00:03:10,679
+successful and we can also use
+
+93
+00:03:10,878 --> 00:03:13,719
+uh if we we can also assign
+
+94
+00:03:13,919 --> 00:03:16,200
+a new array to those elements and if we
+
+95
+00:03:16,400 --> 00:03:17,000
+do that then
+
+96
+00:03:17,199 --> 00:03:20,840
+those elements also change okay
+
+97
+00:03:21,039 --> 00:03:24,280
+so now let's think about well
+
+98
+00:03:24,479 --> 00:03:26,360
+maybe i want to give a name to this
+
+99
+00:03:26,560 --> 00:03:28,679
+piece of the array and manipulate
+
+100
+00:03:28,878 --> 00:03:31,080
+the array via that new name so let's
+
+101
+00:03:31,280 --> 00:03:32,599
+call w
+
+102
+00:03:32,799 --> 00:03:36,759
+the slice of v from three to five
+
+103
+00:03:36,959 --> 00:03:38,759
+so an important question is going to be
+
+104
+00:03:38,959 --> 00:03:39,959
+what happens if i now
+
+105
+00:03:40,158 --> 00:03:42,439
+modify the object w in other words
+
+106
+00:03:42,639 --> 00:03:43,480
+modify i mean
+
+107
+00:03:43,680 --> 00:03:46,360
+go inside w and change something inside
+
+108
+00:03:46,560 --> 00:03:48,679
+w
+
+109
+00:03:48,878 --> 00:03:51,959
+and so just take a moment to think about
+
+110
+00:03:52,158 --> 00:03:54,118
+what you think this will do before we
+
+111
+00:03:54,318 --> 00:03:55,000
+carry on
+
+112
+00:03:55,199 --> 00:03:57,399
+what do you expect to happen and what
+
+113
+00:03:57,598 --> 00:03:58,920
+might the possibilities be
+
+114
+00:03:59,120 --> 00:04:01,160
+for for how this behaves so take a
+
+115
+00:04:01,360 --> 00:04:04,000
+moment to do that
+
+116
+00:04:04,080 --> 00:04:06,439
+so once we've thought about it we should
+
+117
+00:04:06,639 --> 00:04:08,599
+just ask julia what it actually
+
+118
+00:04:08,799 --> 00:04:12,118
+thinks so w looks like an array
+
+119
+00:04:12,318 --> 00:04:13,959
+and now let's modify the first element
+
+120
+00:04:14,158 --> 00:04:15,319
+of w
+
+121
+00:04:15,519 --> 00:04:18,598
+and uh let's look at w and of course we
+
+122
+00:04:18,798 --> 00:04:20,199
+expected the first element correctly
+
+123
+00:04:20,399 --> 00:04:23,279
+changed to eight
+
+124
+00:04:23,600 --> 00:04:26,360
+okay great but but the question is did v
+
+125
+00:04:26,560 --> 00:04:26,840
+change
+
+126
+00:04:27,040 --> 00:04:29,960
+right so we took a piece of v and we
+
+127
+00:04:30,160 --> 00:04:30,840
+called it w
+
+128
+00:04:31,040 --> 00:04:33,319
+we're now modifying something inside w
+
+129
+00:04:33,519 --> 00:04:34,520
+and the question is does
+
+130
+00:04:34,720 --> 00:04:37,559
+v change and the answer is that it does
+
+131
+00:04:37,759 --> 00:04:38,920
+not
+
+132
+00:04:39,120 --> 00:04:42,999
+so this is a key thing to remember
+
+133
+00:04:43,199 --> 00:04:45,879
+when we take a slice of an array and
+
+134
+00:04:46,079 --> 00:04:47,718
+give it a name
+
+135
+00:04:47,918 --> 00:04:49,879
+that is actually making a copy of the
+
+136
+00:04:50,079 --> 00:04:52,278
+data so there's a new copy of those
+
+137
+00:04:52,478 --> 00:04:53,960
+three elements somewhere else in memory
+
+138
+00:04:54,160 --> 00:04:56,520
+and w is referring to that copy
+
+139
+00:04:56,720 --> 00:04:59,800
+and when we modify that copy
+
+140
+00:05:00,000 --> 00:05:01,559
+of course the original does not get
+
+141
+00:05:01,759 --> 00:05:03,240
+modified once we know that
+
+142
+00:05:03,439 --> 00:05:06,719
+this is actually what's happening
+
+143
+00:05:06,959 --> 00:05:09,079
+okay so yeah so you have to remember
+
+144
+00:05:09,279 --> 00:05:11,639
+that when we make a slice like this
+
+145
+00:05:11,839 --> 00:05:14,680
+it makes a copy and and uh it will not
+
+146
+00:05:14,879 --> 00:05:15,319
+modify
+
+147
+00:05:15,519 --> 00:05:18,520
+the original array
+
+148
+00:05:18,720 --> 00:05:20,120
+but of course there might be a case
+
+149
+00:05:20,319 --> 00:05:22,360
+where we want to be able to
+
+150
+00:05:22,560 --> 00:05:25,079
+use this new name to modify the original
+
+151
+00:05:25,279 --> 00:05:26,120
+array so we have to do something
+
+152
+00:05:26,319 --> 00:05:27,559
+different and let's make what's called a
+
+153
+00:05:27,759 --> 00:05:29,559
+view
+
+154
+00:05:29,759 --> 00:05:32,520
+so how do we do that we use this view
+
+155
+00:05:32,720 --> 00:05:34,199
+function so this is actually a function
+
+156
+00:05:34,399 --> 00:05:35,079
+in julia
+
+157
+00:05:35,279 --> 00:05:38,360
+i get i pass in the object
+
+158
+00:05:38,560 --> 00:05:40,520
+the array object that i want to make a
+
+159
+00:05:40,720 --> 00:05:41,559
+view of
+
+160
+00:05:41,759 --> 00:05:44,120
+and again the same range and when i do
+
+161
+00:05:44,319 --> 00:05:44,838
+that
+
+162
+00:05:45,038 --> 00:05:48,278
+it looks like you know it looks
+
+163
+00:05:48,478 --> 00:05:51,079
+from this display it looks the same but
+
+164
+00:05:51,279 --> 00:05:53,400
+actually it's um we've created an object
+
+165
+00:05:53,600 --> 00:05:54,278
+of a different type
+
+166
+00:05:54,478 --> 00:05:56,680
+and we'll look at that in a minute so
+
+167
+00:05:56,879 --> 00:05:58,040
+now let's modify
+
+168
+00:05:58,240 --> 00:06:01,400
+z element by element
+
+169
+00:06:01,600 --> 00:06:04,119
+uh cycle z is this view i gave it the
+
+170
+00:06:04,319 --> 00:06:04,920
+name z
+
+171
+00:06:05,120 --> 00:06:08,920
+now and of course zed itself has changed
+
+172
+00:06:09,120 --> 00:06:11,240
+and the question is now did the original
+
+173
+00:06:11,439 --> 00:06:11,960
+array view
+
+174
+00:06:12,160 --> 00:06:15,559
+also change and so here is the array v
+
+175
+00:06:15,759 --> 00:06:17,800
+and we see that it did change and so
+
+176
+00:06:18,000 --> 00:06:19,639
+that is the point of a view so a view is
+
+177
+00:06:19,839 --> 00:06:22,838
+like a window you're looking into
+
+178
+00:06:23,038 --> 00:06:24,680
+the array well it's even more than a
+
+179
+00:06:24,879 --> 00:06:26,520
+window because you can actually reach in
+
+180
+00:06:26,720 --> 00:06:27,639
+through that window
+
+181
+00:06:27,839 --> 00:06:30,600
+and manipulate the original array so
+
+182
+00:06:30,800 --> 00:06:32,360
+it's a view that allows both reading
+
+183
+00:06:32,560 --> 00:06:35,960
+and writing of the original data
+
+184
+00:06:36,160 --> 00:06:37,559
+so yeah so let's just go come back to
+
+185
+00:06:37,759 --> 00:06:39,639
+the types if we compare the types of
+
+186
+00:06:39,839 --> 00:06:41,079
+these two objects w
+
+187
+00:06:41,279 --> 00:06:43,400
+which was the slice which makes a copy
+
+188
+00:06:43,600 --> 00:06:44,360
+and zed
+
+189
+00:06:44,560 --> 00:06:46,759
+which is there's a view then the
+
+190
+00:06:46,959 --> 00:06:48,278
+original uh
+
+191
+00:06:48,478 --> 00:06:51,399
+the making a copy makes and the makes a
+
+192
+00:06:51,598 --> 00:06:52,199
+new type
+
+193
+00:06:52,399 --> 00:06:56,439
+makes that a type makes an object
+
+194
+00:06:56,639 --> 00:06:58,999
+making a copy makes an object of the
+
+195
+00:06:59,199 --> 00:07:00,360
+same type which is just
+
+196
+00:07:00,560 --> 00:07:03,079
+array but making a view makes this new
+
+197
+00:07:03,279 --> 00:07:04,520
+type called sub array
+
+198
+00:07:04,720 --> 00:07:07,399
+we well this whole expression is this
+
+199
+00:07:07,598 --> 00:07:07,879
+kind of
+
+200
+00:07:08,079 --> 00:07:11,240
+complicated type of this new object but
+
+201
+00:07:11,439 --> 00:07:12,278
+we're not going to worry about the
+
+202
+00:07:12,478 --> 00:07:14,278
+details it's just telling us
+
+203
+00:07:14,478 --> 00:07:16,999
+exactly what kind of object is
+
+204
+00:07:17,199 --> 00:07:18,040
+underlying this
+
+205
+00:07:18,240 --> 00:07:22,199
+new type okay
+
+206
+00:07:22,399 --> 00:07:25,960
+now you might be frustrated that this
+
+207
+00:07:26,160 --> 00:07:26,999
+syntax
+
+208
+00:07:27,199 --> 00:07:30,360
+looks a bit more difficult to use than
+
+209
+00:07:30,560 --> 00:07:32,920
+the square bracket syntax so julia
+
+210
+00:07:33,120 --> 00:07:33,879
+actually provides us
+
+211
+00:07:34,079 --> 00:07:37,319
+with a solution for that so the solution
+
+212
+00:07:37,519 --> 00:07:38,680
+is to use this
+
+213
+00:07:38,879 --> 00:07:41,960
+macro called add view so at
+
+214
+00:07:42,160 --> 00:07:44,838
+is something very special in julia it
+
+215
+00:07:45,038 --> 00:07:45,559
+indicates
+
+216
+00:07:45,759 --> 00:07:47,879
+as i said what's called a macro so what
+
+217
+00:07:48,079 --> 00:07:49,960
+does a macro do it actually takes this
+
+218
+00:07:50,160 --> 00:07:53,160
+nice piece of syntax that we want to use
+
+219
+00:07:53,360 --> 00:07:56,040
+and it replaces this expression by a
+
+220
+00:07:56,240 --> 00:07:57,240
+different expression
+
+221
+00:07:57,439 --> 00:07:59,480
+so there's actually going to be a video
+
+222
+00:07:59,680 --> 00:08:00,439
+on macros
+
+223
+00:08:00,639 --> 00:08:02,520
+uh that you will be able to watch for
+
+224
+00:08:02,720 --> 00:08:04,360
+more details about this
+
+225
+00:08:04,560 --> 00:08:06,759
+but basically uh we can think of this as
+
+226
+00:08:06,959 --> 00:08:08,999
+just literally replacing this
+
+227
+00:08:09,199 --> 00:08:12,199
+piece of code v three to five with
+
+228
+00:08:12,399 --> 00:08:14,679
+the other piece of code view of v three
+
+229
+00:08:14,879 --> 00:08:15,800
+to five
+
+230
+00:08:16,000 --> 00:08:19,319
+and this will create a subarray object
+
+231
+00:08:19,519 --> 00:08:20,679
+because it is a view
+
+232
+00:08:20,879 --> 00:08:23,559
+and then when i modify this view of
+
+233
+00:08:23,759 --> 00:08:24,040
+course
+
+234
+00:08:24,240 --> 00:08:26,520
+now we know that the original vector
+
+235
+00:08:26,720 --> 00:08:29,680
+also gets modified
+
+236
+00:08:30,240 --> 00:08:32,599
+okay so the same thing works for
+
+237
+00:08:32,799 --> 00:08:34,519
+matrices as well let's make a small
+
+238
+00:08:34,719 --> 00:08:37,159
+matrix here
+
+239
+00:08:37,360 --> 00:08:39,879
+there's a matrix a six by four matrix
+
+240
+00:08:40,080 --> 00:08:40,359
+and
+
+241
+00:08:40,559 --> 00:08:42,919
+we can make slices just like we did
+
+242
+00:08:43,120 --> 00:08:43,799
+before
+
+243
+00:08:44,000 --> 00:08:46,439
+except now we need to give a range in
+
+244
+00:08:46,639 --> 00:08:46,839
+the
+
+245
+00:08:47,039 --> 00:08:50,439
+air in the of rows and a range of
+
+246
+00:08:50,639 --> 00:08:51,879
+columns
+
+247
+00:08:52,080 --> 00:08:54,439
+and then it will extract a sub piece but
+
+248
+00:08:54,639 --> 00:08:54,919
+again
+
+249
+00:08:55,120 --> 00:08:57,318
+because it's a slice this will be a copy
+
+250
+00:08:57,519 --> 00:08:58,439
+so you should check
+
+251
+00:08:58,639 --> 00:09:00,359
+that it is actually a copy i'm not going
+
+252
+00:09:00,559 --> 00:09:01,559
+to do it and
+
+253
+00:09:01,759 --> 00:09:03,719
+similarly we can make a view and we can
+
+254
+00:09:03,919 --> 00:09:05,240
+use the add view macro
+
+255
+00:09:05,440 --> 00:09:08,599
+to turn a slice into it to make a view
+
+256
+00:09:08,799 --> 00:09:10,039
+instead and you can see that this is now
+
+257
+00:09:10,240 --> 00:09:12,198
+a view
+
+258
+00:09:12,399 --> 00:09:14,639
+so
+
+259
+00:09:18,000 --> 00:09:20,519
+and finally if we have a matrix we can
+
+260
+00:09:20,720 --> 00:09:22,120
+think about reshaping it
+
+261
+00:09:22,320 --> 00:09:25,159
+so this matrix that i created was of
+
+262
+00:09:25,360 --> 00:09:27,639
+size six by four now let's reshape it to
+
+263
+00:09:27,839 --> 00:09:29,719
+be of size three by eight which is
+
+264
+00:09:29,919 --> 00:09:31,879
+has the same number of elements just you
+
+265
+00:09:32,080 --> 00:09:33,078
+know we're looking at it
+
+266
+00:09:33,278 --> 00:09:35,078
+and thinking of it in a different way
+
+267
+00:09:35,278 --> 00:09:36,839
+and the question is
+
+268
+00:09:37,039 --> 00:09:39,000
+you know given what we've seen so far
+
+269
+00:09:39,200 --> 00:09:39,879
+you should be
+
+270
+00:09:40,080 --> 00:09:42,439
+wondering well when i do this reshape is
+
+271
+00:09:42,639 --> 00:09:43,639
+it making a copy
+
+272
+00:09:43,839 --> 00:09:46,359
+of all this data or is it a view into
+
+273
+00:09:46,559 --> 00:09:47,799
+the original array
+
+274
+00:09:48,000 --> 00:09:50,679
+so that's for you to explore on your own
+
+275
+00:09:50,879 --> 00:09:51,559
+exercise
+
+276
+00:09:51,759 --> 00:09:53,879
+for the reader and there's another
+
+277
+00:09:54,080 --> 00:09:55,639
+useful function called a vect
+
+278
+00:09:55,839 --> 00:09:57,479
+which takes a matrix and turns it into a
+
+279
+00:09:57,679 --> 00:10:00,039
+vector so you can see that it's taking
+
+280
+00:10:00,240 --> 00:10:01,078
+each element
+
+281
+00:10:01,278 --> 00:10:03,159
+one by one in the matrix in a certain
+
+282
+00:10:03,360 --> 00:10:04,359
+order and
+
+283
+00:10:04,559 --> 00:10:07,078
+putting them into a vector so this order
+
+284
+00:10:07,278 --> 00:10:08,519
+that it's taking them in is actually
+
+285
+00:10:08,720 --> 00:10:10,439
+reflecting the underlying
+
+286
+00:10:10,639 --> 00:10:12,758
+way that the matrix is stored in memory
+
+287
+00:10:12,958 --> 00:10:13,719
+in the computer
+
+288
+00:10:13,919 --> 00:10:15,878
+the computer's memory is linear it just
+
+289
+00:10:16,078 --> 00:10:17,799
+has a sequence of boxes in in a
+
+290
+00:10:18,000 --> 00:10:20,359
+in a row and we have a two dimensional
+
+291
+00:10:20,559 --> 00:10:22,039
+object so we have to make a choice about
+
+292
+00:10:22,240 --> 00:10:24,120
+how we actually store that matrix into
+
+293
+00:10:24,320 --> 00:10:26,679
+memory julia makes one particular choice
+
+294
+00:10:26,879 --> 00:10:27,318
+called
+
+295
+00:10:27,519 --> 00:10:30,039
+uh column major so the columns you can
+
+296
+00:10:30,240 --> 00:10:32,359
+see that it's taking the columns first
+
+297
+00:10:32,559 --> 00:10:35,078
+it's taking each column it's moving down
+
+298
+00:10:35,278 --> 00:10:36,679
+the column and putting those elements
+
+299
+00:10:36,879 --> 00:10:38,279
+into the vector
+
+300
+00:10:38,480 --> 00:10:40,758
+so again you have to ask is this
+
+301
+00:10:40,958 --> 00:10:41,559
+function vec
+
+302
+00:10:41,759 --> 00:10:44,599
+making a copy or making a view
+
+303
+00:10:44,799 --> 00:10:47,639
+now making copies of memory
+
+304
+00:10:47,839 --> 00:10:49,399
+copying elements in memory from one
+
+305
+00:10:49,600 --> 00:10:50,919
+place to another is an
+
+306
+00:10:51,120 --> 00:10:53,159
+expensive thing to do so we should avoid
+
+307
+00:10:53,360 --> 00:10:54,359
+it when we can
+
+308
+00:10:54,559 --> 00:10:56,439
+we cannot always avoid it but when we
+
+309
+00:10:56,639 --> 00:10:57,799
+can avoid it we should
+
+310
+00:10:58,000 --> 00:10:59,959
+so you just have to go and check do
+
+311
+00:11:00,159 --> 00:11:02,279
+these two operations reshape and vet
+
+312
+00:11:02,480 --> 00:11:03,959
+make copies or make views and you have
+
+313
+00:11:04,159 --> 00:11:05,878
+to remember that when you use them in
+
+314
+00:11:06,078 --> 00:11:07,799
+the future
+
+315
+00:11:08,000 --> 00:11:10,120
+so in summary we just need to be aware
+
+316
+00:11:10,320 --> 00:11:11,639
+are we making a copy
+
+317
+00:11:11,839 --> 00:11:14,279
+using a slice or are we making a view
+
+318
+00:11:14,480 --> 00:11:15,878
+sometimes we need one of those
+
+319
+00:11:16,078 --> 00:11:17,559
+and sometimes we need the other you just
+
+320
+00:11:17,759 --> 00:11:19,000
+have to take care
+
+321
+00:11:19,200 --> 00:11:24,200
+to use the right one
+

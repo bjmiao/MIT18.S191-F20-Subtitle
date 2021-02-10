@@ -1,0 +1,708 @@
+﻿1
+00:00:00,160 --> 00:00:02,359
+when it comes to computational thinking
+
+2
+00:00:02,560 --> 00:00:04,519
+it's always good to distinguish between
+
+3
+00:00:04,719 --> 00:00:07,319
+the theory and the practice at mit we
+
+4
+00:00:07,519 --> 00:00:08,439
+have the logo
+
+5
+00:00:08,638 --> 00:00:12,519
+men's a manus literally mind and hands
+
+6
+00:00:12,718 --> 00:00:15,559
+the mind refers to the theory the hand
+
+7
+00:00:15,759 --> 00:00:16,600
+refers to
+
+8
+00:00:16,800 --> 00:00:18,839
+the practice in the context of
+
+9
+00:00:19,039 --> 00:00:20,440
+computational thinking it's good to
+
+10
+00:00:20,640 --> 00:00:21,320
+think about
+
+11
+00:00:21,519 --> 00:00:23,239
+the algorithms the mathematics on the
+
+12
+00:00:23,439 --> 00:00:25,879
+one hand and how the software is used in
+
+13
+00:00:26,079 --> 00:00:26,679
+the real world
+
+14
+00:00:26,879 --> 00:00:28,999
+on the other hand and so with that in
+
+15
+00:00:29,199 --> 00:00:30,839
+mind because we've been talking about
+
+16
+00:00:31,039 --> 00:00:31,959
+convolutions
+
+17
+00:00:32,159 --> 00:00:33,878
+i thought i'd look into how convolutions
+
+18
+00:00:34,079 --> 00:00:35,719
+are being used in the real world
+
+19
+00:00:35,920 --> 00:00:38,839
+and so i took a look at uh some image
+
+20
+00:00:39,039 --> 00:00:40,038
+processing on
+
+21
+00:00:40,238 --> 00:00:42,279
+software like adobe premiere and i was
+
+22
+00:00:42,479 --> 00:00:43,959
+also wanted to show you
+
+23
+00:00:44,159 --> 00:00:47,000
+how it appears in software uh like
+
+24
+00:00:47,200 --> 00:00:48,518
+machine learning software
+
+25
+00:00:48,719 --> 00:00:51,079
+and in addition i kind of wanted to talk
+
+26
+00:00:51,280 --> 00:00:52,439
+a little bit about
+
+27
+00:00:52,640 --> 00:00:55,719
+the difference between building yourself
+
+28
+00:00:55,920 --> 00:00:59,399
+versus using a product building yourself
+
+29
+00:00:59,600 --> 00:01:00,599
+feels good you feel like you're in
+
+30
+00:01:00,799 --> 00:01:01,878
+control you know every piece of the
+
+31
+00:01:02,079 --> 00:01:02,759
+puzzle
+
+32
+00:01:02,960 --> 00:01:05,238
+but maybe no one person can always build
+
+33
+00:01:05,438 --> 00:01:06,759
+up the most complex software
+
+34
+00:01:06,959 --> 00:01:08,599
+on their own or maybe they don't want to
+
+35
+00:01:08,799 --> 00:01:10,519
+or have no time to
+
+36
+00:01:10,719 --> 00:01:12,278
+on the other hand when you use package
+
+37
+00:01:12,478 --> 00:01:13,799
+software of course you have the
+
+38
+00:01:14,000 --> 00:01:14,918
+professional
+
+39
+00:01:15,118 --> 00:01:17,640
+whistles and bells but you kind of often
+
+40
+00:01:17,840 --> 00:01:19,079
+lose a lot of control
+
+41
+00:01:19,280 --> 00:01:20,359
+and so that's something interesting to
+
+42
+00:01:20,560 --> 00:01:21,558
+think about in the context of
+
+43
+00:01:21,759 --> 00:01:24,039
+computational thinking
+
+44
+00:01:24,239 --> 00:01:26,599
+so this is adobe premiere this is video
+
+45
+00:01:26,799 --> 00:01:28,359
+editing software i'm not particularly
+
+46
+00:01:28,560 --> 00:01:29,878
+good at it but i started to dabble with
+
+47
+00:01:30,078 --> 00:01:30,840
+it a little bit
+
+48
+00:01:31,040 --> 00:01:32,840
+as long as i was making recordings i
+
+49
+00:01:33,040 --> 00:01:34,200
+thought it'd be kind of good to
+
+50
+00:01:34,400 --> 00:01:36,039
+see what i could do with it so i've got
+
+51
+00:01:36,239 --> 00:01:37,719
+my assistant here philip the corgi i've
+
+52
+00:01:37,920 --> 00:01:39,319
+got a picture of him right here
+
+53
+00:01:39,519 --> 00:01:42,119
+and i understood that convolutions were
+
+54
+00:01:42,319 --> 00:01:43,399
+effects that you could play with so i
+
+55
+00:01:43,599 --> 00:01:44,918
+thought i would try that out
+
+56
+00:01:45,118 --> 00:01:48,119
+and sure enough if i type convolution in
+
+57
+00:01:48,319 --> 00:01:50,599
+the effects menu i see all kinds of
+
+58
+00:01:50,799 --> 00:01:52,840
+convolutions that are preset
+
+59
+00:01:53,040 --> 00:01:54,840
+all kinds of kernels there's blur and
+
+60
+00:01:55,040 --> 00:01:57,640
+blur some more find edges gaussian blur
+
+61
+00:01:57,840 --> 00:02:00,119
+sharpen and so forth and so i thought i
+
+62
+00:02:00,319 --> 00:02:01,238
+would kind of
+
+63
+00:02:01,438 --> 00:02:03,640
+dabble a little bit more and i went
+
+64
+00:02:03,840 --> 00:02:04,679
+ahead and
+
+65
+00:02:04,879 --> 00:02:07,079
+added the find edges kernel and so here
+
+66
+00:02:07,280 --> 00:02:09,558
+i'll sort of show it to you
+
+67
+00:02:09,758 --> 00:02:11,399
+you can see that this little rectangle
+
+68
+00:02:11,598 --> 00:02:12,679
+here is
+
+69
+00:02:12,878 --> 00:02:15,399
+basically finding the edges and if you
+
+70
+00:02:15,598 --> 00:02:16,280
+look at this
+
+71
+00:02:16,479 --> 00:02:18,200
+if you sort of expand down close you
+
+72
+00:02:18,400 --> 00:02:19,320
+could see that
+
+73
+00:02:19,520 --> 00:02:22,118
+the 3x3 matrix listed right here it's
+
+74
+00:02:22,318 --> 00:02:22,679
+kind of
+
+75
+00:02:22,878 --> 00:02:24,679
+not really that convenient i guess to
+
+76
+00:02:24,878 --> 00:02:26,200
+play with the numbers but
+
+77
+00:02:26,400 --> 00:02:28,520
+here you could see a multiple of of one
+
+78
+00:02:28,719 --> 00:02:29,240
+two one
+
+79
+00:02:29,439 --> 00:02:32,679
+and minus one two one and so this is the
+
+80
+00:02:32,878 --> 00:02:34,200
+kernel that we've been playing in the x
+
+81
+00:02:34,400 --> 00:02:34,840
+direction
+
+82
+00:02:35,039 --> 00:02:36,759
+right so this is the this is the silvo
+
+83
+00:02:36,959 --> 00:02:38,439
+filter kernel that we've been learning
+
+84
+00:02:38,639 --> 00:02:39,880
+out in class
+
+85
+00:02:40,080 --> 00:02:42,439
+i happened to watch a video to learn how
+
+86
+00:02:42,639 --> 00:02:43,319
+to do this
+
+87
+00:02:43,519 --> 00:02:45,240
+and in the one video i watched the
+
+88
+00:02:45,439 --> 00:02:46,520
+gentleman pronounced
+
+89
+00:02:46,719 --> 00:02:49,800
+these nine numbers as m11 m12
+
+90
+00:02:50,000 --> 00:02:51,960
+m13 these are matrix elements and so
+
+91
+00:02:52,159 --> 00:02:53,719
+they'd normally be pronounced m11
+
+92
+00:02:53,919 --> 00:02:56,360
+m12 m13 i guess they would normally be
+
+93
+00:02:56,560 --> 00:02:57,959
+written with subscripts and maybe that
+
+94
+00:02:58,158 --> 00:02:59,160
+would have made it more obvious
+
+95
+00:02:59,360 --> 00:03:00,600
+and of course you can play with these
+
+96
+00:03:00,800 --> 00:03:02,520
+numbers and you know get a lot of
+
+97
+00:03:02,719 --> 00:03:04,280
+different things happen you can go ahead
+
+98
+00:03:04,479 --> 00:03:04,920
+and
+
+99
+00:03:05,120 --> 00:03:07,240
+make this number much larger it would
+
+100
+00:03:07,439 --> 00:03:09,000
+wouldn't be so much of an edge detector
+
+101
+00:03:09,199 --> 00:03:10,600
+anymore
+
+102
+00:03:10,800 --> 00:03:13,240
+but uh if you would see would sort of
+
+103
+00:03:13,439 --> 00:03:15,000
+brighten that piece and so forth
+
+104
+00:03:15,199 --> 00:03:16,280
+so this is the sort of thing i guess you
+
+105
+00:03:16,479 --> 00:03:18,039
+could play with and what i'd like to
+
+106
+00:03:18,239 --> 00:03:18,759
+really say
+
+107
+00:03:18,959 --> 00:03:22,360
+maybe i'll just put it back at 15.
+
+108
+00:03:22,560 --> 00:03:24,840
+what i'd really like to say is one of
+
+109
+00:03:25,039 --> 00:03:26,118
+the things i realized is it's very
+
+110
+00:03:26,318 --> 00:03:27,080
+difficult to
+
+111
+00:03:27,280 --> 00:03:29,160
+find exactly what this is doing and this
+
+112
+00:03:29,360 --> 00:03:30,520
+is really my point that
+
+113
+00:03:30,719 --> 00:03:31,959
+it's kind of nice to go to this sort of
+
+114
+00:03:32,158 --> 00:03:34,280
+software and have all of these effects
+
+115
+00:03:34,479 --> 00:03:35,719
+like for example here's this gaussian
+
+116
+00:03:35,919 --> 00:03:36,920
+blur we can
+
+117
+00:03:37,120 --> 00:03:38,439
+start making this whole thing much more
+
+118
+00:03:38,639 --> 00:03:41,880
+blurry so we can start blurring
+
+119
+00:03:42,080 --> 00:03:43,640
+poor little phillies getting very blurry
+
+120
+00:03:43,840 --> 00:03:45,480
+now or we can go back and make them
+
+121
+00:03:45,680 --> 00:03:47,080
+sharp again
+
+122
+00:03:47,280 --> 00:03:50,118
+so nice user interface perhaps easy to
+
+123
+00:03:50,318 --> 00:03:51,399
+play with perhaps
+
+124
+00:03:51,598 --> 00:03:53,480
+you could get the nice list of all these
+
+125
+00:03:53,680 --> 00:03:55,480
+effects and see what's available to you
+
+126
+00:03:55,680 --> 00:03:58,599
+but it's not quite easy to know exactly
+
+127
+00:03:58,799 --> 00:04:00,360
+what's going on if you do things in your
+
+128
+00:04:00,560 --> 00:04:01,319
+own software
+
+129
+00:04:01,519 --> 00:04:02,920
+you have that benefit and so there's
+
+130
+00:04:03,120 --> 00:04:06,878
+that trade-off that i was talking about
+
+131
+00:04:07,840 --> 00:04:09,080
+here's one more picture i made with
+
+132
+00:04:09,280 --> 00:04:11,160
+adobe premiere just because it was fun
+
+133
+00:04:11,360 --> 00:04:15,160
+here is the lobby 7 building of
+
+134
+00:04:15,360 --> 00:04:18,439
+mit taken from killian court and i just
+
+135
+00:04:18,639 --> 00:04:20,520
+made this rectangle an edge detector and
+
+136
+00:04:20,720 --> 00:04:22,199
+also the lawn part over here
+
+137
+00:04:22,399 --> 00:04:23,559
+in edge detection just to see what it
+
+138
+00:04:23,759 --> 00:04:25,319
+would look like and i wanted to close
+
+139
+00:04:25,519 --> 00:04:26,920
+this segment with a few words about
+
+140
+00:04:27,120 --> 00:04:30,278
+machine learning so these days
+
+141
+00:04:30,478 --> 00:04:32,439
+you can i think everybody knows that you
+
+142
+00:04:32,639 --> 00:04:34,600
+can tell an apple from an orange
+
+143
+00:04:34,800 --> 00:04:37,800
+or an american football from a soccer
+
+144
+00:04:38,000 --> 00:04:38,520
+ball
+
+145
+00:04:38,720 --> 00:04:40,999
+or uh even a picture of me from a
+
+146
+00:04:41,199 --> 00:04:42,680
+picture of you these days
+
+147
+00:04:42,879 --> 00:04:45,160
+and you might wonder how that goes well
+
+148
+00:04:45,360 --> 00:04:46,840
+there's convolutions in there
+
+149
+00:04:47,040 --> 00:04:48,840
+and what happens is there are various
+
+150
+00:04:49,040 --> 00:04:50,520
+convolutions that will make a bigger
+
+151
+00:04:50,720 --> 00:04:50,999
+picture
+
+152
+00:04:51,199 --> 00:04:53,559
+smaller for example one way to do it is
+
+153
+00:04:53,759 --> 00:04:54,360
+if you
+
+154
+00:04:54,560 --> 00:04:56,999
+don't overlap the windows a three by
+
+155
+00:04:57,199 --> 00:04:58,199
+three window
+
+156
+00:04:58,399 --> 00:04:59,800
+you'll be divide the length and width by
+
+157
+00:05:00,000 --> 00:05:01,319
+three right and you can keep doing that
+
+158
+00:05:01,519 --> 00:05:03,639
+make smaller and smaller pictures
+
+159
+00:05:03,839 --> 00:05:06,120
+so the question is what numbers to put
+
+160
+00:05:06,319 --> 00:05:07,639
+in those convolutions
+
+161
+00:05:07,839 --> 00:05:09,559
+so with the sobo filter with these other
+
+162
+00:05:09,759 --> 00:05:11,160
+filters these are numbers that are
+
+163
+00:05:11,360 --> 00:05:12,120
+pre-decided
+
+164
+00:05:12,319 --> 00:05:13,480
+but in machine learning what we're going
+
+165
+00:05:13,680 --> 00:05:16,439
+to do is we're going to pick the numbers
+
+166
+00:05:16,639 --> 00:05:18,278
+such that somehow we could tell our
+
+167
+00:05:18,478 --> 00:05:20,040
+apples from our oranges or our meats
+
+168
+00:05:20,240 --> 00:05:20,920
+from you so
+
+169
+00:05:21,120 --> 00:05:21,800
+you're going to run some sort of
+
+170
+00:05:22,000 --> 00:05:23,079
+optimization that somehow is going to
+
+171
+00:05:23,279 --> 00:05:24,360
+separate
+
+172
+00:05:24,560 --> 00:05:26,360
+this image from that image you see and
+
+173
+00:05:26,560 --> 00:05:28,360
+so convolutions serve for image
+
+174
+00:05:28,560 --> 00:05:29,559
+processing where you don't even know
+
+175
+00:05:29,759 --> 00:05:31,319
+what the convolution is
+
+176
+00:05:31,519 --> 00:05:33,400
+you're going to actually do some sort of
+
+177
+00:05:33,600 --> 00:05:38,600
+optimization to figure it out as you go
+

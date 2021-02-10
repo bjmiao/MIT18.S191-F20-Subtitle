@@ -1,0 +1,968 @@
+﻿1
+00:00:00,880 --> 00:00:03,159
+what are macros we've seen several of
+
+2
+00:00:03,359 --> 00:00:05,319
+them already they start with the at
+
+3
+00:00:05,519 --> 00:00:08,680
+sign so what what is going on well they
+
+4
+00:00:08,880 --> 00:00:09,479
+are a way
+
+5
+00:00:09,679 --> 00:00:11,559
+to take a piece of julia code and
+
+6
+00:00:11,759 --> 00:00:13,160
+actually transform it
+
+7
+00:00:13,359 --> 00:00:16,039
+into a different piece of julia code so
+
+8
+00:00:16,239 --> 00:00:16,919
+we're actually
+
+9
+00:00:17,118 --> 00:00:20,039
+representing julia code itself as
+
+10
+00:00:20,239 --> 00:00:22,280
+an object inside julia so let's see how
+
+11
+00:00:22,480 --> 00:00:23,239
+to do that
+
+12
+00:00:23,439 --> 00:00:25,640
+so let's use as an example this function
+
+13
+00:00:25,839 --> 00:00:27,318
+called peak flops
+
+14
+00:00:27,518 --> 00:00:29,399
+when you run that it actually does a
+
+15
+00:00:29,599 --> 00:00:30,919
+little calculation using matrix
+
+16
+00:00:31,118 --> 00:00:33,079
+multiplication and tries to estimate
+
+17
+00:00:33,280 --> 00:00:35,640
+how fast your computer is how many flops
+
+18
+00:00:35,840 --> 00:00:38,119
+or floating point operations per second
+
+19
+00:00:38,320 --> 00:00:41,559
+your computer can actually run at
+
+20
+00:00:41,759 --> 00:00:43,320
+so what we want to do is measure how
+
+21
+00:00:43,520 --> 00:00:44,838
+long that operation took
+
+22
+00:00:45,039 --> 00:00:47,079
+so we're going to do that using this at
+
+23
+00:00:47,280 --> 00:00:47,959
+elapsed
+
+24
+00:00:48,159 --> 00:00:50,678
+macro so elapsed just means how much
+
+25
+00:00:50,878 --> 00:00:51,159
+time
+
+26
+00:00:51,359 --> 00:00:53,878
+a certain operation took but we're using
+
+27
+00:00:54,079 --> 00:00:54,279
+this
+
+28
+00:00:54,479 --> 00:00:57,799
+macro that is defined in julia uh
+
+29
+00:00:58,000 --> 00:00:59,799
+in order to do this so when we run that
+
+30
+00:01:00,000 --> 00:01:00,838
+we see that
+
+31
+00:01:01,039 --> 00:01:04,679
+well this particular operation took 0.33
+
+32
+00:01:04,879 --> 00:01:05,560
+seconds
+
+33
+00:01:05,760 --> 00:01:08,119
+it is no longer returning the output of
+
+34
+00:01:08,319 --> 00:01:10,039
+the peak flops function itself
+
+35
+00:01:10,239 --> 00:01:13,959
+instead it somehow sort of diverted
+
+36
+00:01:14,159 --> 00:01:17,000
+that and is now returning instead the
+
+37
+00:01:17,200 --> 00:01:20,039
+time it took to run the function
+
+38
+00:01:20,239 --> 00:01:23,079
+so this at sign is actually a visual
+
+39
+00:01:23,280 --> 00:01:23,799
+clue
+
+40
+00:01:24,000 --> 00:01:25,480
+that something strange is going on so
+
+41
+00:01:25,680 --> 00:01:26,918
+what julia did is take
+
+42
+00:01:27,118 --> 00:01:28,918
+this piece of code and transform it into
+
+43
+00:01:29,118 --> 00:01:30,278
+a different piece of code
+
+44
+00:01:30,478 --> 00:01:33,079
+that actually calculates the time it
+
+45
+00:01:33,280 --> 00:01:34,679
+took to run the function instead of
+
+46
+00:01:34,879 --> 00:01:36,119
+returning the output of the function
+
+47
+00:01:36,319 --> 00:01:37,719
+itself
+
+48
+00:01:37,920 --> 00:01:41,399
+at macro expand is itself a macro we
+
+49
+00:01:41,599 --> 00:01:43,399
+know that because it begins with the at
+
+50
+00:01:43,599 --> 00:01:44,198
+symbol
+
+51
+00:01:44,399 --> 00:01:47,000
+and what it does is just shows me the
+
+52
+00:01:47,200 --> 00:01:49,399
+code that that macro is producing
+
+53
+00:01:49,599 --> 00:01:51,319
+so here we see well it looks pretty
+
+54
+00:01:51,519 --> 00:01:53,238
+complicated but that's because it has
+
+55
+00:01:53,438 --> 00:01:54,278
+these extra
+
+56
+00:01:54,478 --> 00:01:56,198
+information which is the line numbers
+
+57
+00:01:56,399 --> 00:01:58,359
+where the code is actually coming from
+
+58
+00:01:58,560 --> 00:02:01,079
+inside the julia code base we want to
+
+59
+00:02:01,280 --> 00:02:02,759
+get rid of those because they're pretty
+
+60
+00:02:02,959 --> 00:02:03,399
+noisy
+
+61
+00:02:03,599 --> 00:02:06,518
+so we'll use this remove line nums
+
+62
+00:02:06,718 --> 00:02:10,279
+function from base from base julia which
+
+63
+00:02:10,479 --> 00:02:12,679
+takes the piece of code that's being
+
+64
+00:02:12,878 --> 00:02:15,000
+generated and removes these line numbers
+
+65
+00:02:15,199 --> 00:02:17,160
+so what we see is that indeed the
+
+66
+00:02:17,360 --> 00:02:18,920
+original code is still there
+
+67
+00:02:19,120 --> 00:02:21,960
+but julia has added extra
+
+68
+00:02:22,159 --> 00:02:24,520
+pieces of code around it would take the
+
+69
+00:02:24,719 --> 00:02:26,360
+current time in nanoseconds
+
+70
+00:02:26,560 --> 00:02:29,480
+and then they run it runs the function
+
+71
+00:02:29,680 --> 00:02:32,360
+and produces the new time in nanoseconds
+
+72
+00:02:32,560 --> 00:02:34,280
+afterwards and subtracts the old time
+
+73
+00:02:34,479 --> 00:02:37,319
+so this strange var is just a
+
+74
+00:02:37,519 --> 00:02:40,679
+local variable with us an automatically
+
+75
+00:02:40,878 --> 00:02:41,960
+generated name
+
+76
+00:02:42,159 --> 00:02:43,560
+and you can see that we're dividing by
+
+77
+00:02:43,759 --> 00:02:45,160
+10 to the nine because
+
+78
+00:02:45,360 --> 00:02:46,840
+uh we're getting the time in nanoseconds
+
+79
+00:02:47,039 --> 00:02:48,640
+and we want to return the time in
+
+80
+00:02:48,840 --> 00:02:50,600
+seconds
+
+81
+00:02:50,800 --> 00:02:53,240
+so julia has actually when we run this
+
+82
+00:02:53,439 --> 00:02:55,399
+at elapsed peak flops
+
+83
+00:02:55,598 --> 00:02:58,360
+julia is actually replacing the call to
+
+84
+00:02:58,560 --> 00:03:01,080
+peak flops with this new piece of code
+
+85
+00:03:01,280 --> 00:03:03,800
+and that is what is getting compiled
+
+86
+00:03:04,000 --> 00:03:04,520
+that's how
+
+87
+00:03:04,719 --> 00:03:07,519
+macros work
+
+88
+00:03:07,759 --> 00:03:10,118
+so how is julia able to manipulate these
+
+89
+00:03:10,318 --> 00:03:11,000
+expressions
+
+90
+00:03:11,199 --> 00:03:14,679
+which are representing julia code
+
+91
+00:03:14,878 --> 00:03:17,399
+so let's look at that so if i type x
+
+92
+00:03:17,598 --> 00:03:18,840
+equals one plus two
+
+93
+00:03:19,039 --> 00:03:21,160
+one plus two is a piece of julia code an
+
+94
+00:03:21,360 --> 00:03:22,200
+expression
+
+95
+00:03:22,400 --> 00:03:24,439
+but what julia is doing is actually
+
+96
+00:03:24,639 --> 00:03:26,280
+evaluating that expression
+
+97
+00:03:26,479 --> 00:03:29,719
+so it's turning the string one plus two
+
+98
+00:03:29,919 --> 00:03:32,118
+into a julia code object and then it's
+
+99
+00:03:32,318 --> 00:03:33,800
+evaluating that
+
+100
+00:03:34,000 --> 00:03:36,360
+in the normal way but if i want to
+
+101
+00:03:36,560 --> 00:03:38,118
+actually go and manipulate
+
+102
+00:03:38,318 --> 00:03:40,439
+that piece of code i don't want to
+
+103
+00:03:40,639 --> 00:03:41,959
+evaluate it or run
+
+104
+00:03:42,158 --> 00:03:44,280
+that code i just want it as an
+
+105
+00:03:44,479 --> 00:03:45,880
+unevaluated piece of code
+
+106
+00:03:46,080 --> 00:03:48,118
+and that's what an expression is and i
+
+107
+00:03:48,318 --> 00:03:50,439
+can make expressions in one of two ways
+
+108
+00:03:50,639 --> 00:03:52,920
+i can either so we call that quoting the
+
+109
+00:03:53,120 --> 00:03:53,640
+code
+
+110
+00:03:53,840 --> 00:03:56,039
+i quote the code i sort of put it in
+
+111
+00:03:56,239 --> 00:03:57,319
+quote marks
+
+112
+00:03:57,519 --> 00:04:00,200
+uh so that julia knows not to evaluate
+
+113
+00:04:00,400 --> 00:04:00,599
+it but
+
+114
+00:04:00,799 --> 00:04:02,118
+instead of quote marks which would make
+
+115
+00:04:02,318 --> 00:04:03,719
+a string i use this
+
+116
+00:04:03,919 --> 00:04:06,759
+colon parenthesis or i can
+
+117
+00:04:06,959 --> 00:04:10,118
+use this quote end construction and so
+
+118
+00:04:10,318 --> 00:04:11,319
+either of these make
+
+119
+00:04:11,519 --> 00:04:13,399
+expressions you can see that when i use
+
+120
+00:04:13,598 --> 00:04:15,000
+quote end it actually adds
+
+121
+00:04:15,199 --> 00:04:18,598
+some line number information in so this
+
+122
+00:04:18,798 --> 00:04:20,920
+again leaves this expression alone
+
+123
+00:04:21,120 --> 00:04:22,999
+without evaluating it and returns the
+
+124
+00:04:23,199 --> 00:04:24,759
+unevaluated expression
+
+125
+00:04:24,959 --> 00:04:26,600
+so let's actually see what type of
+
+126
+00:04:26,800 --> 00:04:27,800
+object i've produced when
+
+127
+00:04:28,000 --> 00:04:31,639
+i do that i produce this type so
+
+128
+00:04:31,839 --> 00:04:34,999
+expert with a lowercase e is the name of
+
+129
+00:04:35,199 --> 00:04:35,960
+the variable
+
+130
+00:04:36,160 --> 00:04:38,040
+which corresponds to this expression
+
+131
+00:04:38,240 --> 00:04:39,079
+that i defined
+
+132
+00:04:39,279 --> 00:04:42,120
+whereas extra with a capital e is the
+
+133
+00:04:42,319 --> 00:04:42,840
+type
+
+134
+00:04:43,040 --> 00:04:45,319
+which is a type that julia finds to
+
+135
+00:04:45,519 --> 00:04:46,520
+represent its own
+
+136
+00:04:46,720 --> 00:04:49,079
+expressions so for example let's create
+
+137
+00:04:49,279 --> 00:04:50,278
+this expression y
+
+138
+00:04:50,478 --> 00:04:53,879
+plus one so because it has the colon
+
+139
+00:04:54,079 --> 00:04:56,199
+parenthesis we know that that is going
+
+140
+00:04:56,399 --> 00:04:58,680
+to create an expression object
+
+141
+00:04:58,879 --> 00:05:00,999
+of course if we evaluate this piece of
+
+142
+00:05:01,199 --> 00:05:02,680
+code y plus 1
+
+143
+00:05:02,879 --> 00:05:05,079
+in the normal way using julia that would
+
+144
+00:05:05,279 --> 00:05:06,520
+will give an error because
+
+145
+00:05:06,720 --> 00:05:08,199
+in this notebook we have not defined a
+
+146
+00:05:08,399 --> 00:05:10,838
+variable called y
+
+147
+00:05:11,038 --> 00:05:13,960
+but so i'm really seeing that this
+
+148
+00:05:14,160 --> 00:05:16,199
+is giving me the unevaluated expression
+
+149
+00:05:16,399 --> 00:05:17,639
+and it's perfectly fine
+
+150
+00:05:17,839 --> 00:05:20,120
+as a piece of julia code even though y
+
+151
+00:05:20,319 --> 00:05:21,960
+is not defined
+
+152
+00:05:22,160 --> 00:05:24,600
+because this is a julia object i can go
+
+153
+00:05:24,800 --> 00:05:26,920
+and use the standard julia tools to look
+
+154
+00:05:27,120 --> 00:05:28,199
+inside and see what
+
+155
+00:05:28,399 --> 00:05:30,600
+what is in there so let's use the dump
+
+156
+00:05:30,800 --> 00:05:31,400
+function
+
+157
+00:05:31,600 --> 00:05:34,278
+which just takes an object and tells me
+
+158
+00:05:34,478 --> 00:05:35,240
+what all the sub
+
+159
+00:05:35,439 --> 00:05:38,360
+pieces inside that object are and so
+
+160
+00:05:38,560 --> 00:05:40,360
+here we go this is the output so we see
+
+161
+00:05:40,560 --> 00:05:41,480
+that this
+
+162
+00:05:41,680 --> 00:05:44,040
+expression three variable is of type
+
+163
+00:05:44,240 --> 00:05:46,520
+expression with a capital e
+
+164
+00:05:46,720 --> 00:05:50,439
+and that consists of a field called head
+
+165
+00:05:50,639 --> 00:05:52,520
+which is call so we know that it's some
+
+166
+00:05:52,720 --> 00:05:54,360
+kind of function call
+
+167
+00:05:54,560 --> 00:05:56,278
+and then the and then another field
+
+168
+00:05:56,478 --> 00:05:57,718
+called args meaning
+
+169
+00:05:57,918 --> 00:05:59,800
+arguments so those are the arguments of
+
+170
+00:06:00,000 --> 00:06:01,160
+the call the first
+
+171
+00:06:01,360 --> 00:06:04,520
+argument is the plus is a symbol
+
+172
+00:06:04,720 --> 00:06:07,639
+so a string a kind of string
+
+173
+00:06:07,839 --> 00:06:10,920
+which is just the unevaluated plus sign
+
+174
+00:06:11,120 --> 00:06:12,838
+and then the second argument is the
+
+175
+00:06:13,038 --> 00:06:14,040
+unevaluated
+
+176
+00:06:14,240 --> 00:06:16,999
+symbol y it's like a the unevaluated
+
+177
+00:06:17,199 --> 00:06:17,400
+string
+
+178
+00:06:17,600 --> 00:06:19,800
+y and the third argument is one and so
+
+179
+00:06:20,000 --> 00:06:21,480
+that is the way that julia is
+
+180
+00:06:21,680 --> 00:06:22,520
+representing
+
+181
+00:06:22,720 --> 00:06:26,040
+this piece of code and we know
+
+182
+00:06:26,240 --> 00:06:28,920
+from the video on types that we can
+
+183
+00:06:29,120 --> 00:06:30,119
+extract the fields
+
+184
+00:06:30,319 --> 00:06:33,639
+ourselves manually using dot so extra3
+
+185
+00:06:33,839 --> 00:06:34,838
+dot head
+
+186
+00:06:35,038 --> 00:06:38,759
+gives me the symbol call and extra3.x
+
+187
+00:06:38,959 --> 00:06:40,920
+gives me an array with these three
+
+188
+00:06:41,120 --> 00:06:42,360
+things inside
+
+189
+00:06:42,560 --> 00:06:44,119
+but now the point is that i can actually
+
+190
+00:06:44,319 --> 00:06:46,119
+go and modify those myself
+
+191
+00:06:46,319 --> 00:06:48,439
+so i can extract the second argument
+
+192
+00:06:48,639 --> 00:06:50,040
+which is currently y
+
+193
+00:06:50,240 --> 00:06:52,040
+but because that's just a standard julia
+
+194
+00:06:52,240 --> 00:06:54,439
+array with some kind of objects inside
+
+195
+00:06:54,639 --> 00:06:56,520
+i can actually go and modify the second
+
+196
+00:06:56,720 --> 00:06:59,160
+argument and when i do that
+
+197
+00:06:59,360 --> 00:07:01,319
+okay it allowed me to do that and now
+
+198
+00:07:01,519 --> 00:07:03,480
+let's look at extra three
+
+199
+00:07:03,680 --> 00:07:05,800
+and we see that it actually changed and
+
+200
+00:07:06,000 --> 00:07:07,718
+so this is how macros work
+
+201
+00:07:07,918 --> 00:07:10,040
+they receive their input as julia
+
+202
+00:07:10,240 --> 00:07:11,800
+expressions and then they're free to
+
+203
+00:07:12,000 --> 00:07:13,960
+modify them however they want
+
+204
+00:07:14,160 --> 00:07:15,160
+of course you might think this is
+
+205
+00:07:15,360 --> 00:07:17,399
+dangerous and that's why macros always
+
+206
+00:07:17,598 --> 00:07:18,360
+have this at
+
+207
+00:07:18,560 --> 00:07:21,480
+symbol so that we know visually that
+
+208
+00:07:21,680 --> 00:07:24,119
+julia is allowing whoever wrote the
+
+209
+00:07:24,319 --> 00:07:26,600
+macro to modify my code into a new piece
+
+210
+00:07:26,800 --> 00:07:28,639
+of code that might do something
+
+211
+00:07:28,839 --> 00:07:30,680
+different
+
+212
+00:07:30,879 --> 00:07:33,399
+so for example in pluto the at bind
+
+213
+00:07:33,598 --> 00:07:34,920
+macro
+
+214
+00:07:35,120 --> 00:07:38,680
+actually what does that do it binds
+
+215
+00:07:38,879 --> 00:07:41,718
+a julia variable to some html
+
+216
+00:07:41,918 --> 00:07:44,439
+object which is for example a slider so
+
+217
+00:07:44,639 --> 00:07:45,079
+that's a
+
+218
+00:07:45,279 --> 00:07:47,399
+you know complicated thing to do and the
+
+219
+00:07:47,598 --> 00:07:49,319
+macro is hiding the
+
+220
+00:07:49,519 --> 00:07:51,800
+details from me but i can always go and
+
+221
+00:07:52,000 --> 00:07:53,639
+look at the source code of the macro to
+
+222
+00:07:53,839 --> 00:07:56,520
+see exactly what's going on
+
+223
+00:07:56,720 --> 00:07:58,600
+so this isn't this is the start of
+
+224
+00:07:58,800 --> 00:08:00,520
+what's called meta programming
+
+225
+00:08:00,720 --> 00:08:03,399
+so programming sort of one level up
+
+226
+00:08:03,598 --> 00:08:05,960
+where i'm actually writing a program
+
+227
+00:08:06,160 --> 00:08:09,079
+which itself modifies a program so
+
+228
+00:08:09,279 --> 00:08:11,079
+modifies julia code
+
+229
+00:08:11,279 --> 00:08:12,999
+normally pro the programs we've written
+
+230
+00:08:13,199 --> 00:08:15,319
+so far actually modified data
+
+231
+00:08:15,519 --> 00:08:16,920
+but now we're writing a program that
+
+232
+00:08:17,120 --> 00:08:18,999
+modifies a program
+
+233
+00:08:19,199 --> 00:08:21,160
+and that's a very powerful but can be
+
+234
+00:08:21,360 --> 00:08:22,838
+dangerous tool
+
+235
+00:08:23,038 --> 00:08:24,600
+and so it should only be used in certain
+
+236
+00:08:24,800 --> 00:08:26,278
+circumstances and we're not going to
+
+237
+00:08:26,478 --> 00:08:26,999
+teach
+
+238
+00:08:27,199 --> 00:08:28,838
+how to actually make a macro but they
+
+239
+00:08:29,038 --> 00:08:30,520
+can be very useful when you need to do a
+
+240
+00:08:30,720 --> 00:08:31,559
+syntactic
+
+241
+00:08:31,759 --> 00:08:34,120
+transformation transform the syntax of a
+
+242
+00:08:34,320 --> 00:08:39,320
+piece of code
+

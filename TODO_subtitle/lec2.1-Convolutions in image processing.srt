@@ -1,0 +1,4796 @@
+﻿1
+00:00:01,139 --> 00:00:04,359
+[Music]
+
+2
+00:00:04,559 --> 00:00:06,439
+hello and welcome to the first live
+
+3
+00:00:06,639 --> 00:00:07,799
+lecture of the course
+
+4
+00:00:08,000 --> 00:00:09,399
+so before we jump into things there's
+
+5
+00:00:09,599 --> 00:00:11,000
+just a couple logistics to
+
+6
+00:00:11,199 --> 00:00:13,160
+uh handle here the first one is that we
+
+7
+00:00:13,359 --> 00:00:14,839
+have a new website so if you check the
+
+8
+00:00:15,039 --> 00:00:16,120
+link in the description
+
+9
+00:00:16,320 --> 00:00:18,600
+there's a new official course website uh
+
+10
+00:00:18,800 --> 00:00:20,359
+and again this is something that anybody
+
+11
+00:00:20,559 --> 00:00:21,079
+in the world is
+
+12
+00:00:21,278 --> 00:00:22,760
+free to attend the lectures for if you
+
+13
+00:00:22,960 --> 00:00:24,919
+want to second we're going to be doing
+
+14
+00:00:25,118 --> 00:00:25,720
+the discussion
+
+15
+00:00:25,920 --> 00:00:27,960
+during this lecture through discord so
+
+16
+00:00:28,160 --> 00:00:29,720
+if you want to answer questions or ask
+
+17
+00:00:29,920 --> 00:00:31,318
+questions or interact with the other
+
+18
+00:00:31,518 --> 00:00:32,439
+professors
+
+19
+00:00:32,640 --> 00:00:35,000
+while i give this lecture the discord's
+
+20
+00:00:35,200 --> 00:00:36,119
+the place to do it
+
+21
+00:00:36,320 --> 00:00:38,038
+um questions will be fed to me and we
+
+22
+00:00:38,238 --> 00:00:39,559
+can pull them up on screen here
+
+23
+00:00:39,759 --> 00:00:41,799
+so for example it looks like last time
+
+24
+00:00:42,000 --> 00:00:43,159
+there were some people asking about some
+
+25
+00:00:43,359 --> 00:00:44,518
+of the functions i was using in the
+
+26
+00:00:44,719 --> 00:00:45,320
+notebook
+
+27
+00:00:45,520 --> 00:00:47,159
+uh which i failed to mention were custom
+
+28
+00:00:47,359 --> 00:00:48,678
+defined within that notebook
+
+29
+00:00:48,878 --> 00:00:50,358
+so if you just try and like open raw
+
+30
+00:00:50,558 --> 00:00:51,719
+julia to call destinate
+
+31
+00:00:51,920 --> 00:00:53,399
+it doesn't mean anything but it was just
+
+32
+00:00:53,600 --> 00:00:54,998
+this small little custom thing
+
+33
+00:00:55,198 --> 00:00:56,759
+and in general we'll share the notebooks
+
+34
+00:00:56,960 --> 00:00:58,198
+that we're using so if you want to
+
+35
+00:00:58,399 --> 00:00:59,640
+follow along you can see all those
+
+36
+00:00:59,840 --> 00:01:00,919
+pre-definitions
+
+37
+00:01:01,119 --> 00:01:02,838
+um and with that you know we only have
+
+38
+00:01:03,039 --> 00:01:04,278
+30 minutes for this lecture
+
+39
+00:01:04,478 --> 00:01:06,039
+convolutions are super interesting and
+
+40
+00:01:06,239 --> 00:01:07,799
+let you do a bunch of powerful things
+
+41
+00:01:08,000 --> 00:01:09,719
+so i say let us just jump right into
+
+42
+00:01:09,920 --> 00:01:11,480
+things
+
+43
+00:01:11,680 --> 00:01:13,640
+so as a first example i'm just going to
+
+44
+00:01:13,840 --> 00:01:15,079
+take this 8-bit mario
+
+45
+00:01:15,280 --> 00:01:17,319
+that we see this very low resolution
+
+46
+00:01:17,519 --> 00:01:19,480
+image and i want to blur it
+
+47
+00:01:19,680 --> 00:01:20,840
+and if you're thinking about blurring an
+
+48
+00:01:21,040 --> 00:01:22,200
+image maybe the first thing that you
+
+49
+00:01:22,400 --> 00:01:23,319
+could think to do
+
+50
+00:01:23,519 --> 00:01:25,558
+would be to look at each pixel and kind
+
+51
+00:01:25,759 --> 00:01:27,558
+of average it with all of its neighbors
+
+52
+00:01:27,759 --> 00:01:29,719
+and do this sort of moving average so
+
+53
+00:01:29,920 --> 00:01:31,000
+the way i'm doing it here we've got this
+
+54
+00:01:31,200 --> 00:01:31,719
+little grid
+
+55
+00:01:31,920 --> 00:01:34,439
+uh three by three grid of values that's
+
+56
+00:01:34,640 --> 00:01:35,878
+marching across the image
+
+57
+00:01:36,078 --> 00:01:37,878
+and slowly creating a new image on the
+
+58
+00:01:38,078 --> 00:01:39,878
+right and to be concrete what's going
+
+59
+00:01:40,078 --> 00:01:43,399
+on here is each of those values is 1 9
+
+60
+00:01:43,599 --> 00:01:44,679
+and we're sort of thinking of lining
+
+61
+00:01:44,879 --> 00:01:46,679
+them up with some pixels multiplying
+
+62
+00:01:46,879 --> 00:01:47,878
+each of those values by the
+
+63
+00:01:48,078 --> 00:01:49,238
+corresponding pixel
+
+64
+00:01:49,438 --> 00:01:51,238
+and then adding them together so in this
+
+65
+00:01:51,438 --> 00:01:53,159
+case if they're all 1 9 then we multiply
+
+66
+00:01:53,359 --> 00:01:54,439
+them and we add them together
+
+67
+00:01:54,640 --> 00:01:55,959
+we're just taking an average of the nine
+
+68
+00:01:56,159 --> 00:01:57,959
+pixels so in this
+
+69
+00:01:58,159 --> 00:01:59,480
+specific window it looks like there's
+
+70
+00:01:59,680 --> 00:02:01,238
+four black pixels
+
+71
+00:02:01,438 --> 00:02:02,759
+four gray pixels and then one that's
+
+72
+00:02:02,959 --> 00:02:04,840
+kind of the mario skin tone color
+
+73
+00:02:05,040 --> 00:02:06,278
+so you would expect the average to be
+
+74
+00:02:06,478 --> 00:02:08,600
+like a darker gray with the tiniest
+
+75
+00:02:08,800 --> 00:02:11,480
+you know hint of mario skin color and if
+
+76
+00:02:11,680 --> 00:02:12,920
+we go and look at the new
+
+77
+00:02:13,120 --> 00:02:14,520
+image that's being generated and what's
+
+78
+00:02:14,719 --> 00:02:16,118
+painted into that pixel
+
+79
+00:02:16,318 --> 00:02:17,560
+it's that it's a dark gray with the
+
+80
+00:02:17,759 --> 00:02:20,200
+tiniest hint of some kind of skin color
+
+81
+00:02:20,400 --> 00:02:21,719
+and as we keep marching along we get
+
+82
+00:02:21,919 --> 00:02:23,719
+this blurrier image of mario we might
+
+83
+00:02:23,919 --> 00:02:25,320
+zoom in on another example
+
+84
+00:02:25,520 --> 00:02:27,240
+um here you know this grid it's mostly
+
+85
+00:02:27,439 --> 00:02:28,679
+covering the skin color with just a
+
+86
+00:02:28,878 --> 00:02:29,560
+little bit of black
+
+87
+00:02:29,759 --> 00:02:31,560
+here and there so we would expect it to
+
+88
+00:02:31,759 --> 00:02:34,039
+be a dyed down version of that
+
+89
+00:02:34,239 --> 00:02:36,360
+which is what we see um and he's this
+
+90
+00:02:36,560 --> 00:02:37,640
+gives kind of a nice effect right
+
+91
+00:02:37,840 --> 00:02:40,439
+we zoom out and we see uh what was once
+
+92
+00:02:40,639 --> 00:02:41,880
+this nice clean
+
+93
+00:02:42,080 --> 00:02:45,240
+8-bit mario same resolution uh nothing's
+
+94
+00:02:45,439 --> 00:02:46,679
+changed about the resolution but what
+
+95
+00:02:46,878 --> 00:02:49,160
+we've got is kind of this blurrier image
+
+96
+00:02:49,360 --> 00:02:51,399
+now a couple nuances about what's going
+
+97
+00:02:51,598 --> 00:02:52,439
+on here because
+
+98
+00:02:52,639 --> 00:02:54,280
+uh as with so many things in computer
+
+99
+00:02:54,479 --> 00:02:56,439
+science there's edge cases to handle
+
+100
+00:02:56,639 --> 00:02:58,280
+in this case it's a literal edge case
+
+101
+00:02:58,479 --> 00:03:00,280
+like what's going on at the edge
+
+102
+00:03:00,479 --> 00:03:02,039
+because if we just let this grid of
+
+103
+00:03:02,239 --> 00:03:04,039
+values fall off the side
+
+104
+00:03:04,239 --> 00:03:06,600
+and you know maybe we either don't count
+
+105
+00:03:06,800 --> 00:03:08,679
+them or we're multiplying them by zero
+
+106
+00:03:08,878 --> 00:03:10,840
+what ends up happening is we would only
+
+107
+00:03:11,039 --> 00:03:12,439
+be taking four ninths
+
+108
+00:03:12,639 --> 00:03:14,520
+of the given corner value and it's going
+
+109
+00:03:14,719 --> 00:03:16,679
+to end up disproportionately dark
+
+110
+00:03:16,878 --> 00:03:18,759
+which in some mathematical contexts
+
+111
+00:03:18,959 --> 00:03:19,959
+maybe that's what you want you would
+
+112
+00:03:20,158 --> 00:03:21,160
+want to treat the image as being
+
+113
+00:03:21,360 --> 00:03:22,118
+something where
+
+114
+00:03:22,318 --> 00:03:23,959
+outside of a certain domain it's
+
+115
+00:03:24,158 --> 00:03:25,319
+entirely zero
+
+116
+00:03:25,519 --> 00:03:27,080
+but when our eyes look at the blurred
+
+117
+00:03:27,280 --> 00:03:28,360
+image it doesn't quite seem right
+
+118
+00:03:28,560 --> 00:03:29,880
+because you see all of this black
+
+119
+00:03:30,080 --> 00:03:31,480
+or this sort of darker gray along the
+
+120
+00:03:31,680 --> 00:03:33,399
+side and what we
+
+121
+00:03:33,598 --> 00:03:35,240
+expect is that this was an image taken
+
+122
+00:03:35,439 --> 00:03:36,679
+in a broader context where what's
+
+123
+00:03:36,878 --> 00:03:37,800
+surrounding
+
+124
+00:03:38,000 --> 00:03:40,118
+you know mario's world is the same gray
+
+125
+00:03:40,318 --> 00:03:41,560
+that we would have thought
+
+126
+00:03:41,759 --> 00:03:44,599
+so in the problem set for today's uh not
+
+127
+00:03:44,799 --> 00:03:46,679
+today's lecture for this week's uh
+
+128
+00:03:46,878 --> 00:03:49,240
+uh lectures you've got well you've got
+
+129
+00:03:49,439 --> 00:03:50,360
+the task of basically
+
+130
+00:03:50,560 --> 00:03:51,880
+defining a function that will handle
+
+131
+00:03:52,080 --> 00:03:53,560
+this and a more general variety of
+
+132
+00:03:53,759 --> 00:03:54,759
+what's going on here
+
+133
+00:03:54,959 --> 00:03:56,039
+and one thing to think about is what
+
+134
+00:03:56,239 --> 00:03:58,200
+happens at that edge and
+
+135
+00:03:58,400 --> 00:04:00,520
+a typical convention in image processing
+
+136
+00:04:00,719 --> 00:04:02,039
+context would be that
+
+137
+00:04:02,239 --> 00:04:03,399
+when you're falling off the edge like
+
+138
+00:04:03,598 --> 00:04:06,118
+that you uh you just
+
+139
+00:04:06,318 --> 00:04:08,118
+uh multiply by the nearest value right
+
+140
+00:04:08,318 --> 00:04:09,560
+so if you see that it's
+
+141
+00:04:09,759 --> 00:04:11,800
+1 9 times 0 instead of falling off the
+
+142
+00:04:12,000 --> 00:04:12,599
+edge you take the
+
+143
+00:04:12,799 --> 00:04:14,520
+the nearest value in the image and that
+
+144
+00:04:14,719 --> 00:04:16,038
+would make the boundary of our
+
+145
+00:04:16,238 --> 00:04:18,598
+mario look a lot more gray so that's all
+
+146
+00:04:18,798 --> 00:04:19,960
+well and good
+
+147
+00:04:20,160 --> 00:04:21,319
+but there's another nuance that we might
+
+148
+00:04:21,519 --> 00:04:23,319
+want to handle here which is
+
+149
+00:04:23,519 --> 00:04:24,600
+you know if we're not in a super low
+
+150
+00:04:24,800 --> 00:04:26,520
+resolution context like this but if
+
+151
+00:04:26,720 --> 00:04:27,160
+we're in
+
+152
+00:04:27,360 --> 00:04:28,520
+something that's higher resolution and
+
+153
+00:04:28,720 --> 00:04:30,120
+we want to have a box that's a little
+
+154
+00:04:30,319 --> 00:04:31,400
+bit bigger
+
+155
+00:04:31,600 --> 00:04:33,480
+like maybe i have this 5x5 box that's
+
+156
+00:04:33,680 --> 00:04:34,840
+wandering along
+
+157
+00:04:35,040 --> 00:04:36,600
+it's a little bit strange to treat all
+
+158
+00:04:36,800 --> 00:04:39,160
+of the pixels in that 5x5 box with equal
+
+159
+00:04:39,360 --> 00:04:39,879
+weight
+
+160
+00:04:40,079 --> 00:04:41,319
+because the ones towards the center are
+
+161
+00:04:41,519 --> 00:04:42,840
+somehow more representative of what's
+
+162
+00:04:43,040 --> 00:04:44,520
+going on in that image
+
+163
+00:04:44,720 --> 00:04:46,199
+at that point than the ones that are
+
+164
+00:04:46,399 --> 00:04:47,559
+farther around
+
+165
+00:04:47,759 --> 00:04:48,920
+so for this example what i've actually
+
+166
+00:04:49,120 --> 00:04:50,920
+done if we zoom in here um
+
+167
+00:04:51,120 --> 00:04:52,600
+is i've given a grid of values that
+
+168
+00:04:52,800 --> 00:04:54,040
+aren't all the same you know it's not
+
+169
+00:04:54,240 --> 00:04:56,520
+all 1 divided by 25 in this case
+
+170
+00:04:56,720 --> 00:04:59,400
+but the middle one is 0.162 and out at
+
+171
+00:04:59,600 --> 00:04:59,879
+the
+
+172
+00:05:00,079 --> 00:05:03,400
+farther regions we've got 0.003
+
+173
+00:05:03,600 --> 00:05:04,759
+so when we multiply those by the
+
+174
+00:05:04,959 --> 00:05:06,520
+corresponding pixel values and then we
+
+175
+00:05:06,720 --> 00:05:07,800
+add them all together
+
+176
+00:05:08,000 --> 00:05:09,718
+we're basically taking a weighted sum
+
+177
+00:05:09,918 --> 00:05:11,400
+weighted according to how close to the
+
+178
+00:05:11,600 --> 00:05:12,600
+center it is
+
+179
+00:05:12,800 --> 00:05:14,120
+and that's a that's a way of saying that
+
+180
+00:05:14,319 --> 00:05:16,120
+okay it's okay for this pixel here to be
+
+181
+00:05:16,319 --> 00:05:18,040
+influenced by what's at the outer corner
+
+182
+00:05:18,240 --> 00:05:19,559
+but only by a little bit you know we
+
+183
+00:05:19,759 --> 00:05:20,759
+shouldn't we shouldn't get into it too
+
+184
+00:05:20,959 --> 00:05:21,960
+much
+
+185
+00:05:22,160 --> 00:05:24,120
+these specific values are coming from a
+
+186
+00:05:24,319 --> 00:05:25,960
+gaussian curve also known as a bell
+
+187
+00:05:26,160 --> 00:05:26,520
+curve
+
+188
+00:05:26,720 --> 00:05:28,120
+so you might imagine kind of this bell
+
+189
+00:05:28,319 --> 00:05:29,639
+curve surface sitting on top of the
+
+190
+00:05:29,839 --> 00:05:30,520
+image
+
+191
+00:05:30,720 --> 00:05:32,120
+and it's bulging right above the point
+
+192
+00:05:32,319 --> 00:05:33,639
+that we want and then it dissipates in
+
+193
+00:05:33,839 --> 00:05:34,120
+values
+
+194
+00:05:34,319 --> 00:05:36,439
+as you go away from that and that gets
+
+195
+00:05:36,639 --> 00:05:38,439
+us a much nicer notion of
+
+196
+00:05:38,639 --> 00:05:40,838
+uh averaging the pixels so that it's
+
+197
+00:05:41,038 --> 00:05:42,439
+like i said it's taking into account how
+
+198
+00:05:42,639 --> 00:05:44,120
+close they are to the point we want
+
+199
+00:05:44,319 --> 00:05:45,960
+the gaussian specifically has some
+
+200
+00:05:46,160 --> 00:05:47,480
+really nice mathematical properties that
+
+201
+00:05:47,680 --> 00:05:48,759
+we might talk about
+
+202
+00:05:48,959 --> 00:05:50,439
+a little later on in this lecture that
+
+203
+00:05:50,639 --> 00:05:52,278
+makes it really really quite nice for
+
+204
+00:05:52,478 --> 00:05:54,680
+doing this kind of operation
+
+205
+00:05:54,879 --> 00:05:56,520
+now this operation that we're doing as
+
+206
+00:05:56,720 --> 00:05:58,119
+you can infer from the title of the
+
+207
+00:05:58,319 --> 00:05:58,920
+video and
+
+208
+00:05:59,120 --> 00:06:00,600
+uh everything about this and what we
+
+209
+00:06:00,800 --> 00:06:02,278
+talked about last time
+
+210
+00:06:02,478 --> 00:06:04,360
+it's a convolution what you would say is
+
+211
+00:06:04,560 --> 00:06:05,960
+that the image on the right
+
+212
+00:06:06,160 --> 00:06:08,759
+the resulting values that we get are a
+
+213
+00:06:08,959 --> 00:06:10,278
+convolution of
+
+214
+00:06:10,478 --> 00:06:13,160
+the original image with the little grid
+
+215
+00:06:13,360 --> 00:06:14,838
+of values that we have here
+
+216
+00:06:15,038 --> 00:06:16,759
+okay so it's an operation that takes in
+
+217
+00:06:16,959 --> 00:06:18,680
+at least in an image processing context
+
+218
+00:06:18,879 --> 00:06:20,920
+two different grids of values maybe one
+
+219
+00:06:21,120 --> 00:06:22,600
+is rgb maybe one is numbers
+
+220
+00:06:22,800 --> 00:06:24,278
+they could both be numbers and it
+
+221
+00:06:24,478 --> 00:06:25,718
+combines them to get a new grid of
+
+222
+00:06:25,918 --> 00:06:26,520
+values
+
+223
+00:06:26,720 --> 00:06:28,278
+in other mathematical contexts we often
+
+224
+00:06:28,478 --> 00:06:29,960
+think of it as combining two functions
+
+225
+00:06:30,160 --> 00:06:31,639
+to get a new function
+
+226
+00:06:31,839 --> 00:06:33,879
+and when you're doing it with uh just
+
+227
+00:06:34,079 --> 00:06:36,119
+this little smaller window
+
+228
+00:06:36,319 --> 00:06:37,718
+it's quite common to refer to it as a
+
+229
+00:06:37,918 --> 00:06:40,119
+kernel so in this case we would say that
+
+230
+00:06:40,319 --> 00:06:42,040
+we convolved mario with a
+
+231
+00:06:42,240 --> 00:06:45,718
+gaussian kernel okay and at this point
+
+232
+00:06:45,918 --> 00:06:47,960
+you might sit back and think okay you
+
+233
+00:06:48,160 --> 00:06:49,160
+know that's all well and good i guess
+
+234
+00:06:49,360 --> 00:06:49,559
+with
+
+235
+00:06:49,759 --> 00:06:51,319
+different kinds of averages i could get
+
+236
+00:06:51,519 --> 00:06:52,838
+different sorts of blurring effects
+
+237
+00:06:53,038 --> 00:06:54,439
+going on in the images and
+
+238
+00:06:54,639 --> 00:06:55,879
+you know i guess there's some use cases
+
+239
+00:06:56,079 --> 00:06:57,399
+for blurring images like blurring out
+
+240
+00:06:57,598 --> 00:06:58,680
+faces
+
+241
+00:06:58,879 --> 00:07:00,360
+but it goes way beyond that actually
+
+242
+00:07:00,560 --> 00:07:02,278
+first of all smoothing out an image with
+
+243
+00:07:02,478 --> 00:07:03,718
+a gaussian kernel
+
+244
+00:07:03,918 --> 00:07:05,559
+is useful in a lot of contexts beyond
+
+245
+00:07:05,759 --> 00:07:06,999
+what you would expect
+
+246
+00:07:07,199 --> 00:07:08,199
+but the important thing i want you to
+
+247
+00:07:08,399 --> 00:07:10,199
+keep in mind here is not the specific
+
+248
+00:07:10,399 --> 00:07:10,999
+example
+
+249
+00:07:11,199 --> 00:07:13,240
+but um the general framework that's
+
+250
+00:07:13,439 --> 00:07:14,040
+being developed
+
+251
+00:07:14,240 --> 00:07:16,360
+where if we tweak what the values inside
+
+252
+00:07:16,560 --> 00:07:17,480
+that kernel are
+
+253
+00:07:17,680 --> 00:07:19,240
+we can start to do some more nuanced and
+
+254
+00:07:19,439 --> 00:07:21,718
+interesting things with images
+
+255
+00:07:21,918 --> 00:07:23,079
+and to get to that you know i say let's
+
+256
+00:07:23,279 --> 00:07:25,240
+just dive right into actually coding up
+
+257
+00:07:25,439 --> 00:07:26,520
+some examples here
+
+258
+00:07:26,720 --> 00:07:29,480
+so um i'm just going to be creating a
+
+259
+00:07:29,680 --> 00:07:31,079
+little pluto notebook like i did last
+
+260
+00:07:31,279 --> 00:07:31,960
+time here
+
+261
+00:07:32,160 --> 00:07:34,040
+and uh right now i've prepared it with
+
+262
+00:07:34,240 --> 00:07:36,920
+an image so i've created a large image
+
+263
+00:07:37,120 --> 00:07:39,559
+is loading a certain image of tom the
+
+264
+00:07:39,759 --> 00:07:40,199
+cat
+
+265
+00:07:40,399 --> 00:07:42,199
+and then i've shrunk it down mostly just
+
+266
+00:07:42,399 --> 00:07:43,800
+so that it's easier to see on the screen
+
+267
+00:07:44,000 --> 00:07:45,160
+but also that makes some of the things
+
+268
+00:07:45,360 --> 00:07:47,160
+faster to play with so if we just check
+
+269
+00:07:47,360 --> 00:07:48,278
+the size of the image
+
+270
+00:07:48,478 --> 00:07:51,960
+it's now a very small 500 by 399
+
+271
+00:07:52,160 --> 00:07:53,879
+and again by the way if any of you want
+
+272
+00:07:54,079 --> 00:07:55,079
+to ask questions
+
+273
+00:07:55,279 --> 00:07:56,838
+and you do so in the discord some of
+
+274
+00:07:57,038 --> 00:07:58,360
+them will be like forwarded in my
+
+275
+00:07:58,560 --> 00:08:00,199
+direction and i'll try to keep my eye on
+
+276
+00:08:00,399 --> 00:08:02,920
+if any of those have come in so feel
+
+277
+00:08:03,120 --> 00:08:04,920
+free to just do that whenever
+
+278
+00:08:05,120 --> 00:08:08,278
+and um oh i'm told my mic is peaking a
+
+279
+00:08:08,478 --> 00:08:08,838
+little bit
+
+280
+00:08:09,038 --> 00:08:11,160
+so let me let me just turn that down a
+
+281
+00:08:11,360 --> 00:08:12,679
+little bit give you a better
+
+282
+00:08:12,879 --> 00:08:14,759
+uh sound experience hopefully it's not
+
+283
+00:08:14,959 --> 00:08:16,520
+too unpleasant in any ways
+
+284
+00:08:16,720 --> 00:08:18,040
+it's always so finicky to get these live
+
+285
+00:08:18,240 --> 00:08:19,879
+streams to work properly
+
+286
+00:08:20,079 --> 00:08:23,480
+but we want to actually do this uh
+
+287
+00:08:23,680 --> 00:08:25,079
+convolving operation right we want to
+
+288
+00:08:25,279 --> 00:08:26,439
+actually see what happens when we mess
+
+289
+00:08:26,639 --> 00:08:28,119
+around with different kernels
+
+290
+00:08:28,319 --> 00:08:31,079
+so first of all to get a given kernel
+
+291
+00:08:31,279 --> 00:08:32,278
+there's this library that i'm going to
+
+292
+00:08:32,479 --> 00:08:33,399
+use
+
+293
+00:08:33,599 --> 00:08:34,758
+we've got all of our definitions down
+
+294
+00:08:34,958 --> 00:08:36,039
+here for various functions i'm going to
+
+295
+00:08:36,240 --> 00:08:36,599
+have
+
+296
+00:08:36,799 --> 00:08:37,879
+but i'm going to be using one called
+
+297
+00:08:38,080 --> 00:08:39,799
+image filtering and in
+
+298
+00:08:40,000 --> 00:08:43,078
+it it has this module called kernel
+
+299
+00:08:43,278 --> 00:08:44,599
+and we can pull up the documentation for
+
+300
+00:08:44,799 --> 00:08:46,120
+it you know just using the live docs
+
+301
+00:08:46,320 --> 00:08:46,839
+here
+
+302
+00:08:47,039 --> 00:08:48,359
+where it tells us the various different
+
+303
+00:08:48,559 --> 00:08:50,439
+functions it has in there and among them
+
+304
+00:08:50,639 --> 00:08:52,439
+is this gaussian which is exactly what
+
+305
+00:08:52,639 --> 00:08:53,719
+you want but it already tells you that
+
+306
+00:08:53,919 --> 00:08:54,919
+there's more interesting kernels that
+
+307
+00:08:55,120 --> 00:08:56,359
+can be played with
+
+308
+00:08:56,559 --> 00:08:59,639
+and if i create a gaussian and i specify
+
+309
+00:08:59,839 --> 00:09:01,318
+two different standard deviations one in
+
+310
+00:09:01,519 --> 00:09:03,559
+the x direction one in the y direction
+
+311
+00:09:03,759 --> 00:09:06,039
+what it gives me is a grid of values so
+
+312
+00:09:06,240 --> 00:09:08,039
+we take a look and this type is a five
+
+313
+00:09:08,240 --> 00:09:08,679
+by five
+
+314
+00:09:08,879 --> 00:09:11,959
+offset array okay so essentially it's an
+
+315
+00:09:12,159 --> 00:09:12,919
+array of floats
+
+316
+00:09:13,120 --> 00:09:15,000
+but the offset just means that um the
+
+317
+00:09:15,200 --> 00:09:16,839
+way that you index into it
+
+318
+00:09:17,039 --> 00:09:20,399
+let's give it a name like kernel
+
+319
+00:09:21,360 --> 00:09:23,639
+is such that the middle value is at zero
+
+320
+00:09:23,839 --> 00:09:25,399
+zero so if i called kernel of zero
+
+321
+00:09:25,600 --> 00:09:28,758
+zero i get that middle value that we
+
+322
+00:09:28,958 --> 00:09:30,359
+actually saw in the animation point one
+
+323
+00:09:30,559 --> 00:09:31,159
+six two
+
+324
+00:09:31,360 --> 00:09:33,318
+um and then if we take you know
+
+325
+00:09:33,519 --> 00:09:34,519
+something like negative two which
+
+326
+00:09:34,720 --> 00:09:35,000
+usually
+
+327
+00:09:35,200 --> 00:09:37,318
+you know you can't index at zero much
+
+328
+00:09:37,519 --> 00:09:38,519
+less below zero
+
+329
+00:09:38,720 --> 00:09:41,078
+uh with julia arrays in this context
+
+330
+00:09:41,278 --> 00:09:42,599
+it's specifically offset
+
+331
+00:09:42,799 --> 00:09:44,359
+that doesn't matter too much just wanted
+
+332
+00:09:44,559 --> 00:09:45,959
+to say in case you were wondering what
+
+333
+00:09:46,159 --> 00:09:47,000
+that term means
+
+334
+00:09:47,200 --> 00:09:48,679
+what we actually want is a nice way to
+
+335
+00:09:48,879 --> 00:09:50,519
+take a look at what this kernel is
+
+336
+00:09:50,720 --> 00:09:52,679
+so i wrote a very simple function just
+
+337
+00:09:52,879 --> 00:09:54,198
+called show colored kernel
+
+338
+00:09:54,399 --> 00:09:56,198
+that's basically pulling out the
+
+339
+00:09:56,399 --> 00:09:57,879
+positive part and making it green
+
+340
+00:09:58,080 --> 00:09:59,559
+and then if a kernel has negative part
+
+341
+00:09:59,759 --> 00:10:01,479
+it's going to pull it out as red
+
+342
+00:10:01,679 --> 00:10:02,919
+so you can take a look at the details if
+
+343
+00:10:03,120 --> 00:10:04,519
+you want for that later
+
+344
+00:10:04,720 --> 00:10:07,078
+but all i want is for you to think about
+
+345
+00:10:07,278 --> 00:10:07,559
+okay
+
+346
+00:10:07,759 --> 00:10:09,000
+we've got this little grid of values
+
+347
+00:10:09,200 --> 00:10:10,599
+that's very peaked at one point and then
+
+348
+00:10:10,799 --> 00:10:11,878
+kind of dissipates out
+
+349
+00:10:12,078 --> 00:10:13,318
+we're gonna have it march along the
+
+350
+00:10:13,519 --> 00:10:15,078
+image of the cat here
+
+351
+00:10:15,278 --> 00:10:17,078
+and what's that gonna do and you already
+
+352
+00:10:17,278 --> 00:10:18,359
+know what it's going to do because we've
+
+353
+00:10:18,559 --> 00:10:19,639
+played around with mario
+
+354
+00:10:19,839 --> 00:10:21,639
+but the idea is that as we tweak what
+
+355
+00:10:21,839 --> 00:10:22,839
+this kernel is we'll get some more
+
+356
+00:10:23,039 --> 00:10:24,279
+interesting things
+
+357
+00:10:24,480 --> 00:10:25,959
+so what you will write in the problem
+
+358
+00:10:26,159 --> 00:10:27,878
+set this week is a function called
+
+359
+00:10:28,078 --> 00:10:28,919
+convolve
+
+360
+00:10:29,120 --> 00:10:30,839
+it will do exactly this it'll take in an
+
+361
+00:10:31,039 --> 00:10:32,439
+image it'll take in this kernel of
+
+362
+00:10:32,639 --> 00:10:33,159
+values
+
+363
+00:10:33,360 --> 00:10:35,479
+and it'll produce a new image which in
+
+364
+00:10:35,679 --> 00:10:36,679
+this context
+
+365
+00:10:36,879 --> 00:10:38,758
+is a little bit blurrier now because
+
+366
+00:10:38,958 --> 00:10:39,878
+this is a small kernel
+
+367
+00:10:40,078 --> 00:10:41,479
+you know maybe it's not as visible but
+
+368
+00:10:41,679 --> 00:10:43,318
+if i changed it to be a gaussian
+
+369
+00:10:43,519 --> 00:10:45,639
+with standard deviation 3 the library is
+
+370
+00:10:45,839 --> 00:10:46,919
+smart and it knows to make it
+
+371
+00:10:47,120 --> 00:10:48,519
+a little bit bigger if i want it to so
+
+372
+00:10:48,720 --> 00:10:50,279
+now it's a 13 by 13
+
+373
+00:10:50,480 --> 00:10:52,359
+array and we see that it indeed does
+
+374
+00:10:52,559 --> 00:10:54,198
+make it notably blurrier
+
+375
+00:10:54,399 --> 00:10:55,559
+and we could go to an extreme we could
+
+376
+00:10:55,759 --> 00:10:56,758
+say you know i want the standard
+
+377
+00:10:56,958 --> 00:10:57,878
+deviation to be
+
+378
+00:10:58,078 --> 00:11:01,159
+quite a bit larger so maybe 10 by 10
+
+379
+00:11:01,360 --> 00:11:03,078
+and this gets me a much larger array so
+
+380
+00:11:03,278 --> 00:11:04,679
+that little gaussian
+
+381
+00:11:04,879 --> 00:11:06,039
+curve that we're imagining marching
+
+382
+00:11:06,240 --> 00:11:08,519
+along the image that would now be 41 by
+
+383
+00:11:08,720 --> 00:11:09,559
+41
+
+384
+00:11:09,759 --> 00:11:11,159
+and the result that you get is that
+
+385
+00:11:11,360 --> 00:11:12,839
+every pixel is really influenced by a
+
+386
+00:11:13,039 --> 00:11:13,959
+lot around it
+
+387
+00:11:14,159 --> 00:11:15,959
+very much like you took a lens and you
+
+388
+00:11:16,159 --> 00:11:18,359
+um you unfocused the image
+
+389
+00:11:18,559 --> 00:11:20,359
+now while we're here and because this is
+
+390
+00:11:20,559 --> 00:11:22,758
+a class about computational thinking
+
+391
+00:11:22,958 --> 00:11:23,878
+let's think a little bit about
+
+392
+00:11:24,078 --> 00:11:26,439
+computational complexity because
+
+393
+00:11:26,639 --> 00:11:28,679
+in order to process that image there
+
+394
+00:11:28,879 --> 00:11:30,439
+julia's generally pretty fast
+
+395
+00:11:30,639 --> 00:11:33,639
+um but this took 9.5 seconds now a big
+
+396
+00:11:33,839 --> 00:11:35,000
+part of that is maybe because i wrote
+
+397
+00:11:35,200 --> 00:11:36,120
+this convolved function
+
+398
+00:11:36,320 --> 00:11:38,120
+less efficiently than it could be we'll
+
+399
+00:11:38,320 --> 00:11:39,639
+talk later this lecture about
+
+400
+00:11:39,839 --> 00:11:41,078
+like very clever things that are done to
+
+401
+00:11:41,278 --> 00:11:43,000
+make it more efficient
+
+402
+00:11:43,200 --> 00:11:44,839
+but just in principle if you want to
+
+403
+00:11:45,039 --> 00:11:46,359
+like actively think about how many
+
+404
+00:11:46,559 --> 00:11:48,439
+operations are taking place here
+
+405
+00:11:48,639 --> 00:11:50,198
+uh it's a fun little exercise to think
+
+406
+00:11:50,399 --> 00:11:52,359
+about because the size of our image
+
+407
+00:11:52,559 --> 00:11:53,878
+right it looks like it's not too big
+
+408
+00:11:54,078 --> 00:11:56,599
+it's 500 by 399. which means if we take
+
+409
+00:11:56,799 --> 00:11:58,120
+the product of those two values let's
+
+410
+00:11:58,320 --> 00:11:58,919
+give that's
+
+411
+00:11:59,120 --> 00:12:01,639
+the number of pixels um so if we
+
+412
+00:12:01,839 --> 00:12:02,599
+multiply that by
+
+413
+00:12:02,799 --> 00:12:04,679
+the number of values in the kernel so
+
+414
+00:12:04,879 --> 00:12:05,878
+the product
+
+415
+00:12:06,078 --> 00:12:10,039
+for the size array on the kernel
+
+416
+00:12:10,240 --> 00:12:11,399
+it's actually quite a few different
+
+417
+00:12:11,600 --> 00:12:13,000
+multiplications that have to happen
+
+418
+00:12:13,200 --> 00:12:14,279
+through this whole process because
+
+419
+00:12:14,480 --> 00:12:14,758
+remember
+
+420
+00:12:14,958 --> 00:12:16,120
+every time that little window is sitting
+
+421
+00:12:16,320 --> 00:12:18,279
+on top of a pixel you're multiplying all
+
+422
+00:12:18,480 --> 00:12:19,639
+of those neighboring values and then
+
+423
+00:12:19,839 --> 00:12:20,679
+you're adding them up
+
+424
+00:12:20,879 --> 00:12:22,120
+so in this context it looks like we've
+
+425
+00:12:22,320 --> 00:12:23,959
+got you know thousand million
+
+426
+00:12:24,159 --> 00:12:26,120
+just for one simple small image like 300
+
+427
+00:12:26,320 --> 00:12:28,438
+million multiplications have to happen
+
+428
+00:12:28,639 --> 00:12:29,719
+so that's just a thing to think about
+
+429
+00:12:29,919 --> 00:12:32,279
+here is that as the kernel gets larger
+
+430
+00:12:32,480 --> 00:12:34,839
+it unless you do something clever it
+
+431
+00:12:35,039 --> 00:12:37,078
+will by default take a lot longer to
+
+432
+00:12:37,278 --> 00:12:38,519
+process images especially if they're
+
+433
+00:12:38,720 --> 00:12:40,198
+higher resolution
+
+434
+00:12:40,399 --> 00:12:43,318
+but before we talk about how to
+
+435
+00:12:43,519 --> 00:12:45,479
+diminish that kind of complexity let's
+
+436
+00:12:45,679 --> 00:12:46,919
+just play around with what happens if i
+
+437
+00:12:47,120 --> 00:12:48,599
+change this kernel
+
+438
+00:12:48,799 --> 00:12:52,039
+so actually before i even show you i
+
+439
+00:12:52,240 --> 00:12:54,120
+think i want to do this as a live quiz
+
+440
+00:12:54,320 --> 00:12:56,359
+so that might be a little bit fun where
+
+441
+00:12:56,559 --> 00:12:57,959
+um we were doing a couple of these in
+
+442
+00:12:58,159 --> 00:12:59,159
+the intro animation just
+
+443
+00:12:59,360 --> 00:13:01,399
+some warm-up questions but as the first
+
+444
+00:13:01,600 --> 00:13:02,679
+real question
+
+445
+00:13:02,879 --> 00:13:05,318
+uh i'm going to give you a sample kernel
+
+446
+00:13:05,519 --> 00:13:06,599
+okay i'm not going to show you what it
+
+447
+00:13:06,799 --> 00:13:07,799
+does or tell you what it does
+
+448
+00:13:08,000 --> 00:13:09,399
+but i want you to actually try to think
+
+449
+00:13:09,600 --> 00:13:10,839
+about what this would do
+
+450
+00:13:11,039 --> 00:13:12,679
+okay so it's going to be a little 3x3
+
+451
+00:13:12,879 --> 00:13:13,959
+grid and
+
+452
+00:13:14,159 --> 00:13:15,719
+it's got a lot of negative values around
+
+453
+00:13:15,919 --> 00:13:17,959
+the boundary and the center value is a
+
+454
+00:13:18,159 --> 00:13:18,758
+7.
+
+455
+00:13:18,958 --> 00:13:20,039
+okay so it's going to be seven at the
+
+456
+00:13:20,240 --> 00:13:21,878
+center and then some negative values
+
+457
+00:13:22,078 --> 00:13:22,519
+around it
+
+458
+00:13:22,720 --> 00:13:24,198
+specifically one for the immediately
+
+459
+00:13:24,399 --> 00:13:25,959
+adjacent neighbors and then
+
+460
+00:13:26,159 --> 00:13:27,799
+negative point five for all of those
+
+461
+00:13:28,000 --> 00:13:29,399
+around it
+
+462
+00:13:29,600 --> 00:13:31,919
+and uh at this point if you go to
+
+463
+00:13:32,120 --> 00:13:33,318
+itempool.com3b1b
+
+464
+00:13:33,519 --> 00:13:35,318
+live you can place a vote we're seeing
+
+465
+00:13:35,519 --> 00:13:36,919
+the statistics on how other people are
+
+466
+00:13:37,120 --> 00:13:37,959
+answering
+
+467
+00:13:38,159 --> 00:13:40,279
+and i'm i'm actually genuinely curious
+
+468
+00:13:40,480 --> 00:13:41,318
+what people will
+
+469
+00:13:41,519 --> 00:13:44,120
+uh will say to this one so this is going
+
+470
+00:13:44,320 --> 00:13:45,240
+to be our first example of a
+
+471
+00:13:45,440 --> 00:13:46,359
+non-blurring
+
+472
+00:13:46,559 --> 00:13:49,159
+well maybe i shouldn't say that maybe
+
+473
+00:13:49,360 --> 00:13:50,359
+it's obvious from the context the
+
+474
+00:13:50,559 --> 00:13:51,559
+blurring isn't going to be the right
+
+475
+00:13:51,759 --> 00:13:53,479
+answer
+
+476
+00:13:53,679 --> 00:13:55,240
+but while you while you answer that i'm
+
+477
+00:13:55,440 --> 00:13:57,240
+going to go ahead and type that up
+
+478
+00:13:57,440 --> 00:14:03,839
+into our notebook just to have prepared
+
+479
+00:14:04,399 --> 00:14:06,998
+and also while you answer it think about
+
+480
+00:14:07,198 --> 00:14:07,399
+what
+
+481
+00:14:07,600 --> 00:14:10,359
+aspects of this kernel you could try to
+
+482
+00:14:10,559 --> 00:14:11,159
+compute
+
+483
+00:14:11,360 --> 00:14:12,679
+to get a loose sense of how it would
+
+484
+00:14:12,879 --> 00:14:14,599
+behave in different uh regions of the
+
+485
+00:14:14,799 --> 00:14:15,078
+image
+
+486
+00:14:15,278 --> 00:14:16,438
+you know if it's in a monochromatic
+
+487
+00:14:16,639 --> 00:14:18,120
+region what does it look like if it's in
+
+488
+00:14:18,320 --> 00:14:20,039
+a region where there's a lot going on
+
+489
+00:14:20,240 --> 00:14:21,559
+what does it look like like try to try
+
+490
+00:14:21,759 --> 00:14:22,839
+to think through some examples in your
+
+491
+00:14:23,039 --> 00:14:25,278
+head
+
+492
+00:14:27,278 --> 00:14:29,078
+and that's probably around the amount of
+
+493
+00:14:29,278 --> 00:14:31,159
+time i want to spend
+
+494
+00:14:31,360 --> 00:14:32,839
+although let's let's just take a look if
+
+495
+00:14:33,039 --> 00:14:34,279
+there's any questions in the doc
+
+496
+00:14:34,480 --> 00:14:37,318
+to uh to answer while we're waiting
+
+497
+00:14:37,519 --> 00:14:38,039
+there
+
+498
+00:14:38,240 --> 00:14:39,639
+is it possible to reconstruct the
+
+499
+00:14:39,839 --> 00:14:42,120
+original image from the blurred one
+
+500
+00:14:42,320 --> 00:14:46,800
+i i don't think so um
+
+501
+00:14:46,879 --> 00:14:47,639
+that's an interesting question we'll
+
+502
+00:14:47,839 --> 00:14:48,839
+have to ask the other professor i
+
+503
+00:14:49,039 --> 00:14:50,120
+definitely don't think so because you
+
+504
+00:14:50,320 --> 00:14:51,559
+can take this to an extreme
+
+505
+00:14:51,759 --> 00:14:55,399
+where uh it feels like you're definitely
+
+506
+00:14:55,600 --> 00:14:57,959
+losing out on information
+
+507
+00:14:58,159 --> 00:14:59,240
+there's other things that you can do to
+
+508
+00:14:59,440 --> 00:15:00,839
+it though like the fast fourier
+
+509
+00:15:01,039 --> 00:15:02,120
+transform would be an example where you
+
+510
+00:15:02,320 --> 00:15:03,639
+can recover the image exactly
+
+511
+00:15:03,839 --> 00:15:06,120
+but those feel like you know very rare i
+
+512
+00:15:06,320 --> 00:15:07,399
+don't want to say that offhandedly
+
+513
+00:15:07,600 --> 00:15:07,878
+because
+
+514
+00:15:08,078 --> 00:15:09,078
+i don't know quite off the top of my
+
+515
+00:15:09,278 --> 00:15:10,919
+head one of the other props who's
+
+516
+00:15:11,120 --> 00:15:11,559
+smarter than i
+
+517
+00:15:11,759 --> 00:15:14,120
+might come in to answer um and the
+
+518
+00:15:14,320 --> 00:15:14,919
+second one
+
+519
+00:15:15,120 --> 00:15:16,519
+uh how does convolving an image with a
+
+520
+00:15:16,720 --> 00:15:18,599
+kernel directly relate to convolving two
+
+521
+00:15:18,799 --> 00:15:19,399
+functions
+
+522
+00:15:19,600 --> 00:15:21,318
+glad that you asked that um i'll talk
+
+523
+00:15:21,519 --> 00:15:22,919
+about that in just a little bit actually
+
+524
+00:15:23,120 --> 00:15:23,719
+what the
+
+525
+00:15:23,919 --> 00:15:25,799
+relationship between image processing
+
+526
+00:15:26,000 --> 00:15:27,479
+definition of convolution is and then
+
+527
+00:15:27,679 --> 00:15:28,519
+how you see it in some other
+
+528
+00:15:28,720 --> 00:15:30,120
+mathematical contexts
+
+529
+00:15:30,320 --> 00:15:31,479
+it's essentially the same idea though
+
+530
+00:15:31,679 --> 00:15:32,839
+that you have one thing that's marching
+
+531
+00:15:33,039 --> 00:15:33,719
+across another
+
+532
+00:15:33,919 --> 00:15:35,639
+you multiply corresponding values and
+
+533
+00:15:35,839 --> 00:15:36,758
+then you add them up
+
+534
+00:15:36,958 --> 00:15:38,839
+it's it's really the same operation
+
+535
+00:15:39,039 --> 00:15:41,479
+modulo like one or two small conventions
+
+536
+00:15:41,679 --> 00:15:43,078
+all right so if we go back to our quiz
+
+537
+00:15:43,278 --> 00:15:44,758
+i'll go ahead and
+
+538
+00:15:44,958 --> 00:15:47,240
+see what the answers turn out to be here
+
+539
+00:15:47,440 --> 00:15:48,679
+and
+
+540
+00:15:48,879 --> 00:15:50,758
+fascinating so it looks like most people
+
+541
+00:15:50,958 --> 00:15:53,240
+thought that it would detect edges
+
+542
+00:15:53,440 --> 00:15:54,679
+but if we actually play with this if we
+
+543
+00:15:54,879 --> 00:15:57,240
+go to our notebook here
+
+544
+00:15:57,440 --> 00:15:58,998
+and i've gone ahead and written in the
+
+545
+00:15:59,198 --> 00:16:00,679
+kernel so
+
+546
+00:16:00,879 --> 00:16:02,279
+that same grid of values that i gave you
+
+547
+00:16:02,480 --> 00:16:04,039
+where seven in the center and then some
+
+548
+00:16:04,240 --> 00:16:05,318
+negatives around
+
+549
+00:16:05,519 --> 00:16:07,159
+the effect that it has on the picture of
+
+550
+00:16:07,360 --> 00:16:08,919
+the cat here is it actually
+
+551
+00:16:09,120 --> 00:16:10,679
+kind of sharpens it up so if we look
+
+552
+00:16:10,879 --> 00:16:12,839
+previously his chest is very fluffy very
+
+553
+00:16:13,039 --> 00:16:13,639
+soft
+
+554
+00:16:13,839 --> 00:16:15,078
+but over here what it's done is really
+
+555
+00:16:15,278 --> 00:16:17,318
+accentuated the differences between one
+
+556
+00:16:17,519 --> 00:16:19,878
+piece of fur in the next
+
+557
+00:16:20,078 --> 00:16:21,719
+now for those of you who did answer edge
+
+558
+00:16:21,919 --> 00:16:23,479
+detecting you're definitely on the right
+
+559
+00:16:23,679 --> 00:16:24,120
+track
+
+560
+00:16:24,320 --> 00:16:25,959
+uh but one small thing that you could do
+
+561
+00:16:26,159 --> 00:16:27,639
+to kind of check what the behavior of
+
+562
+00:16:27,839 --> 00:16:28,919
+this kernel might be
+
+563
+00:16:29,120 --> 00:16:30,919
+is to notice uh what the sum of all of
+
+564
+00:16:31,120 --> 00:16:32,599
+those values are
+
+565
+00:16:32,799 --> 00:16:34,998
+the spelling kernel here so if we add
+
+566
+00:16:35,198 --> 00:16:36,519
+them all up they equal one
+
+567
+00:16:36,720 --> 00:16:38,120
+which is much the same that you would do
+
+568
+00:16:38,320 --> 00:16:39,719
+with any kind of um
+
+569
+00:16:39,919 --> 00:16:41,078
+weighted average if you have all the
+
+570
+00:16:41,278 --> 00:16:42,758
+weights they've got to be one
+
+571
+00:16:42,958 --> 00:16:44,679
+and what that means is that if you're in
+
+572
+00:16:44,879 --> 00:16:46,839
+a region of the image without any edges
+
+573
+00:16:47,039 --> 00:16:48,039
+okay you're in like a totally
+
+574
+00:16:48,240 --> 00:16:50,599
+monochromatic spot if you add up all of
+
+575
+00:16:50,799 --> 00:16:52,279
+the values and you're multiplying them
+
+576
+00:16:52,480 --> 00:16:55,078
+and the sum for the kernel is one well
+
+577
+00:16:55,278 --> 00:16:56,359
+that means that you're just going to get
+
+578
+00:16:56,559 --> 00:16:57,799
+the original color back
+
+579
+00:16:58,000 --> 00:16:59,479
+the circumstances under which this does
+
+580
+00:16:59,679 --> 00:17:01,159
+something non-obvious
+
+581
+00:17:01,360 --> 00:17:02,998
+are when there's a lot of variation near
+
+582
+00:17:03,198 --> 00:17:04,919
+a point so if you have one point that's
+
+583
+00:17:05,119 --> 00:17:06,440
+um let's say a very bright pixel
+
+584
+00:17:06,640 --> 00:17:07,799
+and then it's surrounded by very dark
+
+585
+00:17:08,000 --> 00:17:09,799
+pixels that will end up looking quite
+
+586
+00:17:10,000 --> 00:17:11,559
+bright because the dark ones aren't
+
+587
+00:17:11,759 --> 00:17:13,079
+subtracting off in the way that other
+
+588
+00:17:13,279 --> 00:17:14,598
+things are
+
+589
+00:17:14,798 --> 00:17:16,118
+now if you want to think about edge
+
+590
+00:17:16,318 --> 00:17:18,598
+detection stuff there's a couple
+
+591
+00:17:18,798 --> 00:17:20,440
+standard kernels that we might play with
+
+592
+00:17:20,640 --> 00:17:22,200
+for that so one of the simplest
+
+593
+00:17:22,400 --> 00:17:25,559
+would be what's called a sobel kernel
+
+594
+00:17:25,759 --> 00:17:27,399
+and in this context it's yelling at us
+
+595
+00:17:27,599 --> 00:17:29,240
+because what it returns isn't actually a
+
+596
+00:17:29,440 --> 00:17:31,000
+single kernel but a pair of them
+
+597
+00:17:31,200 --> 00:17:33,879
+so i might pull out just one or maybe
+
+598
+00:17:34,079 --> 00:17:35,319
+the second index
+
+599
+00:17:35,519 --> 00:17:38,358
+um and let's let's go ahead and
+
+600
+00:17:38,558 --> 00:17:40,200
+visualize this kernel see
+
+601
+00:17:40,400 --> 00:17:41,319
+first of all we've got that the sum is
+
+602
+00:17:41,519 --> 00:17:42,598
+zero so that's telling us something
+
+603
+00:17:42,798 --> 00:17:43,399
+interesting
+
+604
+00:17:43,599 --> 00:17:48,319
+let me do my show colored kernel
+
+605
+00:17:48,640 --> 00:17:50,838
+great so we see it's got positive values
+
+606
+00:17:51,038 --> 00:17:51,559
+on the right
+
+607
+00:17:51,759 --> 00:17:53,719
+and it's got negative values on the left
+
+608
+00:17:53,919 --> 00:17:54,919
+but crucially
+
+609
+00:17:55,119 --> 00:17:56,680
+now if we add up all of those values it
+
+610
+00:17:56,880 --> 00:17:58,680
+comes up to zero so if you would imagine
+
+611
+00:17:58,880 --> 00:18:00,358
+taking this kernel and you put it over a
+
+612
+00:18:00,558 --> 00:18:02,440
+monochromatic part of the image
+
+613
+00:18:02,640 --> 00:18:04,119
+it's going to come out completely black
+
+614
+00:18:04,319 --> 00:18:05,639
+which sort of matches with what we see
+
+615
+00:18:05,839 --> 00:18:06,200
+here where
+
+616
+00:18:06,400 --> 00:18:07,559
+at first it looks like it's completely
+
+617
+00:18:07,759 --> 00:18:09,319
+turning the image black but
+
+618
+00:18:09,519 --> 00:18:10,598
+let's think a little bit more about what
+
+619
+00:18:10,798 --> 00:18:12,598
+we would expect this specific kernel to
+
+620
+00:18:12,798 --> 00:18:13,319
+do
+
+621
+00:18:13,519 --> 00:18:14,838
+so if we've got our image in mind of
+
+622
+00:18:15,038 --> 00:18:17,000
+taking you know a specific
+
+623
+00:18:17,200 --> 00:18:19,240
+little grid of values and what are we
+
+624
+00:18:19,440 --> 00:18:20,358
+doing we're just kind of marching it
+
+625
+00:18:20,558 --> 00:18:22,200
+across the image
+
+626
+00:18:22,400 --> 00:18:24,759
+what would you expect to be required for
+
+627
+00:18:24,960 --> 00:18:27,960
+this to end up as a positive number well
+
+628
+00:18:28,160 --> 00:18:29,479
+if we're adding up some positive values
+
+629
+00:18:29,679 --> 00:18:30,358
+on the right
+
+630
+00:18:30,558 --> 00:18:32,119
+and then we're subtracting off whatever
+
+631
+00:18:32,319 --> 00:18:33,639
+they multiply on the left
+
+632
+00:18:33,839 --> 00:18:35,319
+then if you have some region where it
+
+633
+00:18:35,519 --> 00:18:36,680
+goes from being very dark
+
+634
+00:18:36,880 --> 00:18:39,079
+to being very bright that's going to be
+
+635
+00:18:39,279 --> 00:18:41,000
+where you get positive values
+
+636
+00:18:41,200 --> 00:18:42,598
+but notice you can also get negative
+
+637
+00:18:42,798 --> 00:18:44,119
+values here if you had a lot of
+
+638
+00:18:44,319 --> 00:18:45,479
+brightness on the left
+
+639
+00:18:45,679 --> 00:18:47,479
+and then a lot of darkness on the right
+
+640
+00:18:47,679 --> 00:18:49,079
+what this convolution would give you
+
+641
+00:18:49,279 --> 00:18:51,240
+is a negative value so that's important
+
+642
+00:18:51,440 --> 00:18:52,119
+to keep in mind
+
+643
+00:18:52,319 --> 00:18:53,319
+just because we're displaying these
+
+644
+00:18:53,519 --> 00:18:55,479
+convolutions as rgb images
+
+645
+00:18:55,679 --> 00:18:57,159
+doesn't mean that's always the right way
+
+646
+00:18:57,359 --> 00:18:58,919
+to see it because in this context when
+
+647
+00:18:59,119 --> 00:19:00,039
+we've convolved
+
+648
+00:19:00,240 --> 00:19:02,200
+our fluffy cat with something that
+
+649
+00:19:02,400 --> 00:19:05,559
+occasionally puts out negative values
+
+650
+00:19:05,759 --> 00:19:07,159
+the way that the rgb type is going to
+
+651
+00:19:07,359 --> 00:19:08,919
+treat that is
+
+652
+00:19:09,119 --> 00:19:10,358
+not necessarily going to be displayed in
+
+653
+00:19:10,558 --> 00:19:11,719
+a way that shows everything that's going
+
+654
+00:19:11,919 --> 00:19:12,358
+on
+
+655
+00:19:12,558 --> 00:19:14,279
+so what i could do instead is take an
+
+656
+00:19:14,480 --> 00:19:16,358
+absolute value of everything happening
+
+657
+00:19:16,558 --> 00:19:19,479
+not an absolute value of the convolution
+
+658
+00:19:19,679 --> 00:19:22,200
+so we've got our convolution take an
+
+659
+00:19:22,400 --> 00:19:24,440
+absolute value
+
+660
+00:19:24,640 --> 00:19:26,440
+of what's sitting there and that's
+
+661
+00:19:26,640 --> 00:19:28,039
+basically if i take the absolute value
+
+662
+00:19:28,240 --> 00:19:28,919
+of an rgb
+
+663
+00:19:29,119 --> 00:19:30,598
+it's um treating it like a vector
+
+664
+00:19:30,798 --> 00:19:32,519
+getting the norm this gives us a grid of
+
+665
+00:19:32,720 --> 00:19:33,159
+values
+
+666
+00:19:33,359 --> 00:19:34,919
+i still want to see it as if it was
+
+667
+00:19:35,119 --> 00:19:37,079
+colors so i'm going to tell pluto hey
+
+668
+00:19:37,279 --> 00:19:38,680
+i want you to think of these as
+
+669
+00:19:38,880 --> 00:19:40,200
+grayscale values
+
+670
+00:19:40,400 --> 00:19:41,639
+and i might even scale them up a little
+
+671
+00:19:41,839 --> 00:19:43,719
+bit just because i'm especially not sure
+
+672
+00:19:43,919 --> 00:19:45,240
+how the youtube compression is handling
+
+673
+00:19:45,440 --> 00:19:45,799
+this all
+
+674
+00:19:46,000 --> 00:19:47,639
+but this will really just accentuate out
+
+675
+00:19:47,839 --> 00:19:49,319
+all of the points where
+
+676
+00:19:49,519 --> 00:19:51,719
+this sobolfilter convolved across the
+
+677
+00:19:51,919 --> 00:19:53,639
+image ends up non-zero
+
+678
+00:19:53,839 --> 00:19:55,240
+and what you see is all of the points
+
+679
+00:19:55,440 --> 00:19:57,639
+where there's a lot of micro variations
+
+680
+00:19:57,839 --> 00:20:00,119
+as you move uh from left to right kind
+
+681
+00:20:00,319 --> 00:20:01,959
+of like the uh
+
+682
+00:20:02,159 --> 00:20:04,039
+you know the different color fur that
+
+683
+00:20:04,240 --> 00:20:05,240
+happens on the chest
+
+684
+00:20:05,440 --> 00:20:06,759
+that's where you start to get a lot of
+
+685
+00:20:06,960 --> 00:20:08,598
+activity
+
+686
+00:20:08,798 --> 00:20:10,358
+and if we take the other thing that this
+
+687
+00:20:10,558 --> 00:20:11,959
+kernel.sobel returned
+
+688
+00:20:12,159 --> 00:20:14,039
+it basically gives us the horizontal
+
+689
+00:20:14,240 --> 00:20:15,799
+version of that okay so as you move
+
+690
+00:20:16,000 --> 00:20:17,799
+up and down for example right around the
+
+691
+00:20:18,000 --> 00:20:19,159
+whiskers that's going to be where you
+
+692
+00:20:19,359 --> 00:20:20,759
+get a lot of this variation
+
+693
+00:20:20,960 --> 00:20:22,440
+and that's what's going to make the
+
+694
+00:20:22,640 --> 00:20:24,519
+convolution of the image with this
+
+695
+00:20:24,720 --> 00:20:25,079
+specific
+
+696
+00:20:25,279 --> 00:20:28,200
+kernel something non-zero so the point
+
+697
+00:20:28,400 --> 00:20:29,240
+here is that you know you can do
+
+698
+00:20:29,440 --> 00:20:30,838
+blurring you can do sharpening you can
+
+699
+00:20:31,038 --> 00:20:31,559
+do
+
+700
+00:20:31,759 --> 00:20:33,319
+edge detecting type things and you can
+
+701
+00:20:33,519 --> 00:20:34,919
+really get more and more sophisticated
+
+702
+00:20:35,119 --> 00:20:35,639
+as you tweak
+
+703
+00:20:35,839 --> 00:20:37,240
+the specific values of this kernel it's
+
+704
+00:20:37,440 --> 00:20:38,680
+a really powerful tool
+
+705
+00:20:38,880 --> 00:20:41,639
+beyond just a moving average many of you
+
+706
+00:20:41,839 --> 00:20:42,838
+may have heard of the idea of a
+
+707
+00:20:43,038 --> 00:20:44,759
+convolutional neural network
+
+708
+00:20:44,960 --> 00:20:47,240
+this is in a context where what you want
+
+709
+00:20:47,440 --> 00:20:48,519
+is for a machine to learn
+
+710
+00:20:48,720 --> 00:20:50,598
+specific kernels so rather than hand
+
+711
+00:20:50,798 --> 00:20:51,559
+baking one like
+
+712
+00:20:51,759 --> 00:20:53,240
+handing it a gaussian or handing it a
+
+713
+00:20:53,440 --> 00:20:55,479
+sobel instead you try to have it learn
+
+714
+00:20:55,679 --> 00:20:56,919
+which kernels are going to pull out some
+
+715
+00:20:57,119 --> 00:20:59,079
+meaningful information from an image
+
+716
+00:20:59,279 --> 00:21:01,559
+so it's a very good building block to
+
+717
+00:21:01,759 --> 00:21:03,719
+add up on top of all of that
+
+718
+00:21:03,919 --> 00:21:05,879
+now one thing to point out while we're
+
+719
+00:21:06,079 --> 00:21:06,838
+looking at this
+
+720
+00:21:07,038 --> 00:21:09,639
+sobo filter is unlike the other ones
+
+721
+00:21:09,839 --> 00:21:10,680
+it's asymmetric
+
+722
+00:21:10,880 --> 00:21:12,358
+so that it looks different on the left
+
+723
+00:21:12,558 --> 00:21:14,039
+than it does on the right whereas
+
+724
+00:21:14,240 --> 00:21:16,519
+a simple gaussian blur or a box blur it
+
+725
+00:21:16,720 --> 00:21:18,440
+doesn't matter how you rotate it
+
+726
+00:21:18,640 --> 00:21:20,838
+and you might think this doesn't matter
+
+727
+00:21:21,038 --> 00:21:22,358
+but it does end up highlighting
+
+728
+00:21:22,558 --> 00:21:23,719
+a different convention that you'll
+
+729
+00:21:23,919 --> 00:21:26,519
+sometimes find so
+
+730
+00:21:26,720 --> 00:21:29,000
+in mathematical contexts instead of
+
+731
+00:21:29,200 --> 00:21:30,358
+doing the thing that you would expect
+
+732
+00:21:30,558 --> 00:21:31,959
+which is having this kernel actively
+
+733
+00:21:32,159 --> 00:21:33,719
+march across the image
+
+734
+00:21:33,919 --> 00:21:35,799
+we often think of whatever the uh
+
+735
+00:21:36,000 --> 00:21:37,079
+convolved term is
+
+736
+00:21:37,279 --> 00:21:39,159
+as being rotated around so i'll show you
+
+737
+00:21:39,359 --> 00:21:40,519
+what i mean if we have over here
+
+738
+00:21:40,720 --> 00:21:41,959
+we've got our kernel it's marching along
+
+739
+00:21:42,159 --> 00:21:43,639
+the image what you actually want to
+
+740
+00:21:43,839 --> 00:21:45,399
+imagine the the picture to actually hold
+
+741
+00:21:45,599 --> 00:21:46,119
+in your head
+
+742
+00:21:46,319 --> 00:21:48,440
+for convolutions in a mathematical
+
+743
+00:21:48,640 --> 00:21:50,519
+setting is to basically flip it entirely
+
+744
+00:21:50,720 --> 00:21:51,240
+around
+
+745
+00:21:51,440 --> 00:21:52,919
+so if the original kernel had the green
+
+746
+00:21:53,119 --> 00:21:54,598
+on the right and the red on the left
+
+747
+00:21:54,798 --> 00:21:56,200
+really you're kind of flipping it around
+
+748
+00:21:56,400 --> 00:21:57,719
+before you have it march across the
+
+749
+00:21:57,919 --> 00:21:58,358
+image
+
+750
+00:21:58,558 --> 00:21:59,559
+and then do the same thing where you
+
+751
+00:21:59,759 --> 00:22:01,559
+multiply corresponding terms and you add
+
+752
+00:22:01,759 --> 00:22:02,838
+them all up
+
+753
+00:22:03,038 --> 00:22:05,240
+and at first that might seem like a very
+
+754
+00:22:05,440 --> 00:22:06,440
+strange thing to do
+
+755
+00:22:06,640 --> 00:22:08,680
+why would the convention in any context
+
+756
+00:22:08,880 --> 00:22:09,879
+work out like that
+
+757
+00:22:10,079 --> 00:22:11,799
+and indeed in some image processing ones
+
+758
+00:22:12,000 --> 00:22:13,479
+they just define convolutions to do the
+
+759
+00:22:13,679 --> 00:22:14,759
+thing that you would expect
+
+760
+00:22:14,960 --> 00:22:16,440
+um but i do want to take a little moment
+
+761
+00:22:16,640 --> 00:22:18,680
+to explain why you sometimes see it this
+
+762
+00:22:18,880 --> 00:22:19,079
+way
+
+763
+00:22:19,279 --> 00:22:20,759
+and why it actually gives you these
+
+764
+00:22:20,960 --> 00:22:22,598
+really nice mathematical properties
+
+765
+00:22:22,798 --> 00:22:24,279
+i don't know if i'll have uh full time
+
+766
+00:22:24,480 --> 00:22:26,440
+to delve into the details here
+
+767
+00:22:26,640 --> 00:22:28,598
+but we're going to start by talking
+
+768
+00:22:28,798 --> 00:22:30,358
+about something that seems
+
+769
+00:22:30,558 --> 00:22:33,399
+totally unrelated to image processing
+
+770
+00:22:33,599 --> 00:22:34,838
+which is to multiply two different
+
+771
+00:22:35,038 --> 00:22:37,079
+polynomials together so for this one let
+
+772
+00:22:37,279 --> 00:22:38,759
+me actually pop back to our live quiz
+
+773
+00:22:38,960 --> 00:22:40,759
+and just have you do a little bit of
+
+774
+00:22:40,960 --> 00:22:43,079
+active thinking
+
+775
+00:22:43,279 --> 00:22:46,119
+so the question asks that you
+
+776
+00:22:46,319 --> 00:22:48,039
+consider the following expression you've
+
+777
+00:22:48,240 --> 00:22:49,879
+got a certain polynomial term
+
+778
+00:22:50,079 --> 00:22:53,000
+whose coefficients are k0 k1 k2 and then
+
+779
+00:22:53,200 --> 00:22:54,598
+we're multiplying it by an infinite
+
+780
+00:22:54,798 --> 00:22:56,279
+series okay just an infinite power
+
+781
+00:22:56,480 --> 00:22:57,000
+series
+
+782
+00:22:57,200 --> 00:23:00,119
+with different um powers of x in there
+
+783
+00:23:00,319 --> 00:23:01,559
+and it wants you to just look at one
+
+784
+00:23:01,759 --> 00:23:03,479
+specific term what is the constant for
+
+785
+00:23:03,679 --> 00:23:04,358
+the x cubed
+
+786
+00:23:04,558 --> 00:23:06,680
+term okay so think about that you know
+
+787
+00:23:06,880 --> 00:23:08,279
+choose your answer as you're thinking
+
+788
+00:23:08,480 --> 00:23:09,639
+about that
+
+789
+00:23:09,839 --> 00:23:11,639
+maybe i'll start talking through how
+
+790
+00:23:11,839 --> 00:23:13,079
+you'd multiply this out
+
+791
+00:23:13,279 --> 00:23:15,079
+and again this might seem extremely
+
+792
+00:23:15,279 --> 00:23:16,759
+unrelated to image processing
+
+793
+00:23:16,960 --> 00:23:19,079
+and it's actually um it's actually
+
+794
+00:23:19,279 --> 00:23:20,200
+closer than you might think
+
+795
+00:23:20,400 --> 00:23:21,879
+for reasons that i hope to be able to
+
+796
+00:23:22,079 --> 00:23:23,719
+get into but a half hour is an awfully
+
+797
+00:23:23,919 --> 00:23:25,159
+short time for a lecture i do have to
+
+798
+00:23:25,359 --> 00:23:26,279
+say
+
+799
+00:23:26,480 --> 00:23:29,319
+so k zero times a one
+
+800
+00:23:29,519 --> 00:23:30,598
+is just going to give you the constant
+
+801
+00:23:30,798 --> 00:23:32,519
+term any other pair of terms that you
+
+802
+00:23:32,720 --> 00:23:33,399
+have in here
+
+803
+00:23:33,599 --> 00:23:35,879
+isn't going to uh is going to involve
+
+804
+00:23:36,079 --> 00:23:36,919
+some kind of x
+
+805
+00:23:37,119 --> 00:23:38,519
+so if we try to organize things in terms
+
+806
+00:23:38,720 --> 00:23:40,119
+of what their constants are
+
+807
+00:23:40,319 --> 00:23:43,159
+you know we've got uh just
+
+808
+00:23:43,359 --> 00:23:45,000
+simple term for the constant and then if
+
+809
+00:23:45,200 --> 00:23:46,200
+you start thinking about what's the term
+
+810
+00:23:46,400 --> 00:23:46,680
+in front of
+
+811
+00:23:46,880 --> 00:23:49,559
+x well we can take k0 times a1 and then
+
+812
+00:23:49,759 --> 00:23:51,000
+k1 times a0
+
+813
+00:23:51,200 --> 00:23:52,519
+those are the two things in the product
+
+814
+00:23:52,720 --> 00:23:54,358
+they're going to result in x just to the
+
+815
+00:23:54,558 --> 00:23:55,719
+power of one
+
+816
+00:23:55,919 --> 00:23:57,639
+and you know i think a lot of you kind
+
+817
+00:23:57,839 --> 00:23:59,399
+of know how to do this we're just doing
+
+818
+00:23:59,599 --> 00:24:02,440
+a foil basically between two different
+
+819
+00:24:02,640 --> 00:24:03,799
+polynomials one of them just
+
+820
+00:24:04,000 --> 00:24:06,358
+happens to be infinite and you know the
+
+821
+00:24:06,558 --> 00:24:07,719
+next term is going to be the
+
+822
+00:24:07,919 --> 00:24:09,399
+answer to the live quiz so let me go
+
+823
+00:24:09,599 --> 00:24:11,479
+ahead and pop over there
+
+824
+00:24:11,679 --> 00:24:14,358
+see what most people are saying here so
+
+825
+00:24:14,558 --> 00:24:15,799
+it looks like we've got
+
+826
+00:24:16,000 --> 00:24:18,919
+92 93 people answering correctly
+
+827
+00:24:19,119 --> 00:24:21,799
+um that it's a which basically is just
+
+828
+00:24:22,000 --> 00:24:23,559
+marching through all of the pairs so
+
+829
+00:24:23,759 --> 00:24:25,159
+that the index on the k
+
+830
+00:24:25,359 --> 00:24:27,240
+added together with the index on the a
+
+831
+00:24:27,440 --> 00:24:29,240
+is equal to three
+
+832
+00:24:29,440 --> 00:24:31,799
+and uh those of you who answered b it's
+
+833
+00:24:32,000 --> 00:24:33,879
+like completely in the right thought
+
+834
+00:24:34,079 --> 00:24:35,240
+it's just that we're multiplying by a
+
+835
+00:24:35,440 --> 00:24:37,399
+quadratic um polynomial instead of
+
+836
+00:24:37,599 --> 00:24:38,598
+multiplying by
+
+837
+00:24:38,798 --> 00:24:40,200
+something that goes on forever as well
+
+838
+00:24:40,400 --> 00:24:42,039
+so there is no k3 term
+
+839
+00:24:42,240 --> 00:24:43,719
+that's the that's the only distractor in
+
+840
+00:24:43,919 --> 00:24:45,479
+that one question
+
+841
+00:24:45,679 --> 00:24:48,598
+and so you know you know how this goes
+
+842
+00:24:48,798 --> 00:24:49,319
+we've got
+
+843
+00:24:49,519 --> 00:24:51,559
+various different terms that we could
+
+844
+00:24:51,759 --> 00:24:53,399
+get it's a nice big product
+
+845
+00:24:53,599 --> 00:24:54,680
+a way that you could think about
+
+846
+00:24:54,880 --> 00:24:56,759
+multiplying two polynomials like this
+
+847
+00:24:56,960 --> 00:24:58,598
+that's actually heavy heavily related
+
+848
+00:24:58,798 --> 00:24:59,959
+now to
+
+849
+00:25:00,159 --> 00:25:01,319
+all the ideas that we were just talking
+
+850
+00:25:01,519 --> 00:25:03,639
+about is i'm going to take a copy of
+
+851
+00:25:03,839 --> 00:25:04,680
+that polynomial
+
+852
+00:25:04,880 --> 00:25:05,559
+and then i'm going to take this
+
+853
+00:25:05,759 --> 00:25:07,078
+quadratic but i want a copy of the
+
+854
+00:25:07,278 --> 00:25:08,440
+quadratic which is
+
+855
+00:25:08,640 --> 00:25:11,240
+turned around so i'm putting the k2 term
+
+856
+00:25:11,440 --> 00:25:12,919
+on the left and then the k0 term on the
+
+857
+00:25:13,119 --> 00:25:13,879
+right
+
+858
+00:25:14,079 --> 00:25:15,799
+we could imagine doing exactly what the
+
+859
+00:25:16,000 --> 00:25:17,319
+little kernel for our image was doing
+
+860
+00:25:17,519 --> 00:25:18,680
+just having it march across
+
+861
+00:25:18,880 --> 00:25:21,399
+where first here we we align the k zero
+
+862
+00:25:21,599 --> 00:25:22,680
+with the a0 terms
+
+863
+00:25:22,880 --> 00:25:24,680
+we multiply them and then we have it
+
+864
+00:25:24,880 --> 00:25:25,959
+march one further
+
+865
+00:25:26,159 --> 00:25:28,598
+and we align the k1 with the a0 and the
+
+866
+00:25:28,798 --> 00:25:30,358
+k0 with the a1
+
+867
+00:25:30,558 --> 00:25:32,039
+multiply the corresponding terms and add
+
+868
+00:25:32,240 --> 00:25:33,559
+them together and that's
+
+869
+00:25:33,759 --> 00:25:35,719
+exactly what we get for our next term
+
+870
+00:25:35,919 --> 00:25:37,559
+here then we have it march along once
+
+871
+00:25:37,759 --> 00:25:38,358
+more
+
+872
+00:25:38,558 --> 00:25:39,879
+play the same game multiply
+
+873
+00:25:40,079 --> 00:25:41,479
+corresponding terms add them all
+
+874
+00:25:41,679 --> 00:25:42,838
+together
+
+875
+00:25:43,038 --> 00:25:44,759
+and what you see is that the terms in
+
+876
+00:25:44,960 --> 00:25:46,440
+the new polynomial
+
+877
+00:25:46,640 --> 00:25:48,680
+could be described as a convolution
+
+878
+00:25:48,880 --> 00:25:49,879
+between the terms
+
+879
+00:25:50,079 --> 00:25:52,680
+in the original polynomials that we had
+
+880
+00:25:52,880 --> 00:25:54,119
+but notice that in order for that to
+
+881
+00:25:54,319 --> 00:25:56,279
+work we needed this convention where
+
+882
+00:25:56,480 --> 00:25:58,200
+one of the polynomials was flipped
+
+883
+00:25:58,400 --> 00:25:59,959
+around before you do this marching
+
+884
+00:26:00,159 --> 00:26:01,879
+process
+
+885
+00:26:02,079 --> 00:26:03,719
+so because that's how it comes up in a
+
+886
+00:26:03,919 --> 00:26:05,639
+lot of mathematical contexts this ends
+
+887
+00:26:05,839 --> 00:26:07,240
+up being a convention
+
+888
+00:26:07,440 --> 00:26:09,719
+more broadly but it does actually have a
+
+889
+00:26:09,919 --> 00:26:11,240
+little bit of um
+
+890
+00:26:11,440 --> 00:26:12,919
+influence on on the image processing
+
+891
+00:26:13,119 --> 00:26:14,519
+context because there's a heavy analogy
+
+892
+00:26:14,720 --> 00:26:15,399
+here between
+
+893
+00:26:15,599 --> 00:26:17,559
+the values k in some little polynomial
+
+894
+00:26:17,759 --> 00:26:18,838
+and the values of our kernel
+
+895
+00:26:19,038 --> 00:26:20,440
+and then thinking of all of these values
+
+896
+00:26:20,640 --> 00:26:22,119
+a as being kind of like
+
+897
+00:26:22,319 --> 00:26:24,279
+pixel values right except instead of
+
+898
+00:26:24,480 --> 00:26:25,799
+storing them in different spots
+
+899
+00:26:26,000 --> 00:26:27,159
+it's kind of like we're storing them
+
+900
+00:26:27,359 --> 00:26:29,959
+next to an associated power of x
+
+901
+00:26:30,159 --> 00:26:31,240
+now that might seem like a strange thing
+
+902
+00:26:31,440 --> 00:26:32,838
+to do with pixels and indeed we never
+
+903
+00:26:33,038 --> 00:26:34,358
+really do that with pixels
+
+904
+00:26:34,558 --> 00:26:36,519
+but one thing that we actually do do is
+
+905
+00:26:36,720 --> 00:26:38,519
+take a um
+
+906
+00:26:38,720 --> 00:26:40,358
+a slight variation of this where instead
+
+907
+00:26:40,558 --> 00:26:42,119
+of multiplying each pixel value
+
+908
+00:26:42,319 --> 00:26:45,078
+by x we might multiply it by this e to
+
+909
+00:26:45,278 --> 00:26:45,719
+the two pi
+
+910
+00:26:45,919 --> 00:26:47,959
+i times some sort of frequency term and
+
+911
+00:26:48,159 --> 00:26:49,639
+as we take the power of that
+
+912
+00:26:49,839 --> 00:26:51,559
+you get this thing that rotates across
+
+913
+00:26:51,759 --> 00:26:53,159
+and it lets you pull out frequency
+
+914
+00:26:53,359 --> 00:26:54,440
+information from the uh
+
+915
+00:26:54,640 --> 00:26:57,639
+image now i'm not expecting uh people
+
+916
+00:26:57,839 --> 00:26:59,240
+watching this to necessarily know
+
+917
+00:26:59,440 --> 00:27:01,159
+about fourier transforms or fourier
+
+918
+00:27:01,359 --> 00:27:02,759
+series if you want to know
+
+919
+00:27:02,960 --> 00:27:04,119
+you know i hear there's a youtube
+
+920
+00:27:04,319 --> 00:27:05,639
+channel that covers some of these topics
+
+921
+00:27:05,839 --> 00:27:06,119
+that
+
+922
+00:27:06,319 --> 00:27:08,200
+you could watch some of the videos of
+
+923
+00:27:08,400 --> 00:27:10,680
+but at a very high level i do want to
+
+924
+00:27:10,880 --> 00:27:11,959
+try to finish the lecture showing you
+
+925
+00:27:12,159 --> 00:27:12,519
+something
+
+926
+00:27:12,720 --> 00:27:15,159
+really cool about convolutions and about
+
+927
+00:27:15,359 --> 00:27:16,279
+making them more
+
+928
+00:27:16,480 --> 00:27:17,799
+computationally efficient than you might
+
+929
+00:27:18,000 --> 00:27:19,719
+think is possible and the only things
+
+930
+00:27:19,919 --> 00:27:21,000
+you need to know about
+
+931
+00:27:21,200 --> 00:27:23,879
+fourier transforms is we're doing
+
+932
+00:27:24,079 --> 00:27:25,959
+something very analogous to power series
+
+933
+00:27:26,159 --> 00:27:27,719
+and then mathematically it behaves very
+
+934
+00:27:27,919 --> 00:27:28,680
+similarly
+
+935
+00:27:28,880 --> 00:27:30,119
+so all we're doing is taking these
+
+936
+00:27:30,319 --> 00:27:32,119
+values and multiplying them by something
+
+937
+00:27:32,319 --> 00:27:34,039
+it's not x but it's something that we
+
+938
+00:27:34,240 --> 00:27:35,719
+have successive powers of
+
+939
+00:27:35,919 --> 00:27:37,559
+and what that means is that if we do
+
+940
+00:27:37,759 --> 00:27:39,240
+that to two different
+
+941
+00:27:39,440 --> 00:27:41,799
+arrays to two different collections of
+
+942
+00:27:42,000 --> 00:27:42,919
+values
+
+943
+00:27:43,119 --> 00:27:45,719
+multiplying the two results corresponds
+
+944
+00:27:45,919 --> 00:27:48,519
+to convolving the original terms
+
+945
+00:27:48,720 --> 00:27:50,119
+so for example right when we take the
+
+946
+00:27:50,319 --> 00:27:52,598
+polynomial that was generated by k
+
+947
+00:27:52,798 --> 00:27:54,279
+and we multiply it by the polynomial
+
+948
+00:27:54,480 --> 00:27:56,598
+that was generated by these a terms
+
+949
+00:27:56,798 --> 00:27:58,838
+we get a new polynomial where each term
+
+950
+00:27:59,038 --> 00:28:01,799
+is a convolution between a and k
+
+951
+00:28:02,000 --> 00:28:03,559
+same thing would happen if we replaced x
+
+952
+00:28:03,759 --> 00:28:05,159
+with something um
+
+953
+00:28:05,359 --> 00:28:07,559
+like this e to the two pi i stuff all of
+
+954
+00:28:07,759 --> 00:28:09,879
+the terms from one
+
+955
+00:28:10,079 --> 00:28:11,639
+if you take this collection of the terms
+
+956
+00:28:11,839 --> 00:28:12,680
+from one what's going to be called the
+
+957
+00:28:12,880 --> 00:28:14,598
+fourier transform of that thing
+
+958
+00:28:14,798 --> 00:28:16,198
+and you multiply it by the fourier
+
+959
+00:28:16,398 --> 00:28:17,639
+transform of the other
+
+960
+00:28:17,839 --> 00:28:19,159
+it corresponds to convolving the
+
+961
+00:28:19,359 --> 00:28:21,240
+original terms now this will be a little
+
+962
+00:28:21,440 --> 00:28:22,358
+bit easier to see if we
+
+963
+00:28:22,558 --> 00:28:24,598
+just again actually pull up a notebook
+
+964
+00:28:24,798 --> 00:28:26,119
+and play around with it
+
+965
+00:28:26,319 --> 00:28:28,838
+so what i'm going to do is let's just
+
+966
+00:28:29,038 --> 00:28:30,198
+remind ourselves what the image looked
+
+967
+00:28:30,398 --> 00:28:30,519
+like
+
+968
+00:28:30,720 --> 00:28:33,879
+this was the cat and i've just written a
+
+969
+00:28:34,079 --> 00:28:34,519
+very simple
+
+970
+00:28:34,720 --> 00:28:37,559
+plot 1d fourier spectrum
+
+971
+00:28:37,759 --> 00:28:40,279
+oh asking me to update my software in
+
+972
+00:28:40,480 --> 00:28:41,799
+the middle of a lecture
+
+973
+00:28:42,000 --> 00:28:45,479
+how rude all right so
+
+974
+00:28:45,679 --> 00:28:48,039
+uh again i'm not necessarily expecting
+
+975
+00:28:48,240 --> 00:28:49,078
+everyone to know
+
+976
+00:28:49,278 --> 00:28:50,759
+what a fourier transform is but at a
+
+977
+00:28:50,960 --> 00:28:52,358
+high level i want to be able to describe
+
+978
+00:28:52,558 --> 00:28:54,039
+what information about the image it's
+
+979
+00:28:54,240 --> 00:28:55,799
+pulling out so
+
+980
+00:28:56,000 --> 00:28:58,119
+tom the cat is a rather soft image with
+
+981
+00:28:58,319 --> 00:28:59,719
+not a lot of variation happening from
+
+982
+00:28:59,919 --> 00:29:00,759
+left to right
+
+983
+00:29:00,960 --> 00:29:03,479
+so if i go through and i try to ask um
+
+984
+00:29:03,679 --> 00:29:05,319
+you know is there very very fine detail
+
+985
+00:29:05,519 --> 00:29:05,799
+a lot of
+
+986
+00:29:06,000 --> 00:29:07,879
+high frequency changes happening as we
+
+987
+00:29:08,079 --> 00:29:09,399
+move from left to right
+
+988
+00:29:09,599 --> 00:29:12,039
+there's not necessarily going to be a
+
+989
+00:29:12,240 --> 00:29:13,639
+lot of information there
+
+990
+00:29:13,839 --> 00:29:16,680
+now i don't know why
+
+991
+00:29:16,880 --> 00:29:18,279
+this is taking as long as it is to
+
+992
+00:29:18,480 --> 00:29:20,358
+process
+
+993
+00:29:20,558 --> 00:29:21,959
+all right maybe it had to pre-compile
+
+994
+00:29:22,159 --> 00:29:24,838
+the function for the first time
+
+995
+00:29:25,038 --> 00:29:26,358
+but tom doesn't actually produce a very
+
+996
+00:29:26,558 --> 00:29:27,959
+interesting fourier transform and he
+
+997
+00:29:28,159 --> 00:29:29,159
+doesn't give a good in
+
+998
+00:29:29,359 --> 00:29:31,078
+uh instinct for what information is
+
+999
+00:29:31,278 --> 00:29:32,838
+being pulled out so what we could do
+
+1000
+00:29:33,038 --> 00:29:33,719
+instead
+
+1001
+00:29:33,919 --> 00:29:35,639
+i'll go ahead and get rid of his uh
+
+1002
+00:29:35,839 --> 00:29:37,559
+convolution term there
+
+1003
+00:29:37,759 --> 00:29:40,598
+is take a more interesting image so i've
+
+1004
+00:29:40,798 --> 00:29:41,399
+prepared one
+
+1005
+00:29:41,599 --> 00:29:44,838
+that's just a herd of zebra
+
+1006
+00:29:45,038 --> 00:29:47,159
+so this heard of zebra we've got lots of
+
+1007
+00:29:47,359 --> 00:29:48,759
+stripes as you move from the left to the
+
+1008
+00:29:48,960 --> 00:29:49,559
+right
+
+1009
+00:29:49,759 --> 00:29:51,240
+kernel by the way i'm just going to
+
+1010
+00:29:51,440 --> 00:29:53,399
+prepare ourselves a gaussian kernel here
+
+1011
+00:29:53,599 --> 00:29:55,799
+let's get a gaussian that's maybe you
+
+1012
+00:29:56,000 --> 00:29:58,440
+know this nine by nine thing
+
+1013
+00:29:58,640 --> 00:30:00,759
+if we look at the uh this fourier
+
+1014
+00:30:00,960 --> 00:30:02,519
+information associated with the image
+
+1015
+00:30:02,720 --> 00:30:04,279
+the only thing i want you to notice is
+
+1016
+00:30:04,480 --> 00:30:06,598
+that as you go away from zero
+
+1017
+00:30:06,798 --> 00:30:08,680
+you actually have higher values so for
+
+1018
+00:30:08,880 --> 00:30:10,119
+example it kind of peaks up
+
+1019
+00:30:10,319 --> 00:30:12,598
+a little above 50 here which almost
+
+1020
+00:30:12,798 --> 00:30:14,358
+certainly corresponds with the frequency
+
+1021
+00:30:14,558 --> 00:30:15,719
+of the stripes themselves
+
+1022
+00:30:15,919 --> 00:30:18,598
+as we move from left to right now the
+
+1023
+00:30:18,798 --> 00:30:19,879
+reason i bring all of this up
+
+1024
+00:30:20,079 --> 00:30:21,399
+is to try to highlight what happens when
+
+1025
+00:30:21,599 --> 00:30:24,198
+we take the convolution of this image
+
+1026
+00:30:24,398 --> 00:30:26,759
+okay so i'm going to create a new image
+
+1027
+00:30:26,960 --> 00:30:29,078
+called conv-m
+
+1028
+00:30:29,278 --> 00:30:31,799
+that's going to convolve the image with
+
+1029
+00:30:32,000 --> 00:30:32,759
+that kernel
+
+1030
+00:30:32,960 --> 00:30:35,799
+which we define to be a gaussian and
+
+1031
+00:30:36,000 --> 00:30:37,479
+as you expect it's a blurrier version of
+
+1032
+00:30:37,679 --> 00:30:39,078
+the of the zebras
+
+1033
+00:30:39,278 --> 00:30:40,759
+but now if we do the same thing we plot
+
+1034
+00:30:40,960 --> 00:30:43,319
+this 1d fourier spectrum
+
+1035
+00:30:43,519 --> 00:30:45,240
+but we do it on the convolved version of
+
+1036
+00:30:45,440 --> 00:30:47,639
+the image what we get looks very similar
+
+1037
+00:30:47,839 --> 00:30:48,358
+to the original
+
+1038
+00:30:48,558 --> 00:30:49,639
+but notice how what's happening around
+
+1039
+00:30:49,839 --> 00:30:51,639
+the edges have been pushed down
+
+1040
+00:30:51,839 --> 00:30:53,399
+and that's a way of saying all the high
+
+1041
+00:30:53,599 --> 00:30:55,159
+frequency stuff happening with the image
+
+1042
+00:30:55,359 --> 00:30:56,598
+all that finer detail
+
+1043
+00:30:56,798 --> 00:30:59,159
+is no longer there so now it's behaving
+
+1044
+00:30:59,359 --> 00:31:00,680
+a lot more like the image of the cat
+
+1045
+00:31:00,880 --> 00:31:03,000
+that was soft all around
+
+1046
+00:31:03,200 --> 00:31:04,198
+and there's actually something much more
+
+1047
+00:31:04,398 --> 00:31:06,279
+specific that's happening here where
+
+1048
+00:31:06,480 --> 00:31:09,399
+it turns out that the uh the fourier
+
+1049
+00:31:09,599 --> 00:31:10,598
+transform of this
+
+1050
+00:31:10,798 --> 00:31:13,318
+gaussian kernel is another gaussian
+
+1051
+00:31:13,519 --> 00:31:14,358
+curve
+
+1052
+00:31:14,558 --> 00:31:15,719
+specifically in such a way that if you
+
+1053
+00:31:15,919 --> 00:31:17,078
+have a really narrow gaussian the
+
+1054
+00:31:17,278 --> 00:31:17,879
+fourier transform
+
+1055
+00:31:18,079 --> 00:31:19,318
+is something really broad if you have a
+
+1056
+00:31:19,519 --> 00:31:20,759
+broad one it gives you something really
+
+1057
+00:31:20,960 --> 00:31:21,879
+narrow
+
+1058
+00:31:22,079 --> 00:31:24,598
+and if we just look at the gauss the the
+
+1059
+00:31:24,798 --> 00:31:26,358
+fourier information just the frequency
+
+1060
+00:31:26,558 --> 00:31:27,159
+information
+
+1061
+00:31:27,359 --> 00:31:29,719
+and we multiply it by a bell curve kind
+
+1062
+00:31:29,919 --> 00:31:31,240
+of squishing down what's at the outer
+
+1063
+00:31:31,440 --> 00:31:32,198
+regions
+
+1064
+00:31:32,398 --> 00:31:33,959
+that gets us the same fourier
+
+1065
+00:31:34,159 --> 00:31:35,479
+information
+
+1066
+00:31:35,679 --> 00:31:36,919
+and remember how a little bit earlier i
+
+1067
+00:31:37,119 --> 00:31:38,598
+was talking about the computational
+
+1068
+00:31:38,798 --> 00:31:40,440
+complexity here how as we have a really
+
+1069
+00:31:40,640 --> 00:31:41,318
+big kernel
+
+1070
+00:31:41,519 --> 00:31:43,639
+it requires a lot of multiplications it
+
+1071
+00:31:43,839 --> 00:31:45,399
+turns out if instead we
+
+1072
+00:31:45,599 --> 00:31:47,240
+first translate things to describing it
+
+1073
+00:31:47,440 --> 00:31:49,318
+in terms of the frequencies of the image
+
+1074
+00:31:49,519 --> 00:31:50,680
+where convolution is just like
+
+1075
+00:31:50,880 --> 00:31:52,440
+multiplication so we can just
+
+1076
+00:31:52,640 --> 00:31:55,000
+multiply the two functions as functions
+
+1077
+00:31:55,200 --> 00:31:56,358
+just pixel by pixel
+
+1078
+00:31:56,558 --> 00:31:58,279
+and then we take it back it gives us a
+
+1079
+00:31:58,480 --> 00:32:01,078
+much faster way to do this operation
+
+1080
+00:32:01,278 --> 00:32:02,358
+and given that this is a course about
+
+1081
+00:32:02,558 --> 00:32:04,039
+computational thinking i think you know
+
+1082
+00:32:04,240 --> 00:32:05,719
+there is a certain general principle to
+
+1083
+00:32:05,919 --> 00:32:06,680
+be had in that
+
+1084
+00:32:06,880 --> 00:32:08,119
+where finding different ways to
+
+1085
+00:32:08,319 --> 00:32:10,039
+represent your information actually can
+
+1086
+00:32:10,240 --> 00:32:12,358
+sometimes help you do things much faster
+
+1087
+00:32:12,558 --> 00:32:14,440
+now here i'm plotting just um a very
+
+1088
+00:32:14,640 --> 00:32:15,639
+one-dimensional thing it's kind of
+
+1089
+00:32:15,839 --> 00:32:17,159
+marching across the image from left to
+
+1090
+00:32:17,359 --> 00:32:17,719
+right
+
+1091
+00:32:17,919 --> 00:32:20,759
+but we could uh show what did i write
+
+1092
+00:32:20,960 --> 00:32:23,159
+like heat map 2d fourier spectrum and
+
+1093
+00:32:23,359 --> 00:32:24,598
+again i'll share this notebook if you
+
+1094
+00:32:24,798 --> 00:32:26,358
+want to play with it
+
+1095
+00:32:26,558 --> 00:32:28,198
+um we can do kind of a two-dimensional
+
+1096
+00:32:28,398 --> 00:32:29,479
+analog
+
+1097
+00:32:29,679 --> 00:32:30,838
+where the information that comes out of
+
+1098
+00:32:31,038 --> 00:32:32,838
+this again i think it has to pre-compile
+
+1099
+00:32:33,038 --> 00:32:34,519
+it
+
+1100
+00:32:34,720 --> 00:32:36,440
+is essentially saying what's the level
+
+1101
+00:32:36,640 --> 00:32:37,559
+of detail happening
+
+1102
+00:32:37,759 --> 00:32:39,159
+both in the vertical and horizontal
+
+1103
+00:32:39,359 --> 00:32:41,240
+direction so in this context
+
+1104
+00:32:41,440 --> 00:32:43,399
+you know we get this strange galactic
+
+1105
+00:32:43,599 --> 00:32:44,358
+image
+
+1106
+00:32:44,558 --> 00:32:46,358
+and if we apply it to the smoothed out
+
+1107
+00:32:46,558 --> 00:32:47,879
+version
+
+1108
+00:32:48,079 --> 00:32:51,399
+the convolved image uh not con
+
+1109
+00:32:51,599 --> 00:32:54,198
+image conv image what we see is that it
+
+1110
+00:32:54,398 --> 00:32:55,879
+actually pushes down the values
+
+1111
+00:32:56,079 --> 00:32:57,479
+that are far away and concentrates us
+
+1112
+00:32:57,679 --> 00:32:59,559
+towards the center and just to kind of
+
+1113
+00:32:59,759 --> 00:33:01,078
+see the contrast if we had started off
+
+1114
+00:33:01,278 --> 00:33:02,680
+with a much softer image
+
+1115
+00:33:02,880 --> 00:33:06,640
+started off with something like tom
+
+1116
+00:33:07,359 --> 00:33:10,358
+he's soft to begin with this uh
+
+1117
+00:33:10,558 --> 00:33:12,039
+this fourier spectrum which again it's
+
+1118
+00:33:12,240 --> 00:33:13,719
+okay if it's not crystal clear what it's
+
+1119
+00:33:13,919 --> 00:33:14,598
+supposed to represent
+
+1120
+00:33:14,798 --> 00:33:16,119
+all i want you to know is that the
+
+1121
+00:33:16,319 --> 00:33:17,639
+farther away you are from the center
+
+1122
+00:33:17,839 --> 00:33:18,838
+the brightness of those values
+
+1123
+00:33:19,038 --> 00:33:20,358
+corresponds to the level of detail
+
+1124
+00:33:20,558 --> 00:33:22,198
+happening
+
+1125
+00:33:22,398 --> 00:33:23,799
+that this is what like a softer image
+
+1126
+00:33:24,000 --> 00:33:25,559
+looks like and as you multiply by
+
+1127
+00:33:25,759 --> 00:33:28,279
+a gaussian in this fourier space it
+
+1128
+00:33:28,480 --> 00:33:30,119
+pushes you towards this smoother looking
+
+1129
+00:33:30,319 --> 00:33:31,240
+spectrum
+
+1130
+00:33:31,440 --> 00:33:33,559
+and that's a much faster operation so
+
+1131
+00:33:33,759 --> 00:33:35,318
+often in the standard libraries for
+
+1132
+00:33:35,519 --> 00:33:37,318
+convolutions they don't do the naive
+
+1133
+00:33:37,519 --> 00:33:38,919
+thing when you have a large kernel
+
+1134
+00:33:39,119 --> 00:33:40,598
+instead they do this more sophisticated
+
+1135
+00:33:40,798 --> 00:33:42,119
+thing
+
+1136
+00:33:42,319 --> 00:33:43,318
+and again you can see kind of what
+
+1137
+00:33:43,519 --> 00:33:45,639
+effect this has had so here the version
+
+1138
+00:33:45,839 --> 00:33:47,078
+of the function convolved that i wrote
+
+1139
+00:33:47,278 --> 00:33:47,719
+by the way
+
+1140
+00:33:47,919 --> 00:33:49,240
+it's not doing the sophisticated thing
+
+1141
+00:33:49,440 --> 00:33:51,399
+it's just doing the naive you have the
+
+1142
+00:33:51,599 --> 00:33:53,399
+little grid of values march across and
+
+1143
+00:33:53,599 --> 00:33:55,559
+you have them uh multiply and add as you
+
+1144
+00:33:55,759 --> 00:33:56,039
+need
+
+1145
+00:33:56,240 --> 00:33:57,559
+and you'll be doing that in the problem
+
+1146
+00:33:57,759 --> 00:33:59,799
+set uh this week
+
+1147
+00:34:00,000 --> 00:34:03,078
+so uh i think oh man a half hour is such
+
+1148
+00:34:03,278 --> 00:34:03,799
+a short time
+
+1149
+00:34:04,000 --> 00:34:06,039
+all right i've already run out uh but
+
+1150
+00:34:06,240 --> 00:34:07,318
+that is the basics of
+
+1151
+00:34:07,519 --> 00:34:09,719
+image convolutions and the main thing i
+
+1152
+00:34:09,918 --> 00:34:10,919
+want you to take away here
+
+1153
+00:34:11,119 --> 00:34:13,560
+is a a simple tool that seemed like it
+
+1154
+00:34:13,760 --> 00:34:15,000
+was specific at first where we were just
+
+1155
+00:34:15,199 --> 00:34:16,280
+doing moving averages
+
+1156
+00:34:16,480 --> 00:34:18,120
+if you abstract in the right way right
+
+1157
+00:34:18,320 --> 00:34:19,800
+you write it so that rather than just
+
+1158
+00:34:20,000 --> 00:34:21,320
+hard coding all of the moving average
+
+1159
+00:34:21,519 --> 00:34:23,879
+functionality you take it out where
+
+1160
+00:34:24,079 --> 00:34:25,560
+this general convolution principle can
+
+1161
+00:34:25,760 --> 00:34:27,240
+be applied as its own and we tweak
+
+1162
+00:34:27,440 --> 00:34:29,240
+some data we tweak the kernel that lets
+
+1163
+00:34:29,440 --> 00:34:31,000
+you do qualitatively different things
+
+1164
+00:34:31,199 --> 00:34:31,959
+with your data
+
+1165
+00:34:32,159 --> 00:34:33,479
+so in this case it let us do things like
+
+1166
+00:34:33,679 --> 00:34:35,479
+blurring like sharpening like edge
+
+1167
+00:34:35,679 --> 00:34:36,600
+detecting
+
+1168
+00:34:36,800 --> 00:34:38,039
+and then the other thing is that when
+
+1169
+00:34:38,239 --> 00:34:40,600
+you represent your data in distinct ways
+
+1170
+00:34:40,800 --> 00:34:43,159
+so uh in this context if we were taking
+
+1171
+00:34:43,358 --> 00:34:44,039
+the fourier
+
+1172
+00:34:44,239 --> 00:34:45,399
+information taking this frequency
+
+1173
+00:34:45,599 --> 00:34:47,240
+information sometimes that actually lets
+
+1174
+00:34:47,440 --> 00:34:47,800
+you do things
+
+1175
+00:34:48,000 --> 00:34:50,120
+much faster even though you're doing
+
+1176
+00:34:50,320 --> 00:34:51,000
+under the hood
+
+1177
+00:34:51,199 --> 00:34:52,840
+um well not under the hood like in the
+
+1178
+00:34:53,039 --> 00:34:54,760
+abstract sense you're doing the same
+
+1179
+00:34:54,960 --> 00:34:56,039
+operations on the data
+
+1180
+00:34:56,239 --> 00:34:58,440
+one domain can often be different from
+
+1181
+00:34:58,639 --> 00:35:00,519
+another and how it behaves
+
+1182
+00:35:00,719 --> 00:35:02,360
+so with that i'm going to call it an
+
+1183
+00:35:02,559 --> 00:35:03,639
+into this first lecture
+
+1184
+00:35:03,838 --> 00:35:05,480
+um for the mit students in the course
+
+1185
+00:35:05,679 --> 00:35:07,240
+we're going to do uh like a zoom call
+
+1186
+00:35:07,440 --> 00:35:08,840
+that's basically the profs um
+
+1187
+00:35:09,039 --> 00:35:10,680
+just discussing more of this material in
+
+1188
+00:35:10,880 --> 00:35:12,840
+person so you can interact there
+
+1189
+00:35:13,039 --> 00:35:14,600
+as always there's the discord so please
+
+1190
+00:35:14,800 --> 00:35:16,760
+do jump into the discord ask questions
+
+1191
+00:35:16,960 --> 00:35:19,000
+have discussion
+
+1192
+00:35:19,199 --> 00:35:21,639
+and i will see you next week and enjoy
+
+1193
+00:35:21,838 --> 00:35:29,850
+the first problem set
+
+1194
+00:35:30,050 --> 00:35:33,689
+[Music]
+
+1195
+00:35:36,360 --> 00:35:39,439
+[Music]
+
+1196
+00:35:41,480 --> 00:35:55,739
+[Music]
+
+1197
+00:35:56,838 --> 00:35:58,510
+do
+
+1198
+00:35:58,710 --> 00:36:09,320
+[Music]
+
+1199
+00:36:09,519 --> 00:36:14,519
+you
+

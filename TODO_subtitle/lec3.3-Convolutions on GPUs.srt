@@ -1,0 +1,1128 @@
+﻿1
+00:00:02,879 --> 00:00:03,399
+the topic
+
+2
+00:00:03,600 --> 00:00:06,519
+of this segment is gpus
+
+3
+00:00:06,719 --> 00:00:09,399
+graphical processing units i'm going to
+
+4
+00:00:09,599 --> 00:00:09,960
+show
+
+5
+00:00:10,160 --> 00:00:13,319
+an example of doing a convolution using
+
+6
+00:00:13,519 --> 00:00:15,319
+a gpu in julia
+
+7
+00:00:15,519 --> 00:00:17,879
+so the actual application is probably
+
+8
+00:00:18,079 --> 00:00:18,359
+not
+
+9
+00:00:18,559 --> 00:00:20,359
+particularly important but we are going
+
+10
+00:00:20,559 --> 00:00:21,720
+to
+
+11
+00:00:21,920 --> 00:00:24,839
+take this julia logo right here and
+
+12
+00:00:25,039 --> 00:00:25,720
+we're going to
+
+13
+00:00:25,920 --> 00:00:27,960
+blur it so here's the logo you can see
+
+14
+00:00:28,160 --> 00:00:29,399
+it being blurred
+
+15
+00:00:29,599 --> 00:00:31,800
+right but that's not the important part
+
+16
+00:00:32,000 --> 00:00:33,559
+probably the important part is to
+
+17
+00:00:33,759 --> 00:00:36,439
+see for yourselves the power of a gpu so
+
+18
+00:00:36,640 --> 00:00:37,878
+i'm going to demonstrate this
+
+19
+00:00:38,079 --> 00:00:40,439
+in julia right here let's focus on the
+
+20
+00:00:40,640 --> 00:00:41,239
+time
+
+21
+00:00:41,439 --> 00:00:43,559
+i'm going to compare a cpu code with a
+
+22
+00:00:43,759 --> 00:00:44,518
+gpu code
+
+23
+00:00:44,719 --> 00:00:47,719
+so let's go ahead here and execute the
+
+24
+00:00:47,920 --> 00:00:49,799
+blurring on a cpu
+
+25
+00:00:50,000 --> 00:00:52,998
+and it took 257 milliseconds
+
+26
+00:00:53,198 --> 00:00:54,759
+let's just do it again just to see oh
+
+27
+00:00:54,960 --> 00:00:57,079
+it's about the same yep always about
+
+28
+00:00:57,280 --> 00:01:01,079
+you know 256 257 milliseconds
+
+29
+00:01:01,280 --> 00:01:02,998
+now i'm going to run the very same code
+
+30
+00:01:03,198 --> 00:01:04,119
+same blurring
+
+31
+00:01:04,319 --> 00:01:07,159
+i'm going to do it on a gpu okay and so
+
+32
+00:01:07,359 --> 00:01:10,759
+look at that two milliseconds 2.2
+
+33
+00:01:10,959 --> 00:01:12,200
+milliseconds
+
+34
+00:01:12,400 --> 00:01:14,200
+so oh that was a little bit more 45 but
+
+35
+00:01:14,400 --> 00:01:16,278
+that seemed to be a fluke 2.2
+
+36
+00:01:16,478 --> 00:01:19,640
+2.2 so about 2 milliseconds usually
+
+37
+00:01:19,840 --> 00:01:22,840
+and do you see that it's 100 times
+
+38
+00:01:23,040 --> 00:01:26,679
+faster on the gpu than the cpu
+
+39
+00:01:26,879 --> 00:01:29,399
+so what's going on here what's this all
+
+40
+00:01:29,599 --> 00:01:30,278
+about and
+
+41
+00:01:30,478 --> 00:01:32,599
+what is the research problem that
+
+42
+00:01:32,799 --> 00:01:34,278
+julia's trying to solve
+
+43
+00:01:34,478 --> 00:01:35,959
+well let me start with that second
+
+44
+00:01:36,159 --> 00:01:38,599
+question so with julia
+
+45
+00:01:38,799 --> 00:01:40,200
+we're trying to make it that you don't
+
+46
+00:01:40,400 --> 00:01:43,000
+have to learn a new language
+
+47
+00:01:43,200 --> 00:01:45,878
+to be able to run on a gpu so this is
+
+48
+00:01:46,078 --> 00:01:47,878
+the code portability problem
+
+49
+00:01:48,078 --> 00:01:49,799
+and it's pretty much a holy grail of
+
+50
+00:01:50,000 --> 00:01:51,319
+high performance computing computer
+
+51
+00:01:51,519 --> 00:01:52,119
+science
+
+52
+00:01:52,319 --> 00:01:54,359
+that the user just decides where the
+
+53
+00:01:54,560 --> 00:01:56,198
+data is going to live
+
+54
+00:01:56,399 --> 00:01:58,599
+and the very same code that calculates
+
+55
+00:01:58,799 --> 00:01:59,799
+the convolution
+
+56
+00:02:00,000 --> 00:02:01,959
+should just work these aren't library
+
+57
+00:02:02,159 --> 00:02:03,640
+calls these are actual functions that
+
+58
+00:02:03,840 --> 00:02:04,359
+are written
+
+59
+00:02:04,560 --> 00:02:06,439
+somewhere here down here i can try to
+
+60
+00:02:06,640 --> 00:02:08,600
+find it if you'll give me a chance to
+
+61
+00:02:08,800 --> 00:02:09,399
+look for it
+
+62
+00:02:09,598 --> 00:02:12,600
+so here's the convolved 2d function and
+
+63
+00:02:12,800 --> 00:02:14,439
+this function this is the basic math of
+
+64
+00:02:14,639 --> 00:02:16,439
+a convolution you take the
+
+65
+00:02:16,639 --> 00:02:19,480
+data you multiply point wise by a filter
+
+66
+00:02:19,680 --> 00:02:20,360
+and you add it all
+
+67
+00:02:20,560 --> 00:02:22,520
+up okay we can look a little bit at the
+
+68
+00:02:22,719 --> 00:02:24,039
+end of this segment
+
+69
+00:02:24,239 --> 00:02:27,000
+what some of the specifics of the julia
+
+70
+00:02:27,199 --> 00:02:28,360
+implementation are doing it's pretty
+
+71
+00:02:28,560 --> 00:02:29,480
+simple really though
+
+72
+00:02:29,680 --> 00:02:30,920
+there may be some commands that might
+
+73
+00:02:31,120 --> 00:02:33,080
+look a little funny but basically
+
+74
+00:02:33,280 --> 00:02:35,960
+if you want to do a convolved 2d you
+
+75
+00:02:36,159 --> 00:02:37,800
+just simply apply this
+
+76
+00:02:38,000 --> 00:02:40,840
+cu function cu stands for cuda which is
+
+77
+00:02:41,039 --> 00:02:41,160
+the
+
+78
+00:02:41,360 --> 00:02:44,439
+nvidia language for doing gpu
+
+79
+00:02:44,639 --> 00:02:45,880
+computations
+
+80
+00:02:46,080 --> 00:02:48,759
+that you take the cu you just that will
+
+81
+00:02:48,959 --> 00:02:49,080
+put
+
+82
+00:02:49,280 --> 00:02:52,439
+the image on the gpu
+
+83
+00:02:52,639 --> 00:02:54,840
+the filter is the same filter and the
+
+84
+00:02:55,039 --> 00:02:56,520
+range that's going to be the interior
+
+85
+00:02:56,719 --> 00:02:57,959
+part of indices
+
+86
+00:02:58,158 --> 00:02:59,719
+will also send over the gpu for a
+
+87
+00:02:59,919 --> 00:03:01,560
+convenience and then we're just going to
+
+88
+00:03:01,759 --> 00:03:02,439
+run the code
+
+89
+00:03:02,639 --> 00:03:04,759
+i didn't do it over here because i
+
+90
+00:03:04,959 --> 00:03:05,719
+wanted to not
+
+91
+00:03:05,919 --> 00:03:08,200
+count the timing for the movement just
+
+92
+00:03:08,400 --> 00:03:10,118
+for the computation but it's the same
+
+93
+00:03:10,318 --> 00:03:11,319
+basic idea
+
+94
+00:03:11,519 --> 00:03:13,640
+so let's step back a second talk about
+
+95
+00:03:13,840 --> 00:03:14,679
+gpus
+
+96
+00:03:14,878 --> 00:03:17,719
+gpus are made by a number of
+
+97
+00:03:17,919 --> 00:03:19,000
+manufacturers i guess
+
+98
+00:03:19,199 --> 00:03:21,480
+i think it's fair to say that the nvidia
+
+99
+00:03:21,680 --> 00:03:22,280
+gpu
+
+100
+00:03:22,479 --> 00:03:25,080
+is probably one of the most popular ones
+
+101
+00:03:25,280 --> 00:03:25,480
+right
+
+102
+00:03:25,680 --> 00:03:28,920
+now the uh nvidia here's some pictures
+
+103
+00:03:29,120 --> 00:03:29,399
+of
+
+104
+00:03:29,598 --> 00:03:32,039
+i just googled the pictures of nvidia
+
+105
+00:03:32,239 --> 00:03:32,920
+gpus
+
+106
+00:03:33,120 --> 00:03:36,280
+gpu started out life being particularly
+
+107
+00:03:36,479 --> 00:03:36,840
+useful
+
+108
+00:03:37,039 --> 00:03:40,118
+for gaming for graphics processing hence
+
+109
+00:03:40,318 --> 00:03:41,000
+the name
+
+110
+00:03:41,199 --> 00:03:42,840
+somewhere along the line people realize
+
+111
+00:03:43,039 --> 00:03:44,360
+that the very same
+
+112
+00:03:44,560 --> 00:03:47,240
+horsepower that's needed to computate
+
+113
+00:03:47,439 --> 00:03:47,719
+for
+
+114
+00:03:47,919 --> 00:03:49,800
+graphics turns out to be really really
+
+115
+00:03:50,000 --> 00:03:52,118
+useful for certain kinds of computations
+
+116
+00:03:52,318 --> 00:03:54,439
+and specifically it's very regular
+
+117
+00:03:54,639 --> 00:03:55,640
+computations
+
+118
+00:03:55,840 --> 00:03:58,039
+so for those of you know about matrices
+
+119
+00:03:58,239 --> 00:03:59,239
+matrix multiply
+
+120
+00:03:59,438 --> 00:04:01,000
+is something that gpus can do really
+
+121
+00:04:01,199 --> 00:04:03,080
+really fast so if you're multiplying
+
+122
+00:04:03,280 --> 00:04:04,280
+little matrices
+
+123
+00:04:04,479 --> 00:04:06,360
+and lots of them this is the sort of
+
+124
+00:04:06,560 --> 00:04:07,719
+thing that for example is happening in
+
+125
+00:04:07,919 --> 00:04:09,160
+machine learning algorithms
+
+126
+00:04:09,360 --> 00:04:11,319
+then gpus just really scream and then
+
+127
+00:04:11,519 --> 00:04:12,840
+answer very popular
+
+128
+00:04:13,039 --> 00:04:15,960
+for ai applications convolutions are
+
+129
+00:04:16,160 --> 00:04:17,879
+have a very similar character they're
+
+130
+00:04:18,079 --> 00:04:18,999
+very regular
+
+131
+00:04:19,199 --> 00:04:22,120
+i suppose you could imagine that if you
+
+132
+00:04:22,319 --> 00:04:23,480
+had
+
+133
+00:04:23,680 --> 00:04:25,240
+not a computer but you had a bunch of
+
+134
+00:04:25,439 --> 00:04:26,840
+people and you asked them to each
+
+135
+00:04:27,040 --> 00:04:28,199
+convolve an image
+
+136
+00:04:28,399 --> 00:04:30,278
+you could easily kind of choreograph the
+
+137
+00:04:30,478 --> 00:04:31,800
+various people that you have because it
+
+138
+00:04:32,000 --> 00:04:32,120
+is
+
+139
+00:04:32,319 --> 00:04:35,240
+so parallelizable so regular so easy
+
+140
+00:04:35,439 --> 00:04:37,240
+that's where the gpus shine they don't
+
+141
+00:04:37,439 --> 00:04:38,840
+do very well at general purpose
+
+142
+00:04:39,040 --> 00:04:40,040
+computations
+
+143
+00:04:40,240 --> 00:04:42,040
+and that's where the cpu kind of has the
+
+144
+00:04:42,240 --> 00:04:43,960
+advantage but when you have these
+
+145
+00:04:44,160 --> 00:04:46,040
+very very regular computationally
+
+146
+00:04:46,240 --> 00:04:47,160
+intensive
+
+147
+00:04:47,360 --> 00:04:49,480
+computations then the gpu does very well
+
+148
+00:04:49,680 --> 00:04:50,439
+so nvidia
+
+149
+00:04:50,639 --> 00:04:53,480
+is is one major manufacturer uh the amd
+
+150
+00:04:53,680 --> 00:04:56,520
+is another one i just googled amd gpus
+
+151
+00:04:56,720 --> 00:04:56,920
+and
+
+152
+00:04:57,120 --> 00:04:58,680
+here are some pictures of the kinds of
+
+153
+00:04:58,879 --> 00:05:00,920
+boards that have come up and
+
+154
+00:05:01,120 --> 00:05:02,920
+intel is very much in the act with the
+
+155
+00:05:03,120 --> 00:05:04,040
+laptops and
+
+156
+00:05:04,240 --> 00:05:06,920
+here you can see some intel gpus so
+
+157
+00:05:07,120 --> 00:05:08,920
+these various gpus are
+
+158
+00:05:09,120 --> 00:05:11,879
+what's accelerating ai and lots of other
+
+159
+00:05:12,079 --> 00:05:13,559
+numerical applications
+
+160
+00:05:13,759 --> 00:05:16,600
+so let me get back here to this code i
+
+161
+00:05:16,800 --> 00:05:18,120
+said i would kind of show you a few
+
+162
+00:05:18,319 --> 00:05:19,718
+aspects to this code i didn't really
+
+163
+00:05:19,918 --> 00:05:20,680
+want to go
+
+164
+00:05:20,879 --> 00:05:22,999
+into great depth but let me just mention
+
+165
+00:05:23,199 --> 00:05:23,800
+that we use a few
+
+166
+00:05:24,000 --> 00:05:26,759
+things for example uh julia has a
+
+167
+00:05:26,959 --> 00:05:28,120
+cartesian index
+
+168
+00:05:28,319 --> 00:05:31,879
+function so that you could directly
+
+169
+00:05:32,079 --> 00:05:34,920
+index into arrays with indices minus two
+
+170
+00:05:35,120 --> 00:05:36,360
+and minus one and zero
+
+171
+00:05:36,560 --> 00:05:39,079
+so here's a kind of five by three window
+
+172
+00:05:39,279 --> 00:05:39,960
+centered at zero
+
+173
+00:05:40,160 --> 00:05:42,040
+zero and i think you could all guess
+
+174
+00:05:42,240 --> 00:05:43,800
+what these indices are doing
+
+175
+00:05:44,000 --> 00:05:46,439
+so to understand the array here let me
+
+176
+00:05:46,639 --> 00:05:47,319
+remind you
+
+177
+00:05:47,519 --> 00:05:48,920
+the two means it's a two dimensional
+
+178
+00:05:49,120 --> 00:05:50,999
+array and the
+
+179
+00:05:51,199 --> 00:05:53,400
+the entries are tuples of integers and
+
+180
+00:05:53,600 --> 00:05:54,680
+you can see that
+
+181
+00:05:54,879 --> 00:05:57,960
+so uh this is these are the various
+
+182
+00:05:58,160 --> 00:05:59,240
+indices
+
+183
+00:05:59,439 --> 00:06:02,360
+in this five by three array and
+
+184
+00:06:02,560 --> 00:06:05,400
+uh we wrote below a neighbor's function
+
+185
+00:06:05,600 --> 00:06:08,999
+which here for if you have a sort of
+
+186
+00:06:09,199 --> 00:06:09,960
+three by three
+
+187
+00:06:10,160 --> 00:06:12,040
+then the neighbors are in the x
+
+188
+00:06:12,240 --> 00:06:14,360
+direction minus one zero and one and
+
+189
+00:06:14,560 --> 00:06:16,360
+in the vertical direction minus one zero
+
+190
+00:06:16,560 --> 00:06:17,800
+and one so
+
+191
+00:06:18,000 --> 00:06:19,400
+let me just show you a few pieces of
+
+192
+00:06:19,600 --> 00:06:21,559
+this again i didn't really want to go
+
+193
+00:06:21,759 --> 00:06:23,160
+into too much detail
+
+194
+00:06:23,360 --> 00:06:25,960
+here is the julia logo being downloaded
+
+195
+00:06:26,160 --> 00:06:27,240
+here's the gaussian
+
+196
+00:06:27,439 --> 00:06:29,960
+filter that i think you'll all recognize
+
+197
+00:06:30,160 --> 00:06:30,360
+so
+
+198
+00:06:30,560 --> 00:06:32,920
+this is a function of x and y and by
+
+199
+00:06:33,120 --> 00:06:34,759
+default we'll use sigma but you can
+
+200
+00:06:34,959 --> 00:06:35,559
+change it
+
+201
+00:06:35,759 --> 00:06:37,559
+so by default we can use sigma to be one
+
+202
+00:06:37,759 --> 00:06:39,800
+half so you could see that this is the
+
+203
+00:06:40,000 --> 00:06:40,360
+usual
+
+204
+00:06:40,560 --> 00:06:43,160
+gaussian function right here and we're
+
+205
+00:06:43,360 --> 00:06:45,079
+also going to allow ourselves
+
+206
+00:06:45,279 --> 00:06:46,838
+to call this gaussian function with
+
+207
+00:06:47,038 --> 00:06:48,759
+these indices like the ones you saw
+
+208
+00:06:48,959 --> 00:06:52,439
+up above so this basically lets you use
+
+209
+00:06:52,639 --> 00:06:53,960
+indices instead of
+
+210
+00:06:54,160 --> 00:06:56,119
+directly using x and y just as a
+
+211
+00:06:56,319 --> 00:06:57,319
+convenience
+
+212
+00:06:57,519 --> 00:07:00,439
+okay and then we're going to
+
+213
+00:07:00,639 --> 00:07:03,160
+compute the gaussian filter and here you
+
+214
+00:07:03,360 --> 00:07:04,278
+can see
+
+215
+00:07:04,478 --> 00:07:07,079
+we're going to use an s matrix which is
+
+216
+00:07:07,279 --> 00:07:08,439
+a static matrix
+
+217
+00:07:08,639 --> 00:07:10,838
+this is a performance hack i don't think
+
+218
+00:07:11,038 --> 00:07:12,999
+i need to go into this too much
+
+219
+00:07:13,199 --> 00:07:15,079
+but this will calculate the gaussian
+
+220
+00:07:15,279 --> 00:07:17,639
+filter in the normalized way
+
+221
+00:07:17,839 --> 00:07:19,879
+here also we've got some neighbors but
+
+222
+00:07:20,079 --> 00:07:21,718
+let me go down to the convolved 2d
+
+223
+00:07:21,918 --> 00:07:23,718
+just to take a look at it basically we
+
+224
+00:07:23,918 --> 00:07:26,040
+get the neighborhood of every point
+
+225
+00:07:26,240 --> 00:07:28,278
+and we're going to compute this static
+
+226
+00:07:28,478 --> 00:07:30,759
+matrix and i just want to point out
+
+227
+00:07:30,959 --> 00:07:32,600
+some of the pieces because you may not
+
+228
+00:07:32,800 --> 00:07:33,960
+be so familiar with these
+
+229
+00:07:34,160 --> 00:07:36,999
+ideas so we have our image it's in
+
+230
+00:07:37,199 --> 00:07:39,800
+a and we don't want to make a copy
+
+231
+00:07:40,000 --> 00:07:40,278
+because
+
+232
+00:07:40,478 --> 00:07:43,399
+copying data is very very expensive so
+
+233
+00:07:43,598 --> 00:07:45,718
+in fact memory movement i've seen in
+
+234
+00:07:45,918 --> 00:07:47,240
+other computer science classes people
+
+235
+00:07:47,439 --> 00:07:47,718
+will count
+
+236
+00:07:47,918 --> 00:07:50,439
+operations like ads and multiplies but
+
+237
+00:07:50,639 --> 00:07:52,439
+actually memory movement is a much more
+
+238
+00:07:52,639 --> 00:07:54,600
+significant matter for most computers
+
+239
+00:07:54,800 --> 00:07:56,278
+so here what we're going to do is
+
+240
+00:07:56,478 --> 00:07:59,240
+instead of instead of making a copy of a
+
+241
+00:07:59,439 --> 00:08:00,759
+we're going to take a view which means
+
+242
+00:08:00,959 --> 00:08:02,119
+we kind of
+
+243
+00:08:02,319 --> 00:08:05,399
+have we have this like three by three
+
+244
+00:08:05,598 --> 00:08:07,319
+sub matrix of a but without making a
+
+245
+00:08:07,519 --> 00:08:08,838
+copy and we
+
+246
+00:08:09,038 --> 00:08:12,199
+load it into a static matrix
+
+247
+00:08:12,399 --> 00:08:15,160
+so and here's the math okay and so when
+
+248
+00:08:15,360 --> 00:08:15,879
+we do that
+
+249
+00:08:16,079 --> 00:08:18,040
+you can sort of see what happens when we
+
+250
+00:08:18,240 --> 00:08:18,920
+filter
+
+251
+00:08:19,120 --> 00:08:22,119
+we'll do some padding and
+
+252
+00:08:22,319 --> 00:08:24,759
+the thing that i want to show you most
+
+253
+00:08:24,959 --> 00:08:25,559
+is
+
+254
+00:08:25,759 --> 00:08:27,480
+how it's called because this is where
+
+255
+00:08:27,680 --> 00:08:29,319
+the gpu is most useful
+
+256
+00:08:29,519 --> 00:08:31,480
+we're going to do this with a broadcast
+
+257
+00:08:31,680 --> 00:08:33,078
+so what this basically says
+
+258
+00:08:33,278 --> 00:08:36,039
+is we're going to apply this convolved2d
+
+259
+00:08:36,240 --> 00:08:37,559
+which is defined at a point
+
+260
+00:08:37,759 --> 00:08:39,240
+we're going to do it at every interior
+
+261
+00:08:39,440 --> 00:08:41,240
+point in the image
+
+262
+00:08:41,440 --> 00:08:43,559
+okay so you can go through this yourself
+
+263
+00:08:43,759 --> 00:08:44,919
+i'll post this
+
+264
+00:08:45,120 --> 00:08:47,639
+notebook you will need a gpu a machine
+
+265
+00:08:47,839 --> 00:08:49,078
+with a gpu if you're actually going to
+
+266
+00:08:49,278 --> 00:08:50,279
+run this thing
+
+267
+00:08:50,480 --> 00:08:53,318
+but again i want to conclude
+
+268
+00:08:53,519 --> 00:08:55,479
+with the most important piece not the
+
+269
+00:08:55,679 --> 00:08:57,318
+julia code we could kind of go over that
+
+270
+00:08:57,519 --> 00:08:58,359
+separately
+
+271
+00:08:58,559 --> 00:09:02,120
+but the real point that the same code
+
+272
+00:09:02,320 --> 00:09:05,078
+runs on a cpu and a gpu no special
+
+273
+00:09:05,278 --> 00:09:05,959
+languages
+
+274
+00:09:06,159 --> 00:09:07,879
+you get that factor of 100 speed up that
+
+275
+00:09:08,080 --> 00:09:09,879
+you hope to get from a gpu
+
+276
+00:09:10,080 --> 00:09:12,279
+and the main key difference i mean
+
+277
+00:09:12,480 --> 00:09:13,959
+there's some double in the details
+
+278
+00:09:14,159 --> 00:09:16,839
+but the key difference is the cu command
+
+279
+00:09:17,039 --> 00:09:18,758
+which is going to move the data
+
+280
+00:09:18,958 --> 00:09:21,318
+from the cpu the central processing unit
+
+281
+00:09:21,519 --> 00:09:22,279
+down to
+
+282
+00:09:22,480 --> 00:09:27,480
+the gpu
+
