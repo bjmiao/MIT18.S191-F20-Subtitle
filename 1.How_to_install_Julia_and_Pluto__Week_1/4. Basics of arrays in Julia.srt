@@ -1,0 +1,447 @@
+﻿1
+00:00:00,080 --> 00:00:03,818
+it's alan edelman and this little
+snippet will be
+
+2
+00:00:03,879 --> 00:00:07,659
+about array basics so if you want to
+
+3
+00:00:07,759 --> 00:00:10,213
+define a vector you can just go
+
+4
+00:00:10,238 --> 00:00:13,100
+v = [1,2,3,4]
+
+5
+00:00:13,199 --> 00:00:15,794
+and you can see
+that the size of v is four
+
+6
+00:00:16,083 --> 00:00:18,296
+however if you want an array 
+one way to do it
+
+7
+00:00:18,320 --> 00:00:20,694
+here's one two three four five six uh
+
+8
+00:00:20,719 --> 00:00:23,363
+with a square bracket
+over here and another be here
+
+9
+00:00:23,840 --> 00:00:27,538
+and the size of w
+is two three so just to
+
+10
+00:00:27,567 --> 00:00:30,139
+show off a few quick things you could do
+
+11
+00:00:30,239 --> 00:00:32,487
+if you want the upper left element
+
+12
+00:00:32,511 --> 00:00:35,243
+w[1,1] is one
+
+13
+00:00:35,254 --> 00:00:38,315
+if you want the lower right element
+
+14
+00:00:38,564 --> 00:00:42,419
+it's the second of the third row
+you get six
+
+15
+00:00:42,443 --> 00:00:44,458
+if you want the entire first row
+
+16
+00:00:44,558 --> 00:00:49,579
+you can go comma colon which basically says
+take the entire first row
+
+17
+00:00:49,679 --> 00:00:51,975
+and it'll come back as a vector
+
+18
+00:00:51,999 --> 00:00:56,938
+or you could take the entire first
+column which also comes back as a vector
+
+19
+00:00:57,039 --> 00:00:59,819
+a vector is one dimensional it's not um
+
+20
+00:00:59,920 --> 00:01:01,899
+it's not like it's an n by one or one by n
+
+21
+00:01:02,000 --> 00:01:05,205
+it's just a one dimensional object in julia
+
+22
+00:01:05,230 --> 00:01:07,476
+you could also slice through some planes
+
+23
+00:01:07,501 --> 00:01:09,259
+so you can take
+
+24
+00:01:09,359 --> 00:01:11,819
+you could take two colon three and
+
+25
+00:01:11,920 --> 00:01:14,937
+you'll get a two by two array that
+comes out so
+
+26
+00:01:14,961 --> 00:01:16,859
+now let's define a few arrays
+
+27
+00:01:16,959 --> 00:01:20,219
+here's a random matrix with the elements
+
+28
+00:01:20,319 --> 00:01:22,059
+chosen uniformly from one through nine
+
+29
+00:01:22,159 --> 00:01:23,899
+it's a three by four matrix
+
+30
+00:01:24,000 --> 00:01:27,100
+so if i execute this a few times you see
+
+31
+00:01:27,200 --> 00:01:29,419
+i get different matrices but either way
+
+32
+00:01:29,519 --> 00:01:32,139
+the size of a1 is always three by four
+
+33
+00:01:32,239 --> 00:01:36,838
+okay here's some random
+pretty characters of various kinds
+
+34
+00:01:36,863 --> 00:01:38,619
+or interesting looking characters
+
+35
+00:01:38,719 --> 00:01:42,219
+so if i didn't have this pretty print
+
+36
+00:01:42,319 --> 00:01:44,219
+which appears just below me
+
+37
+00:01:44,319 --> 00:01:46,059
+you'll see it's kind of an ugly print
+
+38
+00:01:46,159 --> 00:01:47,419
+well it's not terrible
+
+39
+00:01:47,519 --> 00:01:50,539
+but it has those quotations and so the
+
+40
+00:01:50,640 --> 00:01:52,883
+pretty print just kind
+of makes it look nice
+
+41
+00:01:52,908 --> 00:01:54,779
+and it looks just like this
+
+42
+00:01:54,879 --> 00:01:56,378
+so what we do is we're actually
+
+43
+00:01:56,478 --> 00:01:59,179
+converting every character to a string
+
+44
+00:01:59,280 --> 00:02:01,346
+and then just
+making it really look pretty
+
+45
+00:02:01,370 --> 00:02:05,658
+i don't read this
+this was some magic that your ta shashi
+
+46
+00:02:05,759 --> 00:02:08,938
+once wrote, which turns makes it look nice
+
+47
+00:02:09,038 --> 00:02:12,460
+but i'm not going to worry about that
+
+48
+00:02:12,577 --> 00:02:15,028
+here's some colors
+distinguishable colors of 100
+
+49
+00:02:15,053 --> 00:02:16,859
+let's we can go a little slower
+
+50
+00:02:16,950 --> 00:02:19,266
+you could take
+distinguishable colors of three
+
+51
+00:02:19,291 --> 00:02:21,430
+you'll see we have 
+three distinguishable colors
+
+52
+00:02:21,455 --> 00:02:25,340
+or six so the idea is that
+there are colors in this world
+
+53
+00:02:25,439 --> 00:02:28,380
+that are quite contrasting to the human eye
+
+54
+00:02:28,479 --> 00:02:30,828
+to the normal human eye and so
+
+55
+00:02:31,003 --> 00:02:32,928
+these distinguishable colors you know like
+
+56
+00:02:32,953 --> 00:02:35,014
+when you make a graph or something you're
+supposed to
+
+57
+00:02:35,113 --> 00:02:37,174
+have very different looking colors so
+
+58
+00:02:37,274 --> 00:02:39,494
+here's a bunch of distinguishable colors
+
+59
+00:02:39,594 --> 00:02:41,790
+and here's just some
+random
+
+60
+00:02:41,917 --> 00:02:44,425
+10 by 10 array of these colors so every time
+
+61
+00:02:44,553 --> 00:02:47,974
+i do this i get a different random 
+10 by 10 set of colors
+
+62
+00:02:48,073 --> 00:02:49,494
+all right here let me here i just
+
+63
+00:02:49,594 --> 00:02:51,094
+downloaded the corgi
+
+64
+00:02:51,194 --> 00:02:53,254
+um just took it off of a web page and
+
+65
+00:02:53,353 --> 00:02:55,094
+here i downloaded a snoopy
+
+66
+00:02:55,194 --> 00:02:56,614
+and so here you see i could have a
+
+67
+00:02:56,714 --> 00:02:58,854
+random 5x5 array
+
+68
+00:02:58,953 --> 00:03:00,934
+consisting of corgis and snoopy's and so
+
+69
+00:03:01,034 --> 00:03:02,374
+every time i run this
+
+70
+00:03:02,474 --> 00:03:04,934
+it takes a little bit of time but you'll
+
+71
+00:03:05,034 --> 00:03:06,614
+see i get a different five by five array
+
+72
+00:03:06,714 --> 00:03:09,014
+of corgis and snoopy's each and every time
+
+73
+00:03:09,113 --> 00:03:12,934
+okay or here a little bit of code
+
+74
+00:03:13,034 --> 00:03:16,053
+that's going to uh
+
+75
+00:03:16,153 --> 00:03:21,094
+i can copy the first matrix which is a
+bunch of numbers
+
+76
+00:03:21,194 --> 00:03:23,928
+and then put a one two
+three in the upper left element
+
+77
+00:03:23,953 --> 00:03:26,294
+or similarly i could take
+
+78
+00:03:26,393 --> 00:03:29,301
+here i can take a five
+by five array of snoopy's
+
+79
+00:03:29,326 --> 00:03:31,759
+and put a corgi in
+the upper left element
+
+80
+00:03:31,783 --> 00:03:33,894
+here's a multiplication
+table
+
+81
+00:03:33,919 --> 00:03:39,014
+this is what's called a comprehension
+in programming languages like julia
+
+82
+00:03:39,113 --> 00:03:42,693
+so it kind of looks like math set notation
+we have i times j
+
+83
+00:03:42,792 --> 00:03:46,534
+for i equals 1 to 5 and j equals 1
+through 5. this is a comprehension
+
+84
+00:03:46,633 --> 00:03:49,894
+you could do it with a double for loop
+like this one
+
+85
+00:03:49,994 --> 00:03:51,494
+but it's a little bit clunkier
+
+86
+00:03:51,519 --> 00:03:53,890
+people tend to prefer comprehensions 
+when it can be done
+
+87
+00:03:53,914 --> 00:03:56,949
+or you can even do it like in other
+programming languages where
+
+88
+00:03:56,974 --> 00:03:58,693
+you really have just the nested loops
+
+89
+00:03:58,792 --> 00:04:01,375
+but again the comprehension is much
+much nicer
+
+90
+00:04:01,577 --> 00:04:04,586
+so people tend to like that
+
+91
+00:04:04,611 --> 00:04:06,213
+if you just square an array
+
+92
+00:04:06,238 --> 00:04:11,333
+you get the the matrix times itself
+
+93
+00:04:11,433 --> 00:04:14,693
+however if you do point square
+
+94
+00:04:14,792 --> 00:04:18,134
+you get the element-wise square okay
+
+95
+00:04:18,233 --> 00:04:20,453
+you can also concatenate matrices by just
+
+96
+00:04:20,553 --> 00:04:22,773
+putting them
+next to each other in square brackets
+
+97
+00:04:22,873 --> 00:04:28,544
+and so here's [A4 A4] which is
+double the number of columns that a4 had
+
+98
+00:04:28,569 --> 00:04:31,935
+and what you can also 
+vertically concatenate with semicolon
+
+99
+00:04:31,960 --> 00:04:35,984
+semicolon and so you get [A3; A3]
+gives you exactly that
+
+100
+00:04:36,166 --> 00:04:39,857
+right you could kind of
+combine these and
+
+101
+00:04:40,293 --> 00:04:44,694
+you know horizontally and vertically
+concatenate
+
+102
+00:04:44,785 --> 00:04:50,453
+okay that's it for
+basic arrays thank you
+
