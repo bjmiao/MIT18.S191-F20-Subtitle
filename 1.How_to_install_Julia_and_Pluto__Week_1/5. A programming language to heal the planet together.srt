@@ -1,0 +1,1018 @@
+﻿1
+00:00:03,299 --> 00:00:06,816
+[Music]
+
+2
+00:00:11,900 --> 00:00:13,443
+so as long as here we are in the
+
+3
+00:00:13,468 --> 00:00:15,160
+computer science and AI laboratory
+
+4
+00:00:15,359 --> 00:00:17,019
+let me ask perhaps by a show of hands
+
+5
+00:00:17,250 --> 00:00:21,040
+from the audience how many of you know
+what a programming language is
+
+6
+00:00:22,104 --> 00:00:25,369
+okay this is MIT after all
+so maybe I shouldn't be surprised
+
+7
+00:00:25,394 --> 00:00:29,260
+how many of you have
+programmed the computer again
+
+8
+00:00:29,460 --> 00:00:30,760
+I know this is this is a
+great audience this
+
+9
+00:00:30,960 --> 00:00:32,226
+this is MIT
+
+10
+00:00:32,250 --> 00:00:37,329
+so I'm a co-founder
+co-inventor of a programming language
+
+11
+00:00:37,530 --> 00:00:39,128
+known as Julia perhaps some of you have
+
+12
+00:00:39,329 --> 00:00:42,729
+used it and this language is becoming
+
+13
+00:00:42,929 --> 00:00:44,439
+increasingly popular for all of the
+
+14
+00:00:44,640 --> 00:00:46,959
+various kinds of models that will be
+
+15
+00:00:47,159 --> 00:00:48,849
+coming up in the various talks today the
+
+16
+00:00:49,049 --> 00:00:51,158
+climate models the economic models the
+
+17
+00:00:51,359 --> 00:00:54,279
+various political models and so forth so
+
+18
+00:00:54,375 --> 00:00:56,104
+let me say a little bit about myself
+
+19
+00:00:56,233 --> 00:00:58,538
+first of all I'm a mathematician I'm a
+
+20
+00:00:58,563 --> 00:01:00,641
+computer scientist here in this building
+
+21
+00:01:00,666 --> 00:01:02,588
+I mentioned that I'm a co-inventor of
+
+22
+00:01:02,634 --> 00:01:05,269
+the programming language Julia
+
+23
+00:01:05,294 --> 00:01:08,008
+I have a wife and two children and
+the cutest little Corgi on the planet
+
+24
+00:01:08,033 --> 00:01:09,995
+so you might see him around here
+
+25
+00:01:10,020 --> 00:01:14,890
+what I'm not, to be
+honest, I'm not a climate scientist
+
+26
+00:01:15,090 --> 00:01:17,944
+I'm not an economist I'm not a policy maker
+
+27
+00:01:18,238 --> 00:01:20,665
+I'm not even completely
+sure why I'm even in this room
+
+28
+00:01:20,865 --> 00:01:24,174
+except we are all on
+this planet together
+
+29
+00:01:24,216 --> 00:01:27,079
+so about programming
+languages
+
+30
+00:01:27,205 --> 00:01:32,294
+humans talk to computers specifying the
+instructions that automate our world
+
+31
+00:01:32,319 --> 00:01:34,005
+with programming language
+
+32
+00:01:34,205 --> 00:01:35,729
+the climate models the economic models
+
+33
+00:01:35,754 --> 00:01:40,296
+the political models are they're all
+implemented as instructions to computers
+
+34
+00:01:41,204 --> 00:01:43,356
+I co-founded this
+programming language
+
+35
+00:01:43,381 --> 00:01:45,239
+Julia that allows not only
+
+36
+00:01:45,439 --> 00:01:48,039
+humans to talk to computers but
+
+37
+00:01:48,239 --> 00:01:50,950
+it allows humans to talk to humans about
+
+38
+00:01:50,975 --> 00:01:53,169
+their intent on the computer
+
+39
+00:01:53,194 --> 00:01:55,750
+so we all have this vision of we program a
+
+40
+00:01:55,950 --> 00:01:59,349
+computer maybe you sit in your own
+little room and a little silo somewhere
+
+41
+00:01:59,549 --> 00:02:04,080
+and you specify these arcane instructions
+that you tell the computer what to do
+
+42
+00:02:04,105 --> 00:02:06,399
+I have a vision of the
+
+43
+00:02:06,424 --> 00:02:09,850
+ability to have other humans know what
+
+44
+00:02:09,875 --> 00:02:12,914
+it is you're telling
+the computer and what they can do
+
+45
+00:02:13,655 --> 00:02:15,550
+you might think that
+it's a common occurrence that
+
+46
+00:02:15,750 --> 00:02:18,250
+programming languages can, you know,
+
+47
+00:02:18,275 --> 00:02:22,059
+somebody writes a program and a person can look at
+it and see what's going on
+
+48
+00:02:22,084 --> 00:02:24,264
+but I assure you it's anything but
+
+49
+00:02:24,652 --> 00:02:28,930
+I've taken a look at some climate models
+some of the codes out there
+
+50
+00:02:29,025 --> 00:02:31,372
+and I assure you it is very very
+very difficult
+
+51
+00:02:31,397 --> 00:02:35,943
+for a human to find out what is going on
+in those models
+
+52
+00:02:37,742 --> 00:02:39,170
+perhaps you've programmed
+
+53
+00:02:39,195 --> 00:02:40,749
+many of you have raised your hand
+
+54
+00:02:40,863 --> 00:02:43,153
+there are languages out there there's
+that
+
+55
+00:02:43,178 --> 00:02:46,654
+some of you may have
+heard of like Java and C++
+
+56
+00:02:46,871 --> 00:02:50,402
+these are languages that are very very
+common in the business world
+
+57
+00:02:50,631 --> 00:02:53,580
+there are other languages that
+are easy to use
+
+58
+00:02:53,780 --> 00:02:55,890
+they're scratch, Python was invented as a
+
+59
+00:02:55,915 --> 00:02:57,745
+language to become easy to use and
+
+60
+00:02:57,770 --> 00:03:00,423
+because it was so easy to use it became
+
+61
+00:03:00,448 --> 00:03:03,765
+extremely popular and
+now it's very very widely used
+
+62
+00:03:04,180 --> 00:03:07,740
+so the common wisdom has
+always been for programming languages is
+
+63
+00:03:07,939 --> 00:03:10,597
+that there is you could
+have an either or nor,
+
+64
+00:03:10,754 --> 00:03:14,811
+either you can have a
+programming language that's easy to program
+
+65
+00:03:14,846 --> 00:03:16,479
+but you'll pay the price
+
+66
+00:03:16,504 --> 00:03:18,180
+somehow the programs will
+execute much more slowly
+
+67
+00:03:18,379 --> 00:03:20,365
+you will lose out on performance
+
+68
+00:03:20,693 --> 00:03:23,698
+the other possibility is you
+
+69
+00:03:23,731 --> 00:03:25,609
+it's a much more
+difficult endeavor
+
+70
+00:03:25,634 --> 00:03:29,386
+you have to be much more skilled at programming but then
+you can get the performance
+
+71
+00:03:29,411 --> 00:03:34,140
+we set out to show that it wasn't one or
+the other
+
+72
+00:03:34,165 --> 00:03:35,561
+you can have your cake and eat it too
+
+73
+00:03:35,586 --> 00:03:37,285
+the Julia programming language lets you
+
+74
+00:03:37,310 --> 00:03:39,450
+program readily but
+also gets you performance
+
+75
+00:03:39,650 --> 00:03:41,815
+if you look at the climate
+
+76
+00:03:41,840 --> 00:03:43,439
+models you find some of the time that
+
+77
+00:03:43,464 --> 00:03:45,169
+the codes are unavailable a lot of the
+
+78
+00:03:45,301 --> 00:03:48,060
+time scientists write a paper they put
+
+79
+00:03:48,259 --> 00:03:50,035
+together some powerpoints they might put
+
+80
+00:03:50,060 --> 00:03:51,870
+together some output of their code but
+
+81
+00:03:51,895 --> 00:03:54,731
+the code itself is
+unavailable for you to look at
+
+82
+00:03:54,931 --> 00:03:57,262
+okay this is what we call closed source
+
+83
+00:03:57,754 --> 00:03:59,333
+other times
+
+84
+00:03:59,358 --> 00:04:04,816
+the codes are available you can look at them
+but they're not easy to look at
+
+85
+00:04:04,895 --> 00:04:07,285
+but very often what
+people are doing is
+
+86
+00:04:07,310 --> 00:04:09,081
+what's called low-level
+programming
+
+87
+00:04:09,106 --> 00:04:12,645
+you specify very specifically
+what you want the computer to do
+
+88
+00:04:12,670 --> 00:04:15,176
+perhaps you get performance by doing that
+
+89
+00:04:15,201 --> 00:04:19,971
+but you lose complete sight of what
+it is from a high level that's going on
+
+90
+00:04:20,324 --> 00:04:23,840
+what continues to
+surprise me as a Julia co-founder
+
+91
+00:04:24,642 --> 00:04:28,275
+is that a programming language can let
+humans talk to humans
+
+92
+00:04:28,575 --> 00:04:30,794
+a programming language
+can create community
+
+93
+00:04:30,986 --> 00:04:34,053
+a programming language
+can actually create social action
+
+94
+00:04:34,078 --> 00:04:36,848
+it opens very very human possibilities
+
+95
+00:04:37,288 --> 00:04:38,410
+so my own story is a
+testament to the power of language so I
+
+96
+00:04:41,368 --> 00:04:44,970
+have a confession to make I'm gonna make it publicly
+
+97
+00:04:44,995 --> 00:04:46,860
+a year ago I wasn't thinking about
+
+98
+00:04:46,885 --> 00:04:48,653
+anything climate at all sure I read the
+
+99
+00:04:48,678 --> 00:04:53,258
+papers I knew that the earth was warming
+and it was bad
+
+100
+00:04:53,283 --> 00:04:55,810
+but I kind of lumped it with all the
+other bad news in the papers and I
+
+101
+00:04:55,835 --> 00:04:57,586
+didn't particularly relate to it okay
+
+102
+00:04:57,983 --> 00:05:00,699
+but now I put solar panels on the roof
+
+103
+00:05:00,899 --> 00:05:02,969
+we installed the electric vehicle plugs
+
+104
+00:05:02,994 --> 00:05:05,551
+and maybe most important of all
+
+105
+00:05:05,644 --> 00:05:09,456
+I feel guilty I feel
+personally connected to the problem
+
+106
+00:05:09,481 --> 00:05:12,479
+even when I see my little
+friend here with his fur coat
+
+107
+00:05:12,682 --> 00:05:16,166
+who hates going out in the
+summer because of his fur coat
+
+108
+00:05:16,191 --> 00:05:19,429
+and loves to have to frolic in the snow
+
+109
+00:05:19,454 --> 00:05:21,112
+I almost feel the message that
+
+110
+00:05:21,137 --> 00:05:23,609
+we can't afford to be
+messing with the planet
+
+111
+00:05:23,634 --> 00:05:26,664
+I just I see
+these messages everywhere I go
+
+112
+00:05:27,260 --> 00:05:29,775
+a year ago the ocean modelers at MIT
+
+113
+00:05:29,800 --> 00:05:32,319
+came to my office upstairs and
+
+114
+00:05:32,344 --> 00:05:34,015
+told me about the climber
+project
+
+115
+00:05:34,050 --> 00:05:36,550
+and their goal was to rebuild a
+state-of-the-art model
+
+116
+00:05:36,750 --> 00:05:39,127
+of the earth the climate
+
+117
+00:05:39,330 --> 00:05:42,082
+what they told me is that
+what they wanted to do was
+
+118
+00:05:42,107 --> 00:05:44,949
+was write the entire code in Julia
+
+119
+00:05:44,974 --> 00:05:46,785
+they told me not to
+talk them out of it okay
+
+120
+00:05:47,013 --> 00:05:48,373
+and they're doing this because
+
+121
+00:05:48,398 --> 00:05:51,228
+the old codes were just
+not working for them
+
+122
+00:05:51,540 --> 00:05:54,875
+so when it comes
+to language let me point out
+
+123
+00:05:54,900 --> 00:05:59,045
+that philosophers and mathematicians have
+been talking about the importance of language
+
+124
+00:05:59,230 --> 00:06:01,249
+for many many years
+
+125
+00:06:01,274 --> 00:06:03,648
+people have known for a
+long time that
+
+126
+00:06:03,842 --> 00:06:06,338
+language influences us
+the words
+
+127
+00:06:06,363 --> 00:06:08,934
+that we have available
+changes what we can do
+
+128
+00:06:08,959 --> 00:06:11,528
+mathematicians like Poincare
+
+129
+00:06:11,728 --> 00:06:14,561
+have known for a long
+time that your choice of notation
+
+130
+00:06:14,823 --> 00:06:16,294
+can enable new discoveries or
+
+131
+00:06:16,319 --> 00:06:20,072
+constrain new discoveries
+
+132
+00:06:20,097 --> 00:06:23,645
+and so I'm here to talk about the
+computer science version of all this and
+
+133
+00:06:23,670 --> 00:06:25,778
+a good programming language design
+
+134
+00:06:25,978 --> 00:06:28,689
+is really
+applied psychology
+
+135
+00:06:28,730 --> 00:06:30,664
+now again if you think
+of a programming language
+
+136
+00:06:30,689 --> 00:06:33,189
+as just a means of
+
+137
+00:06:33,214 --> 00:06:36,940
+specifying instructions
+that only a machine can understand
+
+138
+00:06:37,378 --> 00:06:39,189
+then you're not seeing the
+
+139
+00:06:39,389 --> 00:06:41,658
+real value of modern programming language
+
+140
+00:06:41,683 --> 00:06:43,563
+modern programming language can now
+
+141
+00:06:43,588 --> 00:06:46,179
+be a kind of Applied
+Psychology
+
+142
+00:06:46,204 --> 00:06:48,129
+it can allow us to create
+communities of people
+
+143
+00:06:48,154 --> 00:06:50,318
+who can work together to solve problems
+
+144
+00:06:50,518 --> 00:06:52,036
+it can allow us to talk to humans
+
+145
+00:06:52,061 --> 00:06:56,679
+as well as machines when we want to specify
+what it is that a climate model
+
+146
+00:06:56,704 --> 00:06:59,667
+or an economic model
+or a political model is doing
+
+147
+00:06:59,692 --> 00:07:02,674
+it enables all kinds of
+collaboration of programs
+
+148
+00:07:02,699 --> 00:07:05,345
+if you have a
+good programming model
+
+149
+00:07:05,370 --> 00:07:11,206
+and of course for all the complexities of the various
+kinds of models that we're doing for the earth
+
+150
+00:07:11,231 --> 00:07:13,798
+everybody these days
+wants to do high-performance
+
+151
+00:07:13,823 --> 00:07:17,184
+high performance
+computing used to be a very small subject
+
+152
+00:07:17,209 --> 00:07:21,270
+and now it's the sort of thing
+that everybody wants to do
+
+153
+00:07:22,028 --> 00:07:25,476
+so scientists communicate
+with math symbols
+
+154
+00:07:25,785 --> 00:07:29,543
+here I'm showing on the
+top the kinds of mathematical symbols
+
+155
+00:07:29,568 --> 00:07:33,598
+that a climate modeler might
+put in one of his or her papers right
+
+156
+00:07:33,623 --> 00:07:36,235
+so it doesn't matter
+what the model is saying
+
+157
+00:07:36,260 --> 00:07:38,859
+the point is that
+people communicate with these symbols
+
+158
+00:07:39,059 --> 00:07:42,161
+people understand what they're doing
+with these symbols okay
+
+159
+00:07:42,699 --> 00:07:45,556
+but what does a scientist code
+typically
+
+160
+00:07:45,627 --> 00:07:48,278
+well you see it right there below
+the symbols you see
+
+161
+00:07:48,373 --> 00:07:51,193
+a lot more lines of very
+very specific instructions
+
+162
+00:07:51,368 --> 00:07:53,062
+and I hope you can see my point
+
+163
+00:07:53,087 --> 00:07:56,519
+that it's not very easy
+to relate back to
+
+164
+00:07:56,544 --> 00:08:01,306
+the symbols if you understand these
+symbols the code really really doesn't help
+
+165
+00:08:01,505 --> 00:08:04,101
+so the code is really not the math is it
+
+166
+00:08:04,126 --> 00:08:05,581
+but with julia we
+
+167
+00:08:05,606 --> 00:08:08,449
+tell people you don't
+code the math code is the math
+
+168
+00:08:08,571 --> 00:08:09,903
+and so at the highest level
+
+169
+00:08:10,025 --> 00:08:14,865
+if these are the equations that are going
+to tell you how the climate is changing
+
+170
+00:08:14,890 --> 00:08:16,594
+you want at this level to be able to
+
+171
+00:08:16,619 --> 00:08:18,664
+just specify these sorts of symbols
+
+172
+00:08:18,689 --> 00:08:20,468
+right and this code actually runs and
+
+173
+00:08:20,509 --> 00:08:23,010
+implements this model
+
+174
+00:08:23,354 --> 00:08:25,653
+and we're doing the kind
+of research that makes it possible
+
+175
+00:08:25,678 --> 00:08:28,267
+to
+implement this sort of thing
+
+176
+00:08:28,292 --> 00:08:29,649
+you could do it on
+your desktop
+
+177
+00:08:29,848 --> 00:08:31,509
+you could do it on a
+supercomputer
+
+178
+00:08:31,534 --> 00:08:33,875
+you could do it on the GPUs
+that are running very fast and
+
+179
+00:08:33,900 --> 00:08:35,823
+we've even played a little bit of
+
+180
+00:08:35,848 --> 00:08:39,465
+with the TPUs, the Google
+tensor processing units
+
+181
+00:08:39,888 --> 00:08:41,588
+my final point and
+
+182
+00:08:41,613 --> 00:08:43,308
+my most important point is
+
+183
+00:08:43,333 --> 00:08:46,439
+what is known as composability
+
+184
+00:08:46,464 --> 00:08:50,047
+so programming when you program
+a you write a program for yourself
+
+185
+00:08:50,072 --> 00:08:52,622
+and somebody else writes another program
+
+186
+00:08:52,647 --> 00:08:55,445
+you might think that
+they would work together very well
+
+187
+00:08:55,470 --> 00:08:56,500
+but they never do
+
+188
+00:08:56,700 --> 00:08:58,256
+how many of you have ever had a problem
+
+189
+00:08:58,281 --> 00:09:00,295
+with a computer not
+doing what you wanted it to do
+
+190
+00:09:00,838 --> 00:09:02,649
+okay that's probably everybody
+
+191
+00:09:02,804 --> 00:09:04,827
+right so computers are like that
+
+192
+00:09:04,897 --> 00:09:06,305
+if you write a program and then
+
+193
+00:09:06,330 --> 00:09:08,049
+somebody else writes a program
+
+194
+00:09:08,074 --> 00:09:09,370
+with no particular intent for
+
+195
+00:09:09,570 --> 00:09:12,039
+them working together
+they usually don't
+
+196
+00:09:12,064 --> 00:09:13,914
+because people are able
+to write programs
+
+197
+00:09:13,939 --> 00:09:17,283
+at a very high level we find that they
+
+198
+00:09:17,308 --> 00:09:19,269
+compose the technical
+word is composing
+
+199
+00:09:19,646 --> 00:09:22,237
+which means that these
+programs can run together
+
+200
+00:09:22,437 --> 00:09:25,614
+and so to give you an
+example of this composability
+
+201
+00:09:25,815 --> 00:09:28,135
+we have this
+complex interconnected planet you know
+
+202
+00:09:28,160 --> 00:09:30,736
+we need to work together
+in much much better ways
+
+203
+00:09:30,936 --> 00:09:34,492
+we have the folks with the CliMA project
+which I'm showing there on the upper left
+
+204
+00:09:34,693 --> 00:09:39,909
+we have economists who are working together
+to combined with people who do risk modeling
+
+205
+00:09:40,074 --> 00:09:41,585
+there the environmentalists
+who are tracking the
+
+206
+00:09:41,610 --> 00:09:45,072
+motions of the animals
+on the planets energy trading
+
+207
+00:09:45,272 --> 00:09:47,766
+we talk about how
+everybody can play a role
+
+208
+00:09:47,791 --> 00:09:51,101
+but what we really would like to see
+is everybody playing this role together
+
+209
+00:09:51,302 --> 00:09:52,714
+so no more of this
+
+210
+00:09:52,854 --> 00:09:54,185
+you sit in your office you write
+
+211
+00:09:54,210 --> 00:09:56,136
+your program and you talk about it
+
+212
+00:09:56,161 --> 00:09:58,709
+somebody else writes a program and they
+talk about it
+
+213
+00:09:58,734 --> 00:10:02,532
+we're trying to talk about a whole system
+where everybody can work together
+
+214
+00:10:02,557 --> 00:10:06,818
+so the climate modeler the economists
+a person who's doing an insurance model
+
+215
+00:10:06,922 --> 00:10:08,699
+might want to put all of this together
+
+216
+00:10:08,724 --> 00:10:10,381
+and see how this can work
+
+217
+00:10:10,406 --> 00:10:14,171
+let me conclude by saying that
+
+218
+00:10:14,196 --> 00:10:16,920
+what I've learned both
+personally and professionally is that
+
+219
+00:10:16,945 --> 00:10:21,346
+everybody can play a role in
+helping to solve the problem of the climate
+
+220
+00:10:21,371 --> 00:10:23,919
+what I'd like to ask is
+through personal action
+
+221
+00:10:24,120 --> 00:10:25,899
+collective action and participating
+
+222
+00:10:26,100 --> 00:10:28,269
+together including through software we
+
+223
+00:10:28,470 --> 00:10:29,919
+should all work together to solve the
+
+224
+00:10:30,120 --> 00:10:32,379
+problem of healing the planet thank you
+
+225
+00:10:32,580 --> 00:10:37,580
+[Applause]
+
